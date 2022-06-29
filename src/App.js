@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CustomButton } from './components/Common/CustomButton';
+import { CustomChip } from './components/Common/CustomChip';
 
 import './App.css';
 
@@ -12,6 +13,11 @@ function App() {
         <CustomButton size="medium" variant="contained" text="Button" disabled={false} color="success"/>
         <CustomButton size="small" variant="contained" text="Button" disabled={false} color="error"/>
         <CustomButton size="small" variant="contained" text="Button" disabled={false} color="info"/>
+      </div>
+      <div>
+        <CustomChip label="Успешно" color="error"/>
+        <CustomChip label="В обработке" color="warning"/>
+        <CustomChip label="Отклонено" color="success"/>
       </div>
     </div>
   );
