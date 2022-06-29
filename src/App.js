@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import React from 'react';
+
+import { CustomButton } from './components/Common/CustomButton';
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <CustomButton size="large" variant="contained" text="Button" disabled={false} color="primary"/>
+        <CustomButton size="medium" variant="contained" text="Button" disabled={false} color="success"/>
+        <CustomButton size="small" variant="contained" text="Button" disabled={false} color="error"/>
+        <CustomButton size="small" variant="contained" text="Button" disabled={false} color="info"/>
+      </div>
     </div>
   );
 }
