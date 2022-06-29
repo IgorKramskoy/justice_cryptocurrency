@@ -2,6 +2,7 @@ import React from 'react';
 
 import { CustomButton } from './components/Common/CustomButton';
 import { CustomChip } from './components/Common/CustomChip';
+import { CustomTextField} from './components/Common/CustomTextField';
 
 import './App.css';
 
@@ -19,6 +20,9 @@ function App() {
         <CustomChip label="В обработке" color="warning"/>
         <CustomChip label="Отклонено" color="success"/>
       </div>
+
+      <CustomTextField id="outlined-basic" label="Имя" variant="outlined" />
+
     </div>
   );
 }
