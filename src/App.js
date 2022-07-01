@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+
+import { Route, Routes } from 'react-router-dom';
+import { Wrapper } from './components/Common/Wrapper';
+
+import { routes } from './routes';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Wrapper>
+        <Routes>
+          {routes.map(({ path, element }) => (
+            <Route path={path} element={element} />
+          ))}
+        </Routes>
+      </Wrapper>
     </div>
   );
 }
