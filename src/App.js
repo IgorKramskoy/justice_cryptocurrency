@@ -6,12 +6,14 @@ import { Wrapper } from './components/Common/Wrapper';
 import { routes } from './routes';
 import './App.css';
 import { Register } from './components/Pages/Register';
+import { Login } from './components/Pages/Login';
 
 
 function App() {
   return (
     <div className="App">
-      <Register/>
+      <Login/>
+      {/*<Register/>*/}
       {/*<Wrapper>*/}
       {/*  <Routes>*/}
       {/*    {routes.map(({ path, element }) => (*/}

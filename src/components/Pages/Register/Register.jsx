@@ -3,7 +3,7 @@ import React from 'react';
 import { RegisterFormContainer } from './RegisterFormContainer';
 import { Box, Typography } from '@mui/material';
 
-import login from '../../../assets/images/login.png'
+import register from '../../../assets/images/register.png'
 import { BoxReg } from './BoxReg.styled';
 
 export const Register = () => {
@@ -14,7 +14,7 @@ export const Register = () => {
           <Typography variant="h4" sx={{
             color: 'white',
           }}>
-            Регистрация
+            Зарегистрироваться
           </Typography>
           <RegisterFormContainer/>
           <BoxReg mode='footer'>
@@ -30,7 +30,7 @@ export const Register = () => {
         </Box>
       </BoxReg>
       <BoxReg mode='right'>
-        <img src={login} alt='login'/>
+        <img src={register} alt='login'/>
       </BoxReg>
     </BoxReg>
   );
