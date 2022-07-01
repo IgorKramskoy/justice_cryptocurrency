@@ -43,7 +43,3 @@ export const TextFieldStyled = styled(TextField) (() => ({
     borderColor: 'red',
   },
 }))
-
-// MuiInputLabel-root
-// MuiOutlinedInput-input
-// Mui-focused

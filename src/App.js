@@ -5,17 +5,20 @@ import { Wrapper } from './components/Common/Wrapper';
 
 import { routes } from './routes';
 import './App.css';
+import { Register } from './components/Pages/Register';
+
 
 function App() {
   return (
     <div className="App">
-      <Wrapper>
-        <Routes>
-          {routes.map(({ path, element }) => (
-            <Route path={path} element={element} />
-          ))}
-        </Routes>
-      </Wrapper>
+      <Register/>
+      {/*<Wrapper>*/}
+      {/*  <Routes>*/}
+      {/*    {routes.map(({ path, element }) => (*/}
+      {/*      <Route path={path} element={element} />*/}
+      {/*    ))}*/}
+      {/*  </Routes>*/}
+      {/*</Wrapper>*/}
     </div>
   );
 }
