@@ -11,9 +11,7 @@ export const Register = () => {
     <BoxReg>
       <BoxReg mode='left'>
         <Box sx={{ width: '420px' }}>
-          <Typography variant="h4" sx={{
-            color: 'white',
-          }}>
+          <Typography variant="h4" sx={{color: 'white'}}>
             Зарегистрироваться
           </Typography>
           <RegisterFormContainer/>
@@ -21,9 +19,7 @@ export const Register = () => {
             <Typography variant="caption" sx={{ color: 'white' }}>
               Уже есть учетная запись?
             </Typography>
-            <Typography variant="caption" sx={{
-              color: 'white',
-            }}>
+            <Typography variant="caption" sx={{ color: 'white' }}>
               Авторизоваться
             </Typography>
          </BoxReg>

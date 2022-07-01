@@ -14,6 +14,13 @@ export const TextFieldStyled = styled(TextField) (() => ({
   '& .MuiInputLabel-root.Mui-disabled': {
     color: 'rgba(255,255,255,.5)',
   },
+  '&.MuiFormControl-root .Mui-error': {
+    border: '1px solid red',
+  },
+  '& .MuiInputLabel-root.Mui-error': {
+    border: '0px',
+    color: 'rgba(255,255,255,.5)',
+  },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
@@ -33,13 +40,9 @@ export const TextFieldStyled = styled(TextField) (() => ({
   '&.MuiFormControl-root': {
     border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
-
   },
   '&.MuiFormControl-root .Miu-focused': {
     border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
-  },
-  '& .Mui-focused.MuiOutlinedInput-notchedOutline': {
-    borderColor: 'red',
   },
 }))

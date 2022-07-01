@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { Wrapper } from './components/Common/Wrapper';
@@ -12,8 +12,8 @@ import { Login } from './components/Pages/Login';
 function App() {
   return (
     <div className="App">
-      <Login/>
-      {/*<Register/>*/}
+      {/*<Login/>*/}
+      <Register/>
       {/*<Wrapper>*/}
       {/*  <Routes>*/}
       {/*    {routes.map(({ path, element }) => (*/}
