@@ -3,6 +3,8 @@ import {Button, styled} from "@mui/material";
 export const ButtonStyled = styled(Button)(() => ({
     '&.MuiButton-root': {
         borderRadius: '3px',
+        fontSize: '14px',
+        textTransform: 'none',
     },
     '&.MuiButton-containedPrimary': {
         background: 'linear-gradient(270deg, #7164FF 0%, #682DFE 100%)',
@@ -21,6 +23,7 @@ export const ButtonStyled = styled(Button)(() => ({
     },
     '&.MuiButton-sizeLarge': {
         padding: '15px 24px',
+        width: '100%',
     },
     '&.MuiButton-sizeMedium': {
         padding: '12px 24px',
@@ -28,6 +31,4 @@ export const ButtonStyled = styled(Button)(() => ({
     '&.MuiButton-sizeSmall': {
         padding: '8px 16px',
     },
-
-
 }))

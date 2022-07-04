@@ -1,14 +1,16 @@
-import { Test } from './components/Test';
-import { Market } from './components/Market';
-import { Profile } from './components/Profile';
-import { Convecter } from './components/Converter';
-import { Wallet } from './components/Wallet';
-import { Transaction } from './components/Transaction';
+import { Market } from './components/Pages/Market';
+import { Profile } from './components/Pages/Profile';
+import { Convecter } from './components/Pages/Converter';
+import { Wallet } from './components/Pages/Wallet';
+import { Transaction } from './components/Pages/Transaction';
+import { Login } from './components/Pages/Login';
+import { Register } from './components/Pages/Register';
+import { Main } from './components/Pages/Main';
 
 export const routes = [
   {
-    path: "/test",
-    element: <Test />,
+    path: "/",
+    element: <Main />,
   },
   {
     path: "/market",
@@ -29,5 +31,13 @@ export const routes = [
   {
     path: "/transaction",
     element: <Transaction />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]

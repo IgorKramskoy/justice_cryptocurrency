@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
   Box,
@@ -14,9 +14,17 @@ import { CustomNavLink} from '../CustomNavLink';
 import { links } from '../../../links';
 import logo from '../../../assets/images/logo.png';
 import logout from '../../../assets/images/logout.svg';
+import { Context } from '../../../App';
+
 const drawerWidth = 240;
 
 export const Wrapper = ({ children }) => {
+  const { currentUser } = useContext(Context);
+
+  if (!currentUser) {
+    return children
+  }
+
   return (
     <Box sx={{ display: 'flex'}}>
       <CssBaseline />
@@ -81,7 +89,7 @@ export const Wrapper = ({ children }) => {
             }
           }}>
             {links.map(({ path, text, image }) => (
-              <CustomNavLink path={path} image={image} text={text}/>
+              <CustomNavLink key={path} path={path} image={image} text={text}/>
             ))}
           </Box>
           <Box sx={{
@@ -99,9 +107,7 @@ export const Wrapper = ({ children }) => {
               background: 'linear-gradient(270deg, #7164FF 0%, #682DFE 100%)',
             }
           }}>
-            <Divider sx={{
-              borderColor: 'rgba(255, 255, 255, 0.1)',
-            }}
+            <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
             />
             <CustomNavLink path='logout' image={logout} text="Выход"/>
           </Box>
