@@ -5,6 +5,8 @@ import { Box, Typography } from '@mui/material';
 
 import register from '../../../assets/images/register.png'
 import { BoxReg } from './BoxReg.styled';
+import * as Navigate from '../../../routesNavigate';
+import { LinkStyled } from './Link.styled';
 
 export const Register = () => {
   return (
@@ -19,9 +21,9 @@ export const Register = () => {
             <Typography variant="caption" sx={{ color: 'white' }}>
               Уже есть учетная запись?
             </Typography>
-            <Typography variant="caption" sx={{ color: 'white' }}>
+            <LinkStyled to={Navigate.Login}>
               Авторизоваться
-            </Typography>
+            </LinkStyled>
          </BoxReg>
         </Box>
       </BoxReg>

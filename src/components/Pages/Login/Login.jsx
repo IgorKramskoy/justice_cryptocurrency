@@ -2,23 +2,24 @@ import React from 'react';
 
 import { LoginFormContainer } from './LoginFormContainer';
 import {
-  Box, Checkbox,
+  Box,
+  Checkbox,
   FormControlLabel,
   Typography
 } from '@mui/material';
 
 import login from '../../../assets/images/login.png'
 import { BoxLog } from './BoxLog.styled';
-import { CustomCheckbox } from '../../Common/CustomCheckbox';
+import { LinkStyled } from './Link.styled';
+import * as Navigate from '../../../routesNavigate';
 
 export const Login = () => {
+
   return (
     <BoxLog>
       <BoxLog mode='left'>
         <Box sx={{ width: '420px' }}>
-          <Typography variant="h4" sx={{
-            color: 'white',
-          }}>
+          <Typography variant="h4" sx={{ color: 'white' }}>
             Вход
           </Typography>
           <LoginFormContainer/>
@@ -27,11 +28,9 @@ export const Login = () => {
             <Typography variant="caption" sx={{ color: 'white' }}>
               Нет аккаунта?
             </Typography>
-            <Typography variant="caption" sx={{
-              color: 'white',
-            }}>
+            <LinkStyled to={Navigate.Register}>
               Создать аккаунт
-            </Typography>
+            </LinkStyled>
          </BoxLog>
         </Box>
       </BoxLog>

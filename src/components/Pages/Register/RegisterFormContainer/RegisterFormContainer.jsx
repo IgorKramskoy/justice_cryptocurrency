@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { StylesBoxReg } from './RefisterFormContainer.styled';
@@ -6,9 +6,14 @@ import { CustomButton } from '../../../Common/CustomButton';
 import { useFormik } from 'formik';
 import { Box, Typography } from '@mui/material';
 import { RegisterFormValidation } from './RegisterFormValidation';
+import { useNavigate } from 'react-router-dom';
+import * as Navigate from '../../../../routesNavigate';
+import { Context } from '../../../../App';
 
 export const RegisterFormContainer = () => {
   const [error, setError] = useState('');
+  const { currentUser, setCurrentUser } = useContext(Context);
+  const navigate = useNavigate();
   const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) ?? []);
   const formik = useFormik({
     initialValues: {
@@ -36,9 +41,16 @@ export const RegisterFormContainer = () => {
         setUsers([...users, data])
         localStorage.setItem('users', JSON.stringify([...users, data]))
         setError('')
+        navigate(Navigate.LOGIN)
       }
     },
   });
+
+  useEffect(() => {
+    if(currentUser) {
+      navigate('/')
+    }
+  }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>

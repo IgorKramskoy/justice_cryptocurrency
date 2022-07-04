@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { Wrapper } from './components/Common/Wrapper';
 
 import { routes } from './routes';
 import './App.css';
-import { Register } from './components/Pages/Register';
-import { Login } from './components/Pages/Login';
 
+export const Context = createContext({});
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('userAuth')));
+
+  const contextValues = {
+    currentUser,
+    setCurrentUser,
+  }
+
   return (
     <div className="App">
-      <Login/>
-      {/*<Register/>*/}
-      {/*<Wrapper>*/}
-      {/*  <Routes>*/}
-      {/*    {routes.map(({ path, element }) => (*/}
-      {/*      <Route path={path} element={element} />*/}
-      {/*    ))}*/}
-      {/*  </Routes>*/}
-      {/*</Wrapper>*/}
+      <Context.Provider value={contextValues}>
+        <Wrapper>
+          <Routes>
+            {routes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
+        </Wrapper>
+      </Context.Provider>
     </div>
   );
 }

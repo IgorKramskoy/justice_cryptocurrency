@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
@@ -7,9 +7,15 @@ import { Box, Typography } from '@mui/material';
 
 import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
+import { Context } from '../../../../App';
+import { useNavigate } from 'react-router-dom';
+import * as Navigate from '../../../../routesNavigate';
 
 export const LoginFormContainer = () => {
   const [error, setError] = useState('');
+  const { currentUser, setCurrentUser } = useContext(Context);
+  const navigate = useNavigate();
+
   const users = JSON.parse(localStorage.getItem('users'));
   const formik = useFormik({
     initialValues: {
@@ -18,17 +24,25 @@ export const LoginFormContainer = () => {
     },
     validationSchema: LoginFormValidation,
     onSubmit: ({email, password }) => {
-      const isUserAuth = users.find((user) => user.email === email)
-      if(!isUserAuth) {
+      const userAuth = users.find((user) => user.email === email)
+      if(!userAuth) {
         setError('Пользователь с таким email не существует или неправильный email!')
-      } else if (isUserAuth.password !== password) {
+      } else if (userAuth.password !== password) {
         setError('Неверный пароль!')
       } else {
-        localStorage.setItem('userAuth', JSON.stringify(isUserAuth))
+        localStorage.setItem('userAuth', JSON.stringify(userAuth))
+        setCurrentUser(userAuth);
         setError('')
+        navigate(Navigate.MARKET)
       }
     },
   });
+
+  useEffect(() => {
+    if(currentUser) {
+      navigate(Navigate.MARKET)
+    }
+  }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
