@@ -28,7 +28,7 @@ export const Login = () => {
             <Typography variant="caption" sx={{ color: 'white' }}>
               Нет аккаунта?
             </Typography>
-            <LinkStyled to={Navigate.Register}>
+            <LinkStyled to={Navigate.REGISTER}>
               Создать аккаунт
             </LinkStyled>
          </BoxLog>
