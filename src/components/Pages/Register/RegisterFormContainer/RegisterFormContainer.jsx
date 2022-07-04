@@ -50,12 +50,9 @@ export const RegisterFormContainer = () => {
           error={formik.errors.name && formik.touched.name}
           onChange={formik.handleChange}
           type="text"
+          errorMessage={formik.errors.name}
+          touched={formik.touched.name}
         />
-        {formik.errors.name && formik.touched.name ? (
-          <Typography variant="caption" sx={{
-            color: 'red',
-          }}>{formik.errors.name}</Typography>
-        ) : null}
       </Box>
       <Box sx={{ width: '100%' }}>
         <CustomTextField
@@ -65,12 +62,9 @@ export const RegisterFormContainer = () => {
           error={formik.errors.email && formik.touched.email}
           onChange={formik.handleChange}
           type="email"
+          errorMessage={formik.errors.email}
+          touched={formik.touched.email}
         />
-        {formik.errors.name && formik.touched.name ? (
-          <Typography variant="caption" sx={{
-            color: 'red',
-          }}>{formik.errors.name}</Typography>
-        ) : null}
       </Box>
       <StylesBoxReg mode='item'>
         <Box sx={{ width: '100%' }}>
@@ -81,12 +75,9 @@ export const RegisterFormContainer = () => {
             error={formik.errors.password && formik.touched.password}
             onChange={formik.handleChange}
             type="password"
+            errorMessage={formik.errors.password}
+            touched={formik.touched.password}
           />
-          {formik.errors.password && formik.touched.password ? (
-            <Typography variant="caption" sx={{
-              color: 'red',
-            }}>{formik.errors.password}</Typography>
-          ) : null}
         </Box>
         <Box sx={{ width: '100%' }}>
           <CustomTextField
@@ -96,16 +87,13 @@ export const RegisterFormContainer = () => {
             error={formik.errors.repeatPassword && formik.touched.repeatPassword}
             onChange={formik.handleChange}
             type="password"
+            errorMessage={formik.errors.repeatPassword}
+            touched={formik.touched.repeatPassword}
           />
-          {formik.errors.repeatPassword && formik.touched.repeatPassword ? (
-            <Typography variant="caption" sx={{
-              color: 'red',
-            }}>{formik.errors.password}</Typography>
-          ) : null}
         </Box>
       </StylesBoxReg>
       {error ? <Typography variant="caption" sx={{
-        color: 'red',
+        color: '#D24242',
       }}>{error}</Typography> : null}
       <CustomButton
         type="submit"

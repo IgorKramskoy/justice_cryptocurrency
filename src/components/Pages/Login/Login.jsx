@@ -30,7 +30,7 @@ export const Login = () => {
             <Typography variant="caption" sx={{
               color: 'white',
             }}>
-              Войти
+              Создать аккаунт
             </Typography>
          </BoxLog>
         </Box>

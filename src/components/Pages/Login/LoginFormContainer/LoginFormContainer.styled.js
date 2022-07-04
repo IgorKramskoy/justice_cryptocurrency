@@ -1,6 +1,6 @@
-import { Box, css, styled } from '@mui/material';
+import { css, styled } from '@mui/material';
 
-export const StylesBoxReg = styled(Box)`
+export const StylesBoxReg = styled('form')`
     ${(props) => {
   switch (props.mode) {
     case "item":

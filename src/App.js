@@ -12,8 +12,8 @@ import { Login } from './components/Pages/Login';
 function App() {
   return (
     <div className="App">
-      {/*<Login/>*/}
-      <Register/>
+      <Login/>
+      {/*<Register/>*/}
       {/*<Wrapper>*/}
       {/*  <Routes>*/}
       {/*    {routes.map(({ path, element }) => (*/}

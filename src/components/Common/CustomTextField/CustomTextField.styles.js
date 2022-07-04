@@ -15,7 +15,7 @@ export const TextFieldStyled = styled(TextField) (() => ({
     color: 'rgba(255,255,255,.5)',
   },
   '&.MuiFormControl-root .Mui-error': {
-    border: '1px solid red',
+    border: '1px solid #D24242',
   },
   '& .MuiInputLabel-root.Mui-error': {
     border: '0px',
