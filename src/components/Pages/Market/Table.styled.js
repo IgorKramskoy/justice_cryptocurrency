@@ -1,5 +1,6 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, TablePagination, } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
+
 
 export const TableCellHeadStyled = styled(TableCell) (() => ({
   '&': {
@@ -22,5 +23,18 @@ export const BoxStyled = styled(Box) (() => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+}))
+export const TablePaginationStyled = styled(TablePagination) (() => ({
+  '&': {
+    background: '#111823',
+    color: '#FFFFFF',
+    borderBottom: 'none',
+  },
+  '& .MuiTablePagination-selectLabel': {
+    display: 'none',
+  },
+  '& .MuiInputBase-root': {
+    display: 'none',
   },
 }))

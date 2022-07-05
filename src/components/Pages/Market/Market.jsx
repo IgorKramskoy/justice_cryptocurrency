@@ -1,28 +1,53 @@
 import React, { useState } from 'react';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { BoxStyled, TableCellHeadStyled, TableCellStyled } from './Table.styled';
-import { TextField, Typography } from '@mui/material';
+import {
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableBody,
+  Table,
+  Paper,
+  TextField,
+  Typography } from '@mui/material';
+
+import { BoxStyled, TableCellHeadStyled, TableCellStyled, TablePaginationStyled } from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
 
-const top100Films = [
+
+const rows = [
   { label: 'The Shawshank Redemption', year: 1994, },
   { label: 'The Godfather', year: 1972 },
+  { label: 'The Godfathedr', year: 1972 },
+  { label: 'The Godfathedr1', year: 1972 },
+  { label: 'The Godf3athedr1', year: 1972 },
+  { label: 'The Godf35athedr1', year: 1972 },
+  { label: 'The Go1df35athedr1', year: 1972 },
+  { label: 'The Go1df35athedr1', year: 1972 },
+  { label: 'The Go12df35athedr1', year: 1972 },
+  { label: 'The Go18d3f35athedr1', year: 1972 },
+  { label: 'The Go751df35athedr1', year: 1972 },
+  { label: 'The Go561df35athedr1', year: 1972 },
+  { label: 'The Go551df35athedr1', year: 1972 },
+  { label: 'The Go51d4f35athedr1', year: 1972 },
+  { label: 'The Go51df2335athedr1', year: 1972 },
 ]
 export const Market = () => {
-  const [filteredRows, setFilteredRows] = useState(top100Films)
+  const [filteredRows, setFilteredRows] = useState(rows)
+  const [page, setPage] = useState(0);
+
+  const rowsPerPage = 10;
 
   const handleSearch = (e) => {
-    setFilteredRows(top100Films.filter((item) => (
+    setFilteredRows(rows.filter((item) => (
       item.label.toLowerCase().includes(e.target.value.toLowerCase())
     )))
   }
-  console.log(filteredRows)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
   return (
     <>
       <BoxStyled>
@@ -32,11 +57,11 @@ export const Market = () => {
         <AutocompleteStyled
           disablePortal
           id="combo-box-demo"
-          options={top100Films}
+          options={filteredRows}
           renderInput={(params) => <TextField {...params} onChange={handleSearch} label="Поиск валюты" />}
         />
       </BoxStyled>
-      <TableContainer component={Paper} sx={{  borderRadius: '0px'}}>
+      <TableContainer component={Paper} sx={{  borderRadius: '0px', boxShadow: 'none'}}>
         <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
           <TableHead sx={{ background: '#191F29', padding: '0px'}}>
             <TableRow  sx={{ }}>
@@ -45,13 +70,25 @@ export const Market = () => {
             </TableRow>
           </TableHead>
           <TableBody sx={{ background: '#111823',}}>
-            {filteredRows.map((row) => (
-              <TableRow key={row.label}>
-                <TableCellStyled align="right">{row.label}</TableCellStyled>
-                <TableCellStyled align="right">{row.year}</TableCellStyled>
-              </TableRow>
-            ))}
+            { filteredRows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow key={row.label}>
+                  <TableCellStyled align="right">{row.label}</TableCellStyled>
+                  <TableCellStyled align="right">{row.year}</TableCellStyled>
+                </TableRow>
+              ))}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePaginationStyled
+                count={filteredRows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
     </TableContainer>
     </>
