@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import {
   TableRow,
@@ -8,18 +8,20 @@ import {
   Table,
   Paper,
   TextField,
-  Typography, Pagination, Button
+  Typography,
+  Pagination,
+  Button
 } from '@mui/material';
 
-import { BoxStyled, TableCellHeadStyled, TableCellStyled, TablePaginationStyled } from './Table.styled';
+import { BoxStyled, TableCellHeadStyled, TableCellStyled } from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
-import { getCurrencies } from '../../../api/api';
+
+import { Context } from '../../../App';
 
 export const Market = () => {
-  const [currencies, setCurrencies] = useState([])
-  const [filteredRows, setFilteredRows] = useState(currencies)
+  const [filteredRows, setFilteredRows] = useState([])
   const [page, setPage] = useState(0);
-
+  const { currencies } = useContext(Context);
   const rowsPerPage = 10;
 
   const handleSearch = (e) => {
@@ -31,12 +33,6 @@ export const Market = () => {
     setPage(newPage);
   };
 
-  useEffect( () => {
-    const aa = getCurrencies()
-      .then((data) => {
-        console.log(data)
-        setCurrencies(Object.values(data.data.DISPLAY)) })
-  }, [])
 
   useEffect( () => {
     if (filteredRows.length === 0) {

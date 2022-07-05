@@ -1,48 +1,19 @@
 import { TextField, styled} from '@mui/material';
 
 export const TextFieldStyled = styled(TextField) (() => ({
-  '& .MuiInputLabel-root': {
-    color: '#8C939D',
+  '&.MuiTextField-root': {
+    width: 'calc(100% - 150px)',
   },
-  '& .Mui-disabled': {
-    background: '#1C2027',
-  },
-  '& .MuiInputLabel-root.Mui-focused': {
-    color: '#8C939D',
-    top: '15px',
-  },
-  '& .MuiInputLabel-root.Mui-disabled': {
-    color: 'rgba(255,255,255,.5)',
-  },
-  '&.MuiFormControl-root .Mui-error': {
-    border: '1px solid #D24242',
-  },
-  '& .MuiInputLabel-root.Mui-error': {
-    border: '0px',
-    color: 'rgba(255,255,255,.5)',
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
+ '& .MuiOutlinedInput-root': {
     border: 'none',
   },
-  '& .MuiFormLabel-filled': {
-    top: '15px',
+ '& .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline ': {
+    border: 'none',
   },
-  '& .MuiOutlinedInput-input': {
-    color: '#FFFFFF',
-    paddingTop: '23px',
-    paddingBottom: '10px',
+ '& .MuiInputBase-root.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline ': {
+    border: 'none',
   },
-  '& .MuiOutlinedInput-input.Mui-focused': {
-    color: '#8C939D',
-  },
-  '& .MuiOutlinedInput-input.MuiInputBase-input': {
-  },
-  '&.MuiFormControl-root': {
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '3px',
-  },
-  '&.MuiFormControl-root .Miu-focused': {
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '3px',
+  '& .MuiInputBase-root.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline ': {
+    border: 'none',
   },
 }))

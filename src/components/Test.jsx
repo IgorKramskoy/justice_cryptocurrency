@@ -1,6 +1,7 @@
 import { CustomTextField } from './Common/CustomTextField';
 import React from 'react';
 import { Alert, Box, Button, Chip } from '@mui/material';
+import { AutocompleteCurrencyInfo } from './Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 
 export const Test = () => {
   return (
@@ -27,6 +28,7 @@ export const Test = () => {
       <Alert color='success' variant='filledLarge' icon={false}>text</Alert>
       <Alert color='error' variant='filledMedium' icon={false}>text</Alert>
       <Alert color='error' variant='filledLarge' icon={false}>text</Alert>
+      <AutocompleteCurrencyInfo/>
     </Box>
   )
 }
