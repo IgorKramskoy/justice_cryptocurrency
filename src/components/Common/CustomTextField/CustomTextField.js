@@ -1,11 +1,10 @@
-import { TextFieldStyled} from './CustomTextField.styles'
-import { Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import React from 'react';
 
 export const CustomTextField = ({ label, value, onChange, name, error, type, errorMessage, touched }) => {
   return (
     <>
-      <TextFieldStyled
+      <TextField
         fullWidth
         label={label}
         value={value}
