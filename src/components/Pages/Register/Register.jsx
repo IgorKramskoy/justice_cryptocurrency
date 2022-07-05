@@ -21,7 +21,7 @@ export const Register = () => {
             <Typography variant="caption" sx={{ color: 'white' }}>
               Уже есть учетная запись?
             </Typography>
-            <LinkStyled to={Navigate.Login}>
+            <LinkStyled to={Navigate.LOGIN}>
               Авторизоваться
             </LinkStyled>
          </BoxReg>

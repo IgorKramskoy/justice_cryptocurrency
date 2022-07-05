@@ -2,9 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { StylesBoxReg } from './RefisterFormContainer.styled';
-import { CustomButton } from '../../../Common/CustomButton';
 import { useFormik } from 'formik';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { RegisterFormValidation } from './RegisterFormValidation';
 import { useNavigate } from 'react-router-dom';
 import * as Navigate from '../../../../routesNavigate';
@@ -107,13 +106,12 @@ export const RegisterFormContainer = () => {
       {error ? <Typography variant="caption" sx={{
         color: '#D24242',
       }}>{error}</Typography> : null}
-      <CustomButton
+      <Button
         type="submit"
         size="large"
         variant="contained"
-        text="Зарегистрироваться"
         color="info"
-      />
+      >Зарегистрироваться</Button>
     </StylesBoxReg>
   );
 }

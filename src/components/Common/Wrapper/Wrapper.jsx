@@ -118,6 +118,7 @@ export const Wrapper = ({ children }) => {
           flexGrow: 1,
           p: 3 ,
           width:'1440px',
+          background: '#111823',
         }}
       >
         <Toolbar />

@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
-import { CustomButton } from '../../../Common/CustomButton';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
@@ -73,13 +72,14 @@ export const LoginFormContainer = () => {
       {error ? <Typography variant="caption" sx={{
         color: '#D24242',
       }}>{error}</Typography> : null}
-      <CustomButton
+      <Button
         type="submit"
         size="large"
         variant="contained"
-        text="Войти"
         color="info"
-      />
+      >
+        Войти
+      </Button>
     </StylesBoxReg>
   );
 }
