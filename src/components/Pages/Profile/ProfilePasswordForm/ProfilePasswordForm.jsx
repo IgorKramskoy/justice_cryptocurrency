@@ -1,12 +1,18 @@
-import React from 'react';
-
-import {  Container } from './ProfilePasswordFormContainer.styled';
-import { CustomTextField } from '../../../Common/CustomTextField';
+import React, { useContext, useState} from 'react';
 import { useFormik } from 'formik';
-import { ProfilePasswordFormValidation } from './ProfilePasswordFormValidation';
+
+import { Container } from './ProfilePasswordFormContainer.styled';
+import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
 
+import { Context } from '../../../../App';
+import { ProfilePasswordFormValidation } from './ProfilePasswordFormValidation';
+
 export const ProfilePasswordForm = () => {
+  const { currentUser, setCurrentUser } = useContext(Context);
+  const { currentUsers, setCurrentUsers } = useContext(Context);
+  const [error, setError] = useState('');
+
   const formik = useFormik({
     initialValues: {
       oldPassword: '',
@@ -15,12 +21,15 @@ export const ProfilePasswordForm = () => {
     },
     validationSchema: ProfilePasswordFormValidation,
     onSubmit: ({ repeatNewPassword, newPassword, oldPassword, }) => {
-      const data = {
-        repeatNewPassword,
-        newPassword,
-        oldPassword,
-      }
-      console.log(data)
+      if(currentUser.password === oldPassword && newPassword === repeatNewPassword) {
+        const userFind = currentUsers.find( (user) => user.password === oldPassword)
+        userFind.password = newPassword
+        localStorage.setItem('userAuth', JSON.stringify(userFind))
+        setCurrentUser(userFind);
+        localStorage.setItem('users', JSON.stringify(currentUsers))
+        setCurrentUsers(currentUsers)
+        setError('')
+      } else { setError('Пароли не совпадают!')}
     },
   });
 
@@ -79,6 +88,10 @@ export const ProfilePasswordForm = () => {
           >
             Изменить пароль
           </Button>
+          {error ? <Typography variant="caption" sx={{
+            color: '#D24242',
+            margin: '10px',
+          }}>{error}</Typography> : null}
         </Box>
       </Container>
     </>

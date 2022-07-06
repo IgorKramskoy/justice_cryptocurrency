@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
@@ -7,14 +8,12 @@ import { Box, Button, Typography } from '@mui/material';
 import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
 import { Context } from '../../../../App';
-import { useNavigate } from 'react-router-dom';
 import * as Navigate from '../../../../routesNavigate';
 
 export const LoginFormContainer = () => {
   const [error, setError] = useState('');
   const { currentUser, setCurrentUser } = useContext(Context);
   const navigate = useNavigate();
-
   const users = JSON.parse(localStorage.getItem('users'));
   const formik = useFormik({
     initialValues: {

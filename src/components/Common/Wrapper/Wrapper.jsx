@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
   Box,
@@ -20,6 +20,11 @@ const drawerWidth = 240;
 
 export const Wrapper = ({ children }) => {
   const { currentUser } = useContext(Context);
+  const [photo, setPhoto] = useState(currentUser.avatar);
+
+  useEffect(() => {
+    setPhoto(currentUser.avatar)
+  }, [currentUser])
 
   if (!currentUser) {
     return children
@@ -42,7 +47,7 @@ export const Wrapper = ({ children }) => {
           sx={{display: 'flex', justifyContent:'space-between' }}
         >
           <img src={logo} alt="logo"/>
-          <Avatar src="/broken-image.jpg" />
+          <Avatar src={photo}/>
         </Toolbar>
       </AppBar>
       <Drawer

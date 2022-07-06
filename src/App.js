@@ -13,6 +13,7 @@ export const Context = createContext({});
 
 function App() {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('userAuth')));
+  const [currentUsers, setCurrentUsers] = useState(JSON.parse(localStorage.getItem('users')));
   const [currencies, setCurrencies] = useState([])
 
   const contextValues = {
@@ -20,6 +21,8 @@ function App() {
     setCurrentUser,
     currencies,
     setCurrencies,
+    currentUsers,
+    setCurrentUsers,
   }
 
   useEffect( () => {

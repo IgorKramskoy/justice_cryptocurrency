@@ -8,7 +8,7 @@ export const BoxBlock = styled(Box) (() => ({
 export const BoxLeft = styled(Box) (() => ({
  width: '80%',
  height: 'calc(100vh - 64px)',
- borderRight: '1px solid red',
+ borderRight: '1px solid rgba(255, 255, 255, 0.1)',
  display: 'flex',
  flexDirection: 'column',
  alignItems: 'center',
@@ -16,7 +16,10 @@ export const BoxLeft = styled(Box) (() => ({
 }))
 export const BoxRight = styled(Box) (() => ({
  width: '20%',
- background: 'white',
+ color: 'white',
+ display: 'flex',
+ alignItems: 'start',
  height: 'calc(100vh - 64px)',
- padding: '24px 0',
+ paddingTop: '24px',
+ paddingLeft: '24px',
 }))

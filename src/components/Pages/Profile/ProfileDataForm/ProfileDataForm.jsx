@@ -1,30 +1,38 @@
-import React from 'react';
-
-import {  Container } from './ProfileDataFormContainer.styled';
-import { CustomTextField } from '../../../Common/CustomTextField';
+import React, {useContext} from 'react';
 import { useFormik } from 'formik';
-import { ProfileDataFormValidation } from './ProfileDataFormValidation';
+
+import { Container } from './ProfileDataFormContainer.styled';
+import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
 
+import { ProfileDataFormValidation } from './ProfileDataFormValidation';
+import { Context } from '../../../../App';
+
 export const ProfileDataForm = () => {
+  const { currentUser, setCurrentUser } = useContext(Context);
+  const { currentUsers, setCurrentUsers } = useContext(Context);
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      city: '',
-      birthday: '',
-      phone: '',
+      name: currentUser?.name ?? '',
+      email: currentUser?.email ?? '',
+      city: currentUser?.city ?? '',
+      birthday: currentUser?.birthday ?? '',
+      phone: currentUser?.phone ?? '',
     },
     validationSchema: ProfileDataFormValidation,
-    onSubmit: ({ name, email, city, birthday, phone }) => {
-      const data = {
-        name,
-        email,
-        birthday,
-        city,
-        phone,
-      }
-      console.log(data)
+    onSubmit: ({ name, email, city, birthday, phone}) => {
+      const userFind = currentUsers.find( (user) => user.email === email)
+      userFind.name = name
+      userFind.email = email
+      userFind.birthday = birthday
+      userFind.city = city
+      userFind.phone = phone
+      userFind.avatar = userFind.avatar
+      localStorage.setItem('userAuth', JSON.stringify(userFind))
+      setCurrentUser(userFind);
+      localStorage.setItem('users', JSON.stringify(currentUsers))
+      setCurrentUsers(currentUsers)
     },
   });
 

@@ -4,6 +4,7 @@ import { BoxBlock, BoxLeft, BoxRight } from './Box.styled';
 import { ProfileDataForm } from './ProfileDataForm';
 import { Divider } from '@mui/material';
 import { ProfilePasswordForm } from './ProfilePasswordForm';
+import { AvatarUser } from './Avataruser';
 
 export const Profile = () => {
   return (
@@ -14,7 +15,9 @@ export const Profile = () => {
         />
         <ProfilePasswordForm/>
       </BoxLeft>
-      <BoxRight></BoxRight>
+      <BoxRight>
+        <AvatarUser/>
+      </BoxRight>
     </BoxBlock>
   );
 }
