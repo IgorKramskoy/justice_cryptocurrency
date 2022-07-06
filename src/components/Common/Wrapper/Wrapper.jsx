@@ -116,12 +116,11 @@ export const Wrapper = ({ children }) => {
       </Drawer>
       <Box component="main" sx={{
           flexGrow: 1,
-          p: 3 ,
+          padding: '88px 24px 24px',
           width:'1440px',
           background: '#111823',
         }}
       >
-        <Toolbar />
         {children}
       </Box>
     </Box>
