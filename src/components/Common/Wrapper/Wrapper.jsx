@@ -116,7 +116,7 @@ export const Wrapper = ({ children }) => {
       </Drawer>
       <Box component="main" sx={{
           flexGrow: 1,
-          padding: '88px 24px 24px',
+          padding: '64px 24px 0',
           width:'1440px',
           background: '#111823',
         }}

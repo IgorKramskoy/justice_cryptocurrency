@@ -89,7 +89,7 @@ export const ProfileDataForm = () => {
               type="submit"
               size="large"
               variant="contained"
-              color="info"
+              color="primary"
             >
               Сохранить изменения
             </Button>
