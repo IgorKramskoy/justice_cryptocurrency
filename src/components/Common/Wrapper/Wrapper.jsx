@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 
 import {
   Box,
@@ -14,22 +14,20 @@ import { CustomNavLink} from '../CustomNavLink';
 import { links } from '../../../links';
 import logo from '../../../assets/images/logo.png';
 import logout from '../../../assets/images/logout.svg';
-import { Context } from '../../../App';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
 export const Wrapper = ({ children }) => {
-  const { currentUser } = useContext(Context);
-  const [photo, setPhoto] = useState(currentUser.avatar);
-
-  useEffect(() => {
-    setPhoto(currentUser.avatar)
-  }, [currentUser])
+  const currentUser = useSelector((state) => {return state.users.currentUser})
+  // useEffect(() => {
+  //   if (currentUser === null) return
+  //   setPhoto(currentUser.avatar)
+  // }, [currentUser])
 
   if (!currentUser) {
     return children
   }
-
   return (
     <Box sx={{ display: 'flex'}}>
       <CssBaseline />
@@ -47,7 +45,7 @@ export const Wrapper = ({ children }) => {
           sx={{display: 'flex', justifyContent:'space-between' }}
         >
           <img src={logo} alt="logo"/>
-          <Avatar src={photo}/>
+          <Avatar src={currentUser.avatar}/>
         </Toolbar>
       </AppBar>
       <Drawer

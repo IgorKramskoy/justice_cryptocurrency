@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 
 import { Container } from './ProfileDataFormContainer.styled';
@@ -6,12 +6,13 @@ import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
-import { Context } from '../../../../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const ProfileDataForm = () => {
-  const { currentUser, setCurrentUser } = useContext(Context);
-  const { currentUsers, setCurrentUsers } = useContext(Context);
-
+  const dispatch = useDispatch()
+  const usersRedux = useSelector((state) => state.users.allUsers)
+  const currentUser = useSelector((state) => state.users.currentUser)
   const formik = useFormik({
     initialValues: {
       name: currentUser?.name ?? '',
@@ -22,7 +23,7 @@ export const ProfileDataForm = () => {
     },
     validationSchema: ProfileDataFormValidation,
     onSubmit: ({ name, email, city, birthday, phone}) => {
-      const userFind = currentUsers.find( (user) => user.email === email)
+      const userFind = usersRedux.find( (user) => user.email === email)
       userFind.name = name
       userFind.email = email
       userFind.birthday = birthday
@@ -30,9 +31,9 @@ export const ProfileDataForm = () => {
       userFind.phone = phone
       userFind.avatar = userFind.avatar
       localStorage.setItem('userAuth', JSON.stringify(userFind))
-      setCurrentUser(userFind);
-      localStorage.setItem('users', JSON.stringify(currentUsers))
-      setCurrentUsers(currentUsers)
+      localStorage.setItem('users', JSON.stringify(usersRedux))
+      dispatch(updateUser(userFind))
+      dispatch(updateUsers(usersRedux))
     },
   });
 

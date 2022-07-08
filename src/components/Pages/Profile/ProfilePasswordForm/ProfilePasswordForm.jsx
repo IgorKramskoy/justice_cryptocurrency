@@ -1,16 +1,18 @@
-import React, { useContext, useState} from 'react';
+import React, { useState} from 'react';
 import { useFormik } from 'formik';
 
 import { Container } from './ProfilePasswordFormContainer.styled';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
 
-import { Context } from '../../../../App';
 import { ProfilePasswordFormValidation } from './ProfilePasswordFormValidation';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const ProfilePasswordForm = () => {
-  const { currentUser, setCurrentUser } = useContext(Context);
-  const { currentUsers, setCurrentUsers } = useContext(Context);
+  const dispatch = useDispatch()
+  const usersRedux = useSelector((state) => state.users.allUsers)
+  const currentUser = useSelector((state) => state.users.currentUser)
   const [error, setError] = useState('');
 
   const formik = useFormik({
@@ -22,17 +24,16 @@ export const ProfilePasswordForm = () => {
     validationSchema: ProfilePasswordFormValidation,
     onSubmit: ({ repeatNewPassword, newPassword, oldPassword, }) => {
       if(currentUser.password === oldPassword && newPassword === repeatNewPassword) {
-        const userFind = currentUsers.find( (user) => user.password === oldPassword)
+        const userFind = usersRedux.find((user) => user.password === oldPassword)
         userFind.password = newPassword
         localStorage.setItem('userAuth', JSON.stringify(userFind))
-        setCurrentUser(userFind);
-        localStorage.setItem('users', JSON.stringify(currentUsers))
-        setCurrentUsers(currentUsers)
+        localStorage.setItem('users', JSON.stringify(usersRedux))
+        dispatch(updateUser(userFind))
+        dispatch(updateUsers(usersRedux))
         setError('')
       } else { setError('Пароли не совпадают!')}
     },
   });
-
   const inputs = [
     {
       label: 'Введите старый пароль',
@@ -50,7 +51,6 @@ export const ProfilePasswordForm = () => {
       type: 'password',
     },
   ]
-
   return (
     <>
       <Typography variant="caption" sx={{color: 'white',alignSelf: 'start', padding: '0px 10px',}}>
