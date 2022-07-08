@@ -1,21 +1,21 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
 
 import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
-import { Context } from '../../../../App';
-import { useNavigate } from 'react-router-dom';
 import * as Navigate from '../../../../routesNavigate';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUserAuth } from '../../../../redux/action';
 
 export const LoginFormContainer = () => {
+  const dispatch = useDispatch()
+  const usersRedux = useSelector((state) => state.users.allUsers)
   const [error, setError] = useState('');
-  const { currentUser, setCurrentUser } = useContext(Context);
   const navigate = useNavigate();
-
-  const users = JSON.parse(localStorage.getItem('users'));
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -23,25 +23,24 @@ export const LoginFormContainer = () => {
     },
     validationSchema: LoginFormValidation,
     onSubmit: ({email, password }) => {
-      const userAuth = users.find((user) => user.email === email)
+      const userAuth = usersRedux.find((user) => user.email === email)
       if(!userAuth) {
         setError('Пользователь с таким email не существует или неправильный email!')
       } else if (userAuth.password !== password) {
         setError('Неверный пароль!')
       } else {
         localStorage.setItem('userAuth', JSON.stringify(userAuth))
-        setCurrentUser(userAuth);
-        setError('')
+        dispatch(createUserAuth(userAuth))
         navigate(Navigate.MARKET)
       }
     },
   });
 
-  useEffect(() => {
-    if(currentUser) {
-      navigate(Navigate.MARKET)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(currentUser) {
+  //     navigate(Navigate.MARKET)
+  //   }
+  // }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>

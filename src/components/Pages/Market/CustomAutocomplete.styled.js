@@ -1,6 +1,5 @@
 import { styled, Autocomplete } from '@mui/material';
 
-
 export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '&': {
     width: 300,
@@ -13,9 +12,6 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '& .MuiSvgIcon-root': {
     display: 'none',
   },
-  // 'Mui-Autocomplete-popper .MuiPaper-root': {
-  //   background: 'red',
-  // },
   '& .Mui-disabled': {
     background: '#1C2027',
   },
@@ -54,5 +50,4 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
     border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
-
 }))

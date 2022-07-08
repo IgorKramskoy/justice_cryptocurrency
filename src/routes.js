@@ -5,13 +5,13 @@ import { Wallet } from './components/Pages/Wallet';
 import { Transaction } from './components/Pages/Transaction';
 import { Login } from './components/Pages/Login';
 import { Register } from './components/Pages/Register';
-import { Main } from './components/Pages/Main';
 import { Test } from './components/Test';
+import { StartPage } from './components/Pages/StartPage';
 
 export const routes = [
   {
     path: "/",
-    element: <Main />,
+    element: <StartPage />,
   },
   {
     path: "/test",

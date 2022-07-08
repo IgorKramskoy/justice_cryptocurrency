@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   TableRow,
@@ -12,18 +12,16 @@ import {
   Pagination,
   Button
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { BoxStyled, TableCellHeadStyled, TableCellStyled } from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
 
-import { Context } from '../../../App';
-
 export const Market = () => {
   const [filteredRows, setFilteredRows] = useState([])
   const [page, setPage] = useState(0);
-  const { currencies } = useContext(Context);
+  const currencies  = useSelector((state) => state.money.money );
   const rowsPerPage = 10;
-
   const handleSearch = (e) => {
     setFilteredRows(currencies.filter((item) => (
       item.label.toLowerCase().includes(e.target.value.toLowerCase())
@@ -33,13 +31,11 @@ export const Market = () => {
     setPage(newPage);
   };
 
-
   useEffect( () => {
     if (filteredRows.length === 0) {
       setFilteredRows(currencies)
     }
   }, [currencies])
-  console.log(filteredRows)
 
   return (
     <>
@@ -72,7 +68,7 @@ export const Market = () => {
             { filteredRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow key={row.label}>
+                <TableRow key={row.RUB?.FROMSYMBOL}>
                   <TableCellStyled align="right">{row?.RUB?.FROMSYMBOL}</TableCellStyled>
                   <TableCellStyled align="right">{row?.RUB?.PRICE}</TableCellStyled>
                   <TableCellStyled align="right">{row?.RUB?.CHANGEPCT24HOUR}%</TableCellStyled>
@@ -90,7 +86,7 @@ export const Market = () => {
           shape="rounded"
           rowsPerPage={rowsPerPage}
           page={page + 1}
-          onPageChange={handleChangePage}
+          onChange={handleChangePage}
         />
     </TableContainer>
     </>

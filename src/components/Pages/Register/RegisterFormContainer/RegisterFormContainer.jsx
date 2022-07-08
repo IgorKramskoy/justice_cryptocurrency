@@ -1,19 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Box, Button, Typography } from '@mui/material';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { StylesBoxReg } from './RefisterFormContainer.styled';
-import { useFormik } from 'formik';
-import { Box, Button, Typography } from '@mui/material';
 import { RegisterFormValidation } from './RegisterFormValidation';
-import { useNavigate } from 'react-router-dom';
 import * as Navigate from '../../../../routesNavigate';
-import { Context } from '../../../../App';
+import { createUser } from '../../../../redux/action';
+
 
 export const RegisterFormContainer = () => {
+  const dispatch = useDispatch()
+  const usersRedux = useSelector((state) => state.users.allUsers)
+  const currentUser = useSelector((state) => state.users.currentUser)
   const [error, setError] = useState('');
-  const { currentUser, setCurrentUser } = useContext(Context);
   const navigate = useNavigate();
-  const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) ?? []);
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -33,23 +36,23 @@ export const RegisterFormContainer = () => {
         phone: '',
         avatar: '',
       }
-      const isUserExist = users.some((user) => user.email === email)
-      if(isUserExist) {
+      const isUserExistRedux = usersRedux.some((user) => user.email === email)
+      if(isUserExistRedux) {
         setError('Пользователь с таким email существует')
       } else {
-        setUsers([...users, data])
-        localStorage.setItem('users', JSON.stringify([...users, data]))
+        dispatch(createUser(data))
+        localStorage.setItem('users', JSON.stringify([...usersRedux, data]))
         setError('')
         navigate(Navigate.LOGIN)
       }
     },
   });
-
-  useEffect(() => {
-    if(currentUser) {
-      navigate('/')
-    }
-  }, [])
+  //
+  // useEffect(() => {
+  //   if(currentUser) {
+  //     navigate(Navigate.MARKET)
+  //   }
+  // }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
