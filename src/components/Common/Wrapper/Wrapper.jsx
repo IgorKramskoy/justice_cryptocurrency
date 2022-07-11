@@ -10,7 +10,8 @@ import {
   Avatar,
   Divider,
 } from '@mui/material';
-import { AppBarStyles,
+import {
+  AppBarStyles,
   BoxChildrenStyles,
   BoxConteinerStyles,
   BoxStyles,
@@ -33,15 +34,16 @@ export const Wrapper = ({ children }) => {
     dispatch(createUserAuth(null))
   }
 
-  if (!currentUser || location.pathname === Navigate.MAIN) {
-    return children
-  }
-
   useEffect(() => {
     if(!currentUser) {
       navigate(Navigate.LOGIN)
     }
   }, []);
+
+  if (!currentUser || location.pathname === Navigate.MAIN) {
+    return children
+  }
+
   return (
     <Box sx={{ display: 'flex'}}>
       <CssBaseline />
