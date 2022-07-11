@@ -2,13 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, HederTitle } from './ProfileDataFormContainer.styled';
-import { CustomTextField } from '../../../Common/CustomTextField';
 import { Button} from '@mui/material';
 
+import { Container, HederTitle, BoxStyled } from './ProfileDataFormContainer.styled';
+import { CustomTextField } from '../../../Common/CustomTextField';
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
 import { updateUser, updateUsers } from '../../../../redux/action';
-import { BoxStyled } from './ProfileDataFormContainer.styled';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
@@ -66,10 +65,9 @@ export const ProfileDataForm = () => {
       type: 'text',
     },
   ]
-
   return (
     <>
-      <HederTitle variant="h4" sx={{}}>
+      <HederTitle variant="h4" >
          Мой профиль
       </HederTitle>
       <Container onSubmit={formik.handleSubmit}>
