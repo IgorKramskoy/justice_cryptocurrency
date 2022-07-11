@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -10,22 +12,32 @@ import {
   Divider,
 } from '@mui/material';
 import { CustomNavLink} from '../CustomNavLink';
-
 import { links } from '../../../links';
+import * as Navigate from '../../../routesNavigate';
+import { createUserAuth } from '../../../redux/action';
 import logo from '../../../assets/images/logo.png';
 import logout from '../../../assets/images/logout.svg';
-import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
 export const Wrapper = ({ children }) => {
-  const currentUser = useSelector((state) => {return state.users.currentUser})
-  // useEffect(() => {
-  //   if (currentUser === null) return
-  //   setPhoto(currentUser.avatar)
-  // }, [currentUser])
+  const currentUser = useSelector((state) => state.users.currentUser)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch()
 
-  if (!currentUser) {
+  const logOut = () => {
+    localStorage.removeItem('userAuth')
+    dispatch(createUserAuth(null))
+  }
+
+  useEffect(() => {
+    if(!currentUser) {
+      navigate(Navigate.LOGIN)
+    }
+  }, []);
+
+  if (!currentUser || location.pathname === Navigate.MAIN) {
     return children
   }
   return (
@@ -112,7 +124,7 @@ export const Wrapper = ({ children }) => {
           }}>
             <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
             />
-            <CustomNavLink path='logout' image={logout} text="Выход"/>
+            <CustomNavLink path={Navigate.LOGIN} image={logout} text="Выход" onClick={logOut} />
           </Box>
         </Box>
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,15 +8,18 @@ import { Box, Button, Typography } from '@mui/material';
 
 import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
-import * as Navigate from '../../../../routesNavigate';
-import { useDispatch, useSelector } from 'react-redux';
 import { createUserAuth } from '../../../../redux/action';
+import * as Navigate from '../../../../routesNavigate';
 
 export const LoginFormContainer = () => {
-  const dispatch = useDispatch()
-  const usersRedux = useSelector((state) => state.users.allUsers)
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentUser = useSelector((state) => state.users.currentUser)
+  const usersRedux = useSelector((state) => state.users.allUsers)
+
+  const [error, setError] = useState('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -36,11 +40,11 @@ export const LoginFormContainer = () => {
     },
   });
 
-  // useEffect(() => {
-  //   if(currentUser) {
-  //     navigate(Navigate.MARKET)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(currentUser) {
+      navigate(Navigate.MARKET)
+    }
+  }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
@@ -68,9 +72,7 @@ export const LoginFormContainer = () => {
           touched={formik.touched.password}
         />
       </Box>
-      {error ? <Typography variant="caption" sx={{
-        color: '#D24242',
-      }}>{error}</Typography> : null}
+      {error ? <Typography variant="caption" sx={{ color: '#D24242' }}>{error}</Typography> : null}
       <Button
         type="submit"
         size="large"

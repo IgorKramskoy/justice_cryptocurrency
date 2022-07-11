@@ -1,14 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Box, TextField } from '@mui/material';
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
-import { Context } from '../../../App';
-import { CustomTextField } from '../CustomTextField';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
 export const AutocompleteCurrencyInfo = () => {
   const [input, setInput] = useState({ value: '', currency: ''})
-  const { currencies } = useContext(Context);
   const top100Films = [
     { label: 'The Shawshank Redemption', year: 1994 },
     { label: 'The Godfather', year: 1972 },
@@ -17,12 +14,10 @@ export const AutocompleteCurrencyInfo = () => {
     { label: '12 Angry Men', year: 1957 },
     { label: "Schindler's List", year: 1993 }
     ]
-  console.log(input)
 
   const handleOnChangeValue = (event) => {
     setInput((prevState) => ({ ...prevState, value: event.target.value }));
   }
-
   const handleOnChangeCurrency = (event, value) => {
     setInput((prevState) => ({ ...prevState, currency: value }));
   }

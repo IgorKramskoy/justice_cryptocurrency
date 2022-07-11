@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   TableRow,
@@ -12,16 +13,19 @@ import {
   Pagination,
   Button
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+
 
 import { BoxStyled, TableCellHeadStyled, TableCellStyled } from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
 
 export const Market = () => {
-  const [filteredRows, setFilteredRows] = useState([])
-  const [page, setPage] = useState(0);
   const currencies  = useSelector((state) => state.money.money );
+
+  const [filteredRows, setFilteredRows] = useState([]);
+  const [page, setPage] = useState(0);
+
   const rowsPerPage = 10;
+
   const handleSearch = (e) => {
     setFilteredRows(currencies.filter((item) => (
       item.label.toLowerCase().includes(e.target.value.toLowerCase())
@@ -35,7 +39,7 @@ export const Market = () => {
     if (filteredRows.length === 0) {
       setFilteredRows(currencies)
     }
-  }, [currencies])
+  }, [currencies]);
 
   return (
     <>
@@ -90,7 +94,6 @@ export const Market = () => {
         />
     </TableContainer>
     </>
-
   );
 }
 
