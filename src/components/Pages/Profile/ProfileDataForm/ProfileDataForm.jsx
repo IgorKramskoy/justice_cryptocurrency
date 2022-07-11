@@ -1,18 +1,20 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Container } from './ProfileDataFormContainer.styled';
+import { Container, HederTitle } from './ProfileDataFormContainer.styled';
 import { CustomTextField } from '../../../Common/CustomTextField';
-import { Box, Button, Typography } from '@mui/material';
+import { Button} from '@mui/material';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateUser, updateUsers } from '../../../../redux/action';
+import { BoxStyled } from './ProfileDataFormContainer.styled';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
   const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
+
   const formik = useFormik({
     initialValues: {
       name: currentUser?.name ?? '',
@@ -67,9 +69,9 @@ export const ProfileDataForm = () => {
 
   return (
     <>
-      <Typography variant="h4" sx={{color: 'white',alignSelf: 'start', padding: '0px 10px',}}>
+      <HederTitle variant="h4" sx={{}}>
          Мой профиль
-      </Typography>
+      </HederTitle>
       <Container onSubmit={formik.handleSubmit}>
         {inputs.map(({ label, name, type }) => (
           <CustomTextField
@@ -88,12 +90,7 @@ export const ProfileDataForm = () => {
             }}
           />
         ))}
-          <Box sx={{
-            width: '50%',
-            display: 'flex',
-            justifyContent: 'start',
-            maxHeight: '56px',
-          }}>
+          <BoxStyled>
             <Button
               type="submit"
               size="large"
@@ -102,7 +99,7 @@ export const ProfileDataForm = () => {
             >
               Сохранить изменения
             </Button>
-          </Box>
+          </BoxStyled>
       </Container>
     </>
   );

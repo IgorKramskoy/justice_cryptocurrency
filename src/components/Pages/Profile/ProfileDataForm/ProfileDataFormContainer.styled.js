@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 
 export const Container = styled( 'form' ) (() => ({
   display: 'flex',
@@ -10,3 +10,16 @@ export const Container = styled( 'form' ) (() => ({
     width: '48%',
   }
 }))
+export const HederTitle = styled( Typography ) (() => ({
+  color: 'white',
+  alignSelf: 'start',
+  padding: '0px 10px',
+}))
+export const BoxStyled = styled( Box ) (() => ({
+  width: '50%',
+  display: 'flex',
+  justifyContent: 'start',
+  maxHeight: '56px',
+}))
+
+
