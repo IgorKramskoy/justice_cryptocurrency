@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography
+} from '@mui/material';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { StylesBoxReg } from './RefisterFormContainer.styled';
 import { RegisterFormValidation } from './RegisterFormValidation';
@@ -13,10 +17,14 @@ import { createUser } from '../../../../redux/action';
 
 export const RegisterFormContainer = () => {
   const dispatch = useDispatch()
+
   const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
+
   const [error, setError] = useState('');
+
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -47,12 +55,12 @@ export const RegisterFormContainer = () => {
       }
     },
   });
-  //
-  // useEffect(() => {
-  //   if(currentUser) {
-  //     navigate(Navigate.MARKET)
-  //   }
-  // }, [])
+
+  useEffect(() => {
+    if(currentUser) {
+      navigate(Navigate.MARKET)
+    }
+  }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
@@ -106,9 +114,7 @@ export const RegisterFormContainer = () => {
           />
         </Box>
       </StylesBoxReg>
-      {error ? <Typography variant="caption" sx={{
-        color: '#D24242',
-      }}>{error}</Typography> : null}
+      {error ? <Typography variant="caption" sx={{color: '#D24242'}}>{error}</Typography> : null}
       <Button
         type="submit"
         size="large"

@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-
-import { Box, Button, Typography } from '@mui/material';
-
-import AddIcon from '@mui/icons-material/Add';
-import { AvatarStyled } from './Avatar.styled';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+
+import {
+  AvatarStyled,
+  BoxConteinerStyled,
+  BoxStyled,
+  ButtonStyled,
+  ConteinerStyled
+} from './Avatar.styled';
 import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const AvatarUser = () => {
-  const dispatch = useDispatch()
-  const usersRedux = useSelector((state) => state.users.allUsers)
-  const currentUser = useSelector((state) => state.users.currentUser)
+  const dispatch = useDispatch();
+  const usersRedux = useSelector((state) => state.users.allUsers);
+  const currentUser = useSelector((state) => state.users.currentUser);
+
   const [photo, setPhoto] = useState(currentUser.avatar);
   const convertBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -40,49 +47,14 @@ export const AvatarUser = () => {
     dispatch(updateUsers(usersRedux))
   }
   return (
-    <Box sx={{
-      background: '#191F29',
-      width: '100%',
-      height: '208px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '20px',
-    }}>
-      <Box sx={{
-        position: 'relative',
-        display: 'flex',
-        gap: '20px',
-      }}>
-        <Box sx={{
-          width: '84px',
-          height: '84px',
-          borderLeft: '2px solid #7164FF',
-          borderRight: '2px solid #7164FF',
-          borderBottom: '2px solid #7164FF',
-          borderTop: '2px solid #191F29',
-          transform:' rotate(45deg)',
-          padding: '20px',
-          borderRadius: '50%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+    <BoxConteinerStyled >
+      <BoxStyled >
+        <ConteinerStyled>
           <AvatarStyled src={photo}/>
-        </Box>
-        <Button
+        </ConteinerStyled>
+        <ButtonStyled
           variant="contained"
           component="label"
-          sx={{
-            borderRadius: '50px',
-            padding: '0px',
-            minWidth: '15px',
-            position: 'absolute',
-            top: '5px',
-            left: '60px',
-            zIndex: '100'
-          }}
         >
           <AddIcon/>
           <input
@@ -90,11 +62,11 @@ export const AvatarUser = () => {
             onChange={handleImageChange}
             hidden
           />
-        </Button>
-      </Box>
+        </ButtonStyled>
+      </BoxStyled>
       <Typography variant="caption" sx={{ color: 'white' }}>
        Name User
       </Typography>
-    </Box>
+    </BoxConteinerStyled>
   );
 }
