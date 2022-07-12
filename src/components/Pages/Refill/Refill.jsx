@@ -28,7 +28,6 @@ export const Refill = () => {
     navigate(Navigate.WALLET)
   }
 
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -39,6 +38,7 @@ export const Refill = () => {
 
   const handleClose = () => {
     setOpen(false);
+    navigate(Navigate.WALLET);
   };
   return (
     <ContentСontainer >
@@ -81,9 +81,6 @@ export const Refill = () => {
               <Box sx={{ textAlign:'start'}}>
                 <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
                 <FormCard handleOpen={handleOpen} />
-                <Button>
-                  Далее
-                </Button>
               </Box> ) : null}
             { open ? (
               <Box>
