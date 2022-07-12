@@ -8,7 +8,7 @@ import {
   CssBaseline,
   Toolbar,
   Avatar,
-  Divider,
+  Divider, Typography,
 } from '@mui/material';
 import {
   AppBarStyles,
@@ -27,7 +27,7 @@ export const Wrapper = ({ children }) => {
   const currentUser = useSelector((state) => state.users.currentUser)
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const logOut = () => {
     localStorage.removeItem('userAuth')
@@ -53,7 +53,9 @@ export const Wrapper = ({ children }) => {
           <Avatar src={currentUser.avatar}/>
         </Toolbar>
       </AppBarStyles>
-      <DrawerStyles variant="permanent">
+
+
+      {location.pathname !== Navigate.REFILL ? <DrawerStyles variant="permanent">
         <BoxConteinerStyles>
           <BoxStyles>
             {links.map(({ path, text, image }) => (
@@ -66,7 +68,7 @@ export const Wrapper = ({ children }) => {
           </BoxStyles>
         </BoxConteinerStyles>
 
-      </DrawerStyles>
+      </DrawerStyles> : null}
       <BoxChildrenStyles component="main">
         {children}
       </BoxChildrenStyles>

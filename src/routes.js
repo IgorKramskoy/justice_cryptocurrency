@@ -7,6 +7,7 @@ import { Login } from './components/Pages/Login';
 import { Register } from './components/Pages/Register';
 import { Test } from './components/Test';
 import { StartPage } from './components/Pages/StartPage';
+import { Refill } from './components/Pages/Refill';
 
 export const routes = [
   {
@@ -44,5 +45,9 @@ export const routes = [
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/refill",
+    element: <Refill />,
   },
 ]

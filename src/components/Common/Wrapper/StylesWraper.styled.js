@@ -52,4 +52,5 @@ export const BoxChildrenStyles  = styled(Box) (() => ({
   padding: '64px 24px 0',
   width:'1440px',
   background: '#111823',
+  minHeight: '100vh',
 }))
