@@ -15,7 +15,7 @@ import {
 } from './Refill.styles';
 import * as Navigate from '../../../routesNavigate';
 import { useNavigate } from 'react-router-dom';
-import { FormCard } from './CardForm';
+import { CardForm} from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
 
 export const Refill = () => {
@@ -80,7 +80,7 @@ export const Refill = () => {
             { activeStep === 1 ? (
               <Box sx={{ textAlign:'start'}}>
                 <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
-                <FormCard handleOpen={handleOpen} />
+                <CardForm handleOpen={handleOpen} />
               </Box> ) : null}
             { open ? (
               <Box>
