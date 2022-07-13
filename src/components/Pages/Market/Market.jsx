@@ -23,6 +23,7 @@ export const Market = () => {
 
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const onChange = (event, newValue) => {
     console.log(event, newValue);
@@ -36,8 +37,6 @@ export const Market = () => {
     }
   }
 
-  const rowsPerPage = 10;
-
   const handleSearch = (e) => {
     if(!e.target.value){
       setFilteredRows(currencies)
@@ -49,7 +48,12 @@ export const Market = () => {
   }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(newPage - 1);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   useEffect( () => {
@@ -89,7 +93,7 @@ export const Market = () => {
             label="Поиск валюты"
             inputProps={{
               ...params.inputProps,
-              autoComplete: 'new-password', // disable autocomplete and autofill
+              autoComplete: 'new-password',
             }}
           />}
         />
@@ -121,7 +125,6 @@ export const Market = () => {
                       <Box>{row?.currency}</Box>
                       <Box>{row?.name}</Box>
                     </Box>
-                    {/*renderCell(row)*/}
                   </TableCellStyled>
                   <TableCellStyled align="left">{row.PRICE}</TableCellStyled>
                   <TableCellStyled align="left">{row.CHANGEPCT24HOUR}%</TableCellStyled>
@@ -135,11 +138,12 @@ export const Market = () => {
           </TableBody>
         </Table>
         <Pagination
-          count={Math.round(filteredRows.length / 10)}
+          count={Math.ceil(filteredRows.length / rowsPerPage)}
           shape="rounded"
-          // rowsPerPage={rowsPerPage}
+          rowsperpage={rowsPerPage}
           page={page + 1}
           onChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
     </TableContainer>
     </>

@@ -43,4 +43,69 @@ export const CryptoUrrency = [
     currency: 'ETC',
     name: 'Ethereum Classic'
   },
+  {
+    img: trx,
+    currency: 'DAI',
+    name: 'Dai'
+  },
+  {
+    img: etc,
+    currency: 'DOGE',
+    name: 'Dogecoin'
+  },
+  {
+    img: etc,
+    currency: 'DOT',
+    name: 'Polcadot'
+  },
+  {
+    img: etc,
+    currency: 'TRX',
+    name: 'TRON'
+  },
+  {
+    img: etc,
+    currency: 'SHIB',
+    name: 'Shiba Inu'
+  },
+  {
+    img: etc,
+    currency: 'LEO',
+    name: 'UNUS SED LEO'
+  },
+  {
+    img: etc,
+    currency: 'AVAX',
+    name: 'Avalanche'
+  },
+  {
+    img: etc,
+    currency: 'WBTC',
+    name: 'Wrapped Bitcin'
+  },
+  {
+    img: etc,
+    currency: 'UNI',
+    name: 'Uniswap'
+  },
+  {
+    img: etc,
+    currency: 'FTT',
+    name: 'FTX Token'
+  },
+  {
+    img: etc,
+    currency: 'CRO',
+    name: 'Cronos'
+  },
+  {
+    img: etc,
+    currency: 'LINK',
+    name: 'Chainlink'
+  },
+  {
+    img: etc,
+    currency: 'XLM',
+    name: 'Stelar'
+  },
 ]
