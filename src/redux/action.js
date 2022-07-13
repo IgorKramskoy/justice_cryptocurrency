@@ -1,6 +1,12 @@
 import axios from 'axios';
 
-import { CREATE_USER, CREATE_USER_AUTH, FETCH_MONEY, UPDATE_USER } from './types';
+import {
+  CREATE_USER,
+  CREATE_USER_AUTH,
+  FETCH_MONEY,
+  UPDATE_USER
+} from './types';
+import { CryptoUrrency } from '../cryptoСurrency';
 
 export function createUser(user) {
   return {
@@ -33,7 +39,11 @@ export function fetchMoney() {
         Apikey: 'de42efd4a118fc97380190a2b2c42fa9910d4ee5661a95df48c78fa94a6551ff',
       }
     })
-    dispatch({type: FETCH_MONEY, payload: Object.values(response.data.DISPLAY)})
+    let arr = CryptoUrrency.map((item) => ({
+      ...response.data.DISPLAY[item.currency].RUB,
+      ...item,
+    }))
+    dispatch({type: FETCH_MONEY, payload: arr})
   }
 }
 

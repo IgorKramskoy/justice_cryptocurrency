@@ -86,9 +86,7 @@ export const StartPage = () => {
           <ContentImageSmall>
             <img src={small} alt="logo" />
           </ContentImageSmall>
-          <GroupTop sx={{
-
-          }}>
+          <GroupTop>
             <img src={groupTop} alt="logo" />
           </GroupTop>
           <GroupBottom >

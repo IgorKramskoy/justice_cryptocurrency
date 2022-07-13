@@ -72,11 +72,11 @@ export const Wallet = () => {
           <TableHead sx={{ background: '#191F29', padding: '0px'}}>
             <TableRow>
               <TableCellHeadStyled align="left">Название</TableCellHeadStyled>
-              <TableCellHeadStyled align="right">Цена</TableCellHeadStyled>
-              <TableCellHeadStyled align="right">Изм за 24ч</TableCellHeadStyled>
-              <TableCellHeadStyled align="right">Объем за 24ч</TableCellHeadStyled>
-              <TableCellHeadStyled align="right">Капитализация</TableCellHeadStyled>
-              <TableCellHeadStyled align="right"></TableCellHeadStyled>
+              <TableCellHeadStyled align="left">Всего</TableCellHeadStyled>
+              <TableCellHeadStyled align="left">В ордере</TableCellHeadStyled>
+              <TableCellHeadStyled align="left">Доступно</TableCellHeadStyled>
+              <TableCellHeadStyled align="left">В ордере</TableCellHeadStyled>
+              <TableCellHeadStyled align="left"></TableCellHeadStyled>
             </TableRow>
           </TableHead>
           <TableBody sx={{ background: '#111823',}}>
@@ -84,22 +84,23 @@ export const Wallet = () => {
               .map((row) => (
                 <TableRow key={row.name} >
                   <TableCellStyled align="left" >
-                    <img src={row?.img} alt='logo'/>
-                    {row?.name}
-                    {row?.title}
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                      <Box><img src={row?.img} alt='icon'/></Box>
+                      <Box>{row?.name}</Box>
+                      <Box>{row?.title}</Box>
+                    </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="right">000</TableCellStyled>
-                  <TableCellStyled align="right">000</TableCellStyled>
-                  <TableCellStyled align="right">000</TableCellStyled>
-                  <TableCellStyled align="right">000</TableCellStyled>
-                  <TableCellStyled align="right">
+                  <TableCellStyled align="left">000</TableCellStyled>
+                  <TableCellStyled align="left">000</TableCellStyled>
+                  <TableCellStyled align="left">000</TableCellStyled>
+                  <TableCellStyled align="left">000</TableCellStyled>
+                  <TableCellStyled align="left">
                     <Button size="small" variant="contained" disabled={false} color="info" >Вывод</Button>
                   </TableCellStyled>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
-
       </BoxTableStyles>
     </>
   );

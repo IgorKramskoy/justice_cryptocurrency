@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Box,
   Button,
+  TextField,
   Typography
 } from '@mui/material';
 import { Steper } from './Steper';
@@ -17,6 +18,7 @@ import * as Navigate from '../../../routesNavigate';
 import { useNavigate } from 'react-router-dom';
 import { CardForm} from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
+import { AutocompleteStyled } from '../Market/CustomAutocomplete.styled';
 
 export const Refill = () => {
   const navigate = useNavigate();
@@ -40,6 +42,42 @@ export const Refill = () => {
     setOpen(false);
     navigate(Navigate.WALLET);
   };
+
+  const currencies =  [
+    {
+      label: 'RUB'
+    },
+    {
+      label: 'USD'
+    },
+  ]
+  const [filteredRows, setFilteredRows] = useState([]);
+
+  const onChange = (event, newValue) => {
+    if(!newValue){
+      setFilteredRows(currencies)
+    } else {
+      setFilteredRows(currencies.filter((item) => (
+        item.label.includes(newValue.label)
+      )))
+    }
+  }
+  const handleSearch = (e) => {
+    if(!e.target.value){
+      setFilteredRows(currencies)
+    } else {
+      setFilteredRows(currencies.filter((item) => (
+        item.label.toLowerCase().includes(e.target.value.toLowerCase())
+      )))
+    }
+  }
+
+  useEffect( () => {
+    if (filteredRows.length === 0) {
+      setFilteredRows(currencies)
+    }
+  }, [currencies]);
+
   return (
     <ContentСontainer >
       <Content>
@@ -65,7 +103,13 @@ export const Refill = () => {
               <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px',}}>
                 <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
                 <Box sx={{ color: '#FFFFFF'}}>
-                  inputs
+                  <AutocompleteStyled
+                    disablePortal
+                    options={filteredRows}
+                    onChange={onChange}
+                    getOptionLabel={(options) => options.label}
+                    renderInput={(params) => <TextField {...params} onChange={handleSearch} label="Поиск валюты" />}
+                  />
                 </Box>
                 <Button
                   type="submit"
