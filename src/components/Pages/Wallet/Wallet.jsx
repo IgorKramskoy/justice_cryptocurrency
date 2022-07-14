@@ -17,27 +17,38 @@ import { TableCellStyled } from './Wallet.styles';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import * as Navigate from '../../../routesNavigate';
+import { useSelector } from 'react-redux';
 
 
 export const Wallet = () => {
   const navigate = useNavigate();
+
+  const walletUserRedux = useSelector((state) => state.money.walletUser);
 
   const rows = [
     {
       img: rub,
       name: 'RUB',
       title: 'Russian Ruble',
+      cunt: walletUserRedux.currencies.rub,
+
     },
     {
       img: usd,
       name: 'USD',
       title: 'American dollar',
+      cunt: walletUserRedux.currencies.usd,
     },
   ]
 
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
   }
+
+  // useEffect(() => {
+  //
+  //
+  // });
 
   return (
     <>
@@ -90,7 +101,7 @@ export const Wallet = () => {
                       <Box>{row?.title}</Box>
                     </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="left">000</TableCellStyled>
+                  <TableCellStyled align="left">{row.cunt}</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>

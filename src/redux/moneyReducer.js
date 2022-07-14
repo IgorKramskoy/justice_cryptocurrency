@@ -2,7 +2,7 @@ import { FETCH_MONEY, WALLET_USER_REFILL } from './types';
 
 const initialState = {
   money: [],
-  walletUser: null,
+  walletUser: JSON.parse(localStorage.getItem('userWallet')) ?? null,
 }
 
 export const moneyReducer = (state = initialState, action) => {

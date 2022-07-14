@@ -94,6 +94,7 @@ export const Refill = () => {
           }
         }
         dispatch(walletRefill(newWallet));
+        localStorage.setItem('userWallet', JSON.stringify(newWallet))
       } else {
         const walletUser = {
           userId: currentUser.id,
@@ -103,6 +104,7 @@ export const Refill = () => {
           }
         }
         dispatch(walletRefill(walletUser));
+        localStorage.setItem('userWallet', JSON.stringify(walletUser))
       }
     } else {
       if(walletUserRedux) {
@@ -114,6 +116,7 @@ export const Refill = () => {
           }
         }
         dispatch(walletRefill(newWallet));
+        localStorage.setItem('userWallet', JSON.stringify(newWallet))
       } else {
         const walletUser = {
           userId: currentUser.id,
@@ -123,6 +126,7 @@ export const Refill = () => {
           }
         }
         dispatch(walletRefill(walletUser));
+        localStorage.setItem('userWallet', JSON.stringify(walletUser))
       }
     }
     const value = {}
