@@ -23,7 +23,6 @@ import { SimpleDialogDemo } from './ModalWindow';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
-import { RefillValidation } from './RefillValidation';
 
 export const Refill = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -43,15 +42,6 @@ export const Refill = () => {
       count: 0,
     },
     onSubmit: (values) => {
-      console.log(13232131)
-      const value = {
-        userId: currentUser.id,
-        currencies: {
-          rub: 0,
-          usd: 0,
-        }
-      }
-      console.log(values)
     },
   });
 
@@ -81,6 +71,10 @@ export const Refill = () => {
     formik.setFieldValue('currenciesValue', name);
   }, [])
 
+  const handleChangeCount = useCallback((name) => {
+    formik.setFieldValue('count', name);
+  }, [])
+
   const handleSubmit = () => {
     //zdes value
     console.log(formik.values)
@@ -93,7 +87,6 @@ export const Refill = () => {
     }
   }
 
-  console.log(formik.values);
   return (
     <ContentСontainer >
       <Content>
@@ -123,6 +116,7 @@ export const Refill = () => {
                      <AutocompleteCurrencyInfo
                        arr={money}
                        handleChangeCurrency={handleChangeCurrency}
+                       handleChangeCount={handleChangeCount}
                      />
                     </Box>
                     <Button

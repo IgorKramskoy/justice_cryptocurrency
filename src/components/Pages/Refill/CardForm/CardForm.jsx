@@ -16,9 +16,7 @@ export const CardForm = ({ handleOpen, handleSubmit }) => {
     },
     validationSchema: CardFormValidation,
     onSubmit: () => {
-      console.log(111)
       handleSubmit()
-      console.log(222)
       handleOpen();
     },
   });

@@ -8,7 +8,7 @@ import {
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
-export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency }) => {
+export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency, handleChangeCount }) => {
   const [icon, setIcon] = useState();
 
   const handleOnChangeValue = (event, newValue) => {
@@ -17,12 +17,9 @@ export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency }) => 
   }
 
   const handleSearch = (e) => {
-    console.log(e.target.value);
+    handleChangeCount(e.target.value);
   }
 
-  const handleValue = (event, newValue) => {
-    console.log(newValue.name);
-  }
   return (
     <Box sx={{
       width: '100%',
@@ -57,7 +54,6 @@ export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency }) => 
               },
             }}
             {...params}
-            onChange={handleValue}
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',
