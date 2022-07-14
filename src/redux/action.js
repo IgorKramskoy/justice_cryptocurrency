@@ -5,7 +5,8 @@ import {
   CREATE_USER_AUTH,
   FETCH_MONEY,
   UPDATE_USER,
-  WALLET_USER_REFILL
+  WALLET_USER_REFILL,
+  WALLETS_ALL
 } from './types';
 import { CryptoUrrency } from '../cryptoСurrency';
 
@@ -51,6 +52,12 @@ export function walletRefill(walletUser) {
   return {
     type: WALLET_USER_REFILL,
     payload: walletUser,
+  }
+}
+export function allWalletRefill(allWallets) {
+  return {
+    type: WALLETS_ALL,
+    payload: allWallets,
   }
 }
 

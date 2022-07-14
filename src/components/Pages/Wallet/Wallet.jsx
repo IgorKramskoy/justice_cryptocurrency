@@ -24,31 +24,44 @@ export const Wallet = () => {
   const navigate = useNavigate();
 
   const walletUserRedux = useSelector((state) => state.money.walletUser);
+  const allWalletRedux = useSelector((state) => state.money.allWallets);
 
-  const rows = [
+  let rows = [
     {
       img: rub,
       name: 'RUB',
       title: 'Russian Ruble',
-      cunt: walletUserRedux.currencies.rub,
+      cunt: 0 ,
 
     },
     {
       img: usd,
       name: 'USD',
       title: 'American dollar',
-      cunt: walletUserRedux.currencies.usd,
+      cunt: 0 ,
     },
   ]
+  if(walletUserRedux) {
+    rows = [
+      {
+        img: rub,
+        name: 'RUB',
+        title: 'Russian Ruble',
+        cunt: walletUserRedux.currencies.rub ,
+
+      },
+      {
+        img: usd,
+        name: 'USD',
+        title: 'American dollar',
+        cunt: walletUserRedux.currencies.usd ,
+      },
+    ]
+  }
 
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
   }
-
-  // useEffect(() => {
-  //
-  //
-  // });
 
   return (
     <>
@@ -93,7 +106,7 @@ export const Wallet = () => {
           <TableBody sx={{ background: '#111823',}}>
             { rows
               .map((row) => (
-                <TableRow key={row.name} >
+                <TableRow key={row?.name} >
                   <TableCellStyled align="left" >
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                       <Box><img src={row?.img} alt='icon'/></Box>

@@ -23,7 +23,7 @@ import { SimpleDialogDemo } from './ModalWindow';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
-import { walletRefill } from '../../../redux/action';
+import { allWalletRefill, walletRefill } from '../../../redux/action';
 
 export const Refill = () => {
   const dispatch = useDispatch()
@@ -34,6 +34,7 @@ export const Refill = () => {
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
+  const allWalletRedux = useSelector((state) => state.money.allWallets);
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +45,7 @@ export const Refill = () => {
       console.log('1')
     },
   });
-  console.log(walletUserRedux, 'wallet user redux')
+
   const money = [
     {
       img: rub,
@@ -82,19 +83,29 @@ export const Refill = () => {
   }, [])
 
   const handleSubmit = () => {
-    console.log(walletUserRedux)
+    const id = currentUser.id
     const key = formik.values.currenciesValue.toLowerCase();
+    const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
     if(key === 'rub') {
-      if(walletUserRedux) {
+      if(findWallet) {
         const newWallet = {
-          ...walletUserRedux,
+          ...findWallet,
           currencies: {
-            ...walletUserRedux.currencies,
-            rub: +formik.values.count + +walletUserRedux.currencies.rub
+            ...findWallet.currencies,
+            rub: +formik.values.count + +findWallet.currencies.rub
           }
         }
-        dispatch(walletRefill(newWallet));
+        dispatch(walletRefill(newWallet))
         localStorage.setItem('userWallet', JSON.stringify(newWallet))
+        const newAllWallets = allWalletRedux.map((wallet) => {
+          if (wallet.userId === newWallet.userId) {
+            return newWallet
+          }
+          return wallet
+        })
+        console.log(allWalletRedux)
+        dispatch(allWalletRefill(newAllWallets));
+        localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
           userId: currentUser.id,
@@ -105,18 +116,30 @@ export const Refill = () => {
         }
         dispatch(walletRefill(walletUser));
         localStorage.setItem('userWallet', JSON.stringify(walletUser))
+        allWalletRedux.push(walletUser)
+        dispatch(allWalletRefill(allWalletRedux));
+        localStorage.setItem('allWallets', JSON.stringify(allWalletRedux))
       }
     } else {
-      if(walletUserRedux) {
+      if(findWallet) {
         const newWallet = {
-          ...walletUserRedux,
+          ...findWallet,
           currencies: {
-            ...walletUserRedux.currencies,
-            usd: +formik.values.count + +walletUserRedux.currencies.usd
+            ...findWallet.currencies,
+            usd: +formik.values.count + +findWallet.currencies.usd
           }
         }
         dispatch(walletRefill(newWallet));
         localStorage.setItem('userWallet', JSON.stringify(newWallet))
+        const newAllWallets = allWalletRedux.map((wallet) => {
+          if (wallet.userId === newWallet.userId) {
+            return newWallet
+          }
+          return wallet
+        })
+        console.log(allWalletRedux)
+        dispatch(allWalletRefill(newAllWallets));
+        localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
           userId: currentUser.id,
@@ -127,6 +150,9 @@ export const Refill = () => {
         }
         dispatch(walletRefill(walletUser));
         localStorage.setItem('userWallet', JSON.stringify(walletUser))
+        allWalletRedux.push(walletUser)
+        dispatch(allWalletRefill(allWalletRedux));
+        localStorage.setItem('allWallets', JSON.stringify(allWalletRedux))
       }
     }
     const value = {}
