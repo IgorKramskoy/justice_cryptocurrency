@@ -23,7 +23,7 @@ import { SimpleDialogDemo } from './ModalWindow';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
-import { createUser, walletRefill } from '../../../redux/action';
+import { walletRefill } from '../../../redux/action';
 
 export const Refill = () => {
   const dispatch = useDispatch()
@@ -46,6 +46,7 @@ export const Refill = () => {
       count: 0,
     },
     onSubmit: (values) => {
+      console.log('1')
     },
   });
 
@@ -82,14 +83,33 @@ export const Refill = () => {
   const handleSubmit = () => {
     //zdes value
     console.log(formik.values)
+    const key = formik.values.currenciesValue.toLowerCase();
+    if(key === 'rub') {
+      const wallet = {
+        userId: currentUser.id,
+        currencies: {
+          rub: formik.values.count,
+          usd: 0,
+        }
+      }
+      dispatch(walletRefill(wallet));
+    } else {
+      const wallet = {
+        userId: currentUser.id,
+        currencies: {
+          rub: 0,
+          usd: formik.values.count,
+        }
+      }
+      dispatch(walletRefill(wallet));
+    }
     const value = {
       userId: currentUser.id,
       currencies: {
-        rub: 0,
-        usd: 0,
-      }
+      rub: 0,
+       usd: 0,
+       }
     }
-    // dispatch(walletRefill(value));
   }
 
   return (
