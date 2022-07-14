@@ -22,14 +22,19 @@ export const ContentHeader = styled(Toolbar) (() => ({
   padding: '0px',
 }))
 export const ContentLeft = styled(Box) (() => ({
-  width: '70%',
-  borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-  paddingRight: '20px',
-  paddingTop: '30px',
+
+  display: 'flex',
+  flexDirection: 'row',
 }))
 export const ContentRight = styled(Box) (() => ({
   width: '30%',
   borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
   paddingLeft: '20px',
+  paddingTop: '30px',
+}))
+export const RefillForm = styled('form') (() => ({
+  width: '70%',
+  borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+  paddingRight: '20px',
   paddingTop: '30px',
 }))

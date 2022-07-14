@@ -1,25 +1,27 @@
-import React, {useState} from 'react';
+import React, { memo, useState } from 'react';
 
-import { Box, TextField } from '@mui/material';
+import {
+  Box,
+  InputAdornment,
+  TextField
+} from '@mui/material';
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
-export const AutocompleteCurrencyInfo = () => {
-  const money = [
-    {
-      label: 'RUB'
-    },
-    {
-      label: 'USD'
-    },
-  ]
-  const [input, setInput] = useState({ value: '', currency: ''})
+export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency }) => {
+  const [icon, setIcon] = useState();
 
-  const handleOnChangeValue = (event) => {
-    setInput((prevState) => ({ ...prevState, value: event.target.value }));
+  const handleOnChangeValue = (event, newValue) => {
+    setIcon(newValue.img);
+    handleChangeCurrency(newValue.name);
   }
-  const handleOnChangeCurrency = (event, value) => {
-    setInput((prevState) => ({ ...prevState, currency: value }));
+
+  const handleSearch = (e) => {
+    console.log(e.target.value);
+  }
+
+  const handleValue = (event, newValue) => {
+    console.log(newValue.name);
   }
   return (
     <Box sx={{
@@ -31,26 +33,42 @@ export const AutocompleteCurrencyInfo = () => {
     }}>
       <TextFieldStyled
         label='Кол-во'
-        onChange={handleOnChangeValue}
+        type="number"
+        onChange={handleSearch}
       />
-      <AutocompleteStyled sx={{
-        border: 'none',
-        ['&.MuiAutocomplete-root'] : {
-          border:'none',
-          margin: '0px',
-          width: '280px',
-        },
-        ['& .MuiOutlinedInput-root'] : {
-          border:'none',
-          padding: '4px!important',
-        },
-      }}
-        disablePortal
-        options={money}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        onChange={(e, value) => handleOnChangeCurrency(e, value)}
-        renderInput={(params) => <TextField {...params}/>
-      }/>
+      <AutocompleteStyled
+        // disablePortal
+        options={arr}
+        onChange={handleOnChangeValue}
+        getOptionLabel={(option) => (
+          option.name
+        )}
+        renderOption={(props, option) => (
+          <Box {...props} sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+            <Box><img src={option?.img} alt='icon'/></Box>
+            <Box>{option?.name}</Box>
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            sx={{
+              ['&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink']: {
+                top: '10px', left: '0px'
+              },
+            }}
+            {...params}
+            onChange={handleValue}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: 'new-password',
+            }}
+            InputProps={{
+              ...params.InputProps,
+              startAdornment: <InputAdornment position="start">{icon ? <img src={icon} alt="icon"/> : ''}</InputAdornment>,
+            }}
+          />
+        )}
+      />
     </Box>
   )
-}
+})

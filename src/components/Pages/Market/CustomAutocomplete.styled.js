@@ -3,7 +3,6 @@ import { styled, Autocomplete } from '@mui/material';
 export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '&': {
     width: 300,
-    border: '1px solid rgba(255, 255, 255, 0.1)',
     margin: '10px',
   },
   '& .MuiInputLabel-root': {

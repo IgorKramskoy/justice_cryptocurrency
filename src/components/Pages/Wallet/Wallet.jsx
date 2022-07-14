@@ -14,8 +14,8 @@ import {
 import { BoxTableStyles } from './Wallet.styles';
 import { TableCellHeadStyled} from '../Market/Table.styled';
 import { TableCellStyled } from './Wallet.styles';
-import rub from '../../../assets/images/rub.svg'
-import usd from '../../../assets/images/usd.svg'
+import rub from '../../../assets/images/rub.svg';
+import usd from '../../../assets/images/usd.svg';
 import * as Navigate from '../../../routesNavigate';
 
 

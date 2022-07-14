@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
   Box,
   Button,
-  TextField,
   Typography
 } from '@mui/material';
 import { Steper } from './Steper';
@@ -12,15 +14,47 @@ import {
   ContentHeader,
   ContentLeft,
   ContentRight,
-  ContentСontainer
+  ContentСontainer,
+  RefillForm
 } from './Refill.styles';
 import * as Navigate from '../../../routesNavigate';
-import { useNavigate } from 'react-router-dom';
 import { CardForm} from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
-import { AutocompleteStyled } from '../Market/CustomAutocomplete.styled';
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+import rub from '../../../assets/images/rub.svg';
+import usd from '../../../assets/images/usd.svg';
+import { RefillValidation } from './RefillValidation';
 
 export const Refill = () => {
+  const currentUser = useSelector((state) => state.users.currentUser);
+  const money = [
+    {
+      img: rub,
+      name: 'RUB'
+    },
+    {
+      img: usd,
+      name: 'USD'
+    },
+  ]
+  const formik = useFormik({
+    initialValues: {
+      currenciesValue: '',
+      count: 0,
+    },
+    onSubmit: (values) => {
+      console.log(13232131)
+      const value = {
+        userId: currentUser.id,
+        currencies: {
+          rub: 0,
+          usd: 0,
+        }
+      }
+      console.log(values)
+    },
+  });
+
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -43,47 +77,29 @@ export const Refill = () => {
     navigate(Navigate.WALLET);
   };
 
-  const currencies =  [
-    {
-      label: 'RUB'
-    },
-    {
-      label: 'USD'
-    },
-  ]
-  const [filteredRows, setFilteredRows] = useState([]);
+  const handleChangeCurrency = useCallback((name) => {
+    formik.setFieldValue('currenciesValue', name);
+  }, [])
 
-  const onChange = (event, newValue) => {
-    if(!newValue){
-      setFilteredRows(currencies)
-    } else {
-      setFilteredRows(currencies.filter((item) => (
-        item.label.includes(newValue.label)
-      )))
-    }
-  }
-  const handleSearch = (e) => {
-    if(!e.target.value){
-      setFilteredRows(currencies)
-    } else {
-      setFilteredRows(currencies.filter((item) => (
-        item.label.toLowerCase().includes(e.target.value.toLowerCase())
-      )))
+  const handleSubmit = () => {
+    //zdes value
+    console.log(formik.values)
+    const value = {
+      userId: currentUser.id,
+      currencies: {
+        rub: 0,
+        usd: 0,
+      }
     }
   }
 
-  useEffect( () => {
-    if (filteredRows.length === 0) {
-      setFilteredRows(currencies)
-    }
-  }, [currencies]);
-
+  console.log(formik.values);
   return (
     <ContentСontainer >
       <Content>
         <ContentHeader>
           <Box >
-            <Typography sx={{color: '#FFFFFF',}} variant="h5">Пополнение</Typography>
+            <Typography sx={{color: '#FFFFFF'}} variant="h5">Пополнение</Typography>
           </Box>
           <Box >
             <Button
@@ -97,44 +113,43 @@ export const Refill = () => {
             </Button>
           </Box>
         </ContentHeader>
-        <Box sx={{ display: 'flex', flexDirection: 'row', }}>
           <ContentLeft>
-            { activeStep === 0 ? (
-              <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px',}}>
-                <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
-                <Box sx={{ color: '#FFFFFF'}}>
-                  <AutocompleteStyled
-                    disablePortal
-                    options={filteredRows}
-                    onChange={onChange}
-                    getOptionLabel={(options) => options.label}
-                    renderInput={(params) => <TextField {...params} onChange={handleSearch} label="Поиск валюты" />}
-                  />
-                </Box>
-                <Button
-                  type="submit"
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                >
-                  Продолжить
-                </Button>
-              </Box> ) : null}
-            { activeStep === 1 ? (
-              <Box sx={{ textAlign:'start'}}>
-                <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
-                <CardForm handleOpen={handleOpen} />
-              </Box> ) : null}
-            { open ? (
-              <Box>
-                <SimpleDialogDemo open={open} handleClose={handleClose}/>
-              </Box> ) : null}
+              <RefillForm >
+
+                { activeStep === 0 ? (
+                  <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '50px'}}>
+                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
+                    <Box sx={{ color: '#FFFFFF'}}>
+                     <AutocompleteCurrencyInfo
+                       arr={money}
+                       handleChangeCurrency={handleChangeCurrency}
+                     />
+                    </Box>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                    >
+                      Продолжить
+                    </Button>
+                  </Box> ) : null}
+
+                { activeStep === 1 ? (
+                  <Box sx={{ textAlign:'start'}}>
+                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
+                    <CardForm handleOpen={handleOpen} handleSubmit={handleSubmit} />
+                  </Box> ) : null}
+                { open ? (
+                  <Box>
+                    <SimpleDialogDemo open={open} handleClose={handleClose}/>
+                  </Box> ) : null}
+
+              </RefillForm>
+            <ContentRight >
+              <Steper activeStep={activeStep}/>
+            </ContentRight>
           </ContentLeft>
-          <ContentRight >
-            <Steper activeStep={activeStep}/>
-          </ContentRight>
-        </Box>
       </Content>
     </ContentСontainer>
   );
