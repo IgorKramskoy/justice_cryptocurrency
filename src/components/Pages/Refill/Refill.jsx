@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Box,
@@ -23,9 +23,13 @@ import { SimpleDialogDemo } from './ModalWindow';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
+import { createUser, walletRefill } from '../../../redux/action';
 
 export const Refill = () => {
+  const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.users.currentUser);
+  const walletUserRedux = useSelector((state) => state.money.walletUser);
+  console.log(walletUserRedux, 'wallet user redux')
   const money = [
     {
       img: rub,
@@ -85,6 +89,7 @@ export const Refill = () => {
         usd: 0,
       }
     }
+    // dispatch(walletRefill(value));
   }
 
   return (

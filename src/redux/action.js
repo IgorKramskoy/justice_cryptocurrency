@@ -4,7 +4,8 @@ import {
   CREATE_USER,
   CREATE_USER_AUTH,
   FETCH_MONEY,
-  UPDATE_USER
+  UPDATE_USER,
+  WALLET_USER_REFILL
 } from './types';
 import { CryptoUrrency } from '../cryptoСurrency';
 
@@ -44,6 +45,12 @@ export function fetchMoney() {
       ...item,
     }))
     dispatch({type: FETCH_MONEY, payload: arr})
+  }
+}
+export function walletRefill(walletUser) {
+  return {
+    type: WALLET_USER_REFILL,
+    payload: walletUser,
   }
 }
 

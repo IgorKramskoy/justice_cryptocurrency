@@ -1,7 +1,8 @@
-import { FETCH_MONEY } from './types';
+import { FETCH_MONEY, WALLET_USER_REFILL } from './types';
 
 const initialState = {
   money: [],
+  walletUser: {},
 }
 
 export const moneyReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const moneyReducer = (state = initialState, action) => {
       return {
         ...state,
         money: action.payload,
+      }
+      case WALLET_USER_REFILL:
+      return {
+        ...state,
+        walletUser: action.payload,
       }
     default: return state
   }
