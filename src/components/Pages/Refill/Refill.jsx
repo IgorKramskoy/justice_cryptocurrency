@@ -27,8 +27,23 @@ import { walletRefill } from '../../../redux/action';
 
 export const Refill = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
+
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
   const currentUser = useSelector((state) => state.users.currentUser);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
+
+  const formik = useFormik({
+    initialValues: {
+      currenciesValue: '',
+      count: 0,
+    },
+    onSubmit: (values) => {
+      console.log('1')
+    },
+  });
   console.log(walletUserRedux, 'wallet user redux')
   const money = [
     {
@@ -40,20 +55,6 @@ export const Refill = () => {
       name: 'USD'
     },
   ]
-  const formik = useFormik({
-    initialValues: {
-      currenciesValue: '',
-      count: 0,
-    },
-    onSubmit: (values) => {
-      console.log('1')
-    },
-  });
-
-  const navigate = useNavigate();
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
 
   const goToWallet = () => {
     navigate(Navigate.WALLET)
@@ -81,35 +82,50 @@ export const Refill = () => {
   }, [])
 
   const handleSubmit = () => {
-    //zdes value
-    console.log(formik.values)
+    console.log(walletUserRedux)
     const key = formik.values.currenciesValue.toLowerCase();
     if(key === 'rub') {
-      const wallet = {
-        userId: currentUser.id,
-        currencies: {
-          rub: formik.values.count,
-          usd: 0,
+      if(walletUserRedux) {
+        const newWallet = {
+          ...walletUserRedux,
+          currencies: {
+            ...walletUserRedux.currencies,
+            rub: +formik.values.count + +walletUserRedux.currencies.rub
+          }
         }
+        dispatch(walletRefill(newWallet));
+      } else {
+        const walletUser = {
+          userId: currentUser.id,
+          currencies: {
+            rub: +formik.values.count ,
+            usd: 0,
+          }
+        }
+        dispatch(walletRefill(walletUser));
       }
-      dispatch(walletRefill(wallet));
     } else {
-      const wallet = {
-        userId: currentUser.id,
-        currencies: {
-          rub: 0,
-          usd: formik.values.count,
+      if(walletUserRedux) {
+        const newWallet = {
+          ...walletUserRedux,
+          currencies: {
+            ...walletUserRedux.currencies,
+            usd: +formik.values.count + +walletUserRedux.currencies.usd
+          }
         }
+        dispatch(walletRefill(newWallet));
+      } else {
+        const walletUser = {
+          userId: currentUser.id,
+          currencies: {
+            rub:  0,
+            usd: +formik.values.count,
+          }
+        }
+        dispatch(walletRefill(walletUser));
       }
-      dispatch(walletRefill(wallet));
     }
-    const value = {
-      userId: currentUser.id,
-      currencies: {
-      rub: 0,
-       usd: 0,
-       }
-    }
+    const value = {}
   }
 
   return (
