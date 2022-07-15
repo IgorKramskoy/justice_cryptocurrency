@@ -28,7 +28,7 @@ export const Wallet = () => {
 
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage] = useState(8);
 
   const walletUserRedux = useSelector((state) => state.money.walletUser);
   // const allWalletRedux = useSelector((state) => state.money.allWallets);
@@ -70,36 +70,10 @@ export const Wallet = () => {
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
   }
-  // const onChange = (event, newValue) => {
-  //   console.log(event, newValue);
-  //   if(!newValue){
-  //     setFilteredRows(currencies)
-  //   } else {
-  //     setFilteredRows(currencies.filter((item) => (
-  //       item.currency.includes(newValue.currency)
-  //     )))
-  //
-  //   }
-  // }
-  //
-  // const handleSearch = (e) => {
-  //   if(!e.target.value){
-  //     setFilteredRows(currencies)
-  //   } else {
-  //     setFilteredRows(currencies.filter((item) => (
-  //       item.currency.toLowerCase().includes(e.target.value.toLowerCase())
-  //     )))
-  //   }
-  // }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage - 1);
   };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
 
   useEffect( () => {
     if (filteredRows.length === 0) {
@@ -201,7 +175,7 @@ export const Wallet = () => {
                       <Box>{row?.name}</Box>
                     </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="left"></TableCellStyled>
+                  <TableCellStyled align="left">{walletUserRedux.crypto[row.currency.toLowerCase()]}</TableCellStyled>
                   <TableCellStyled align="left"></TableCellStyled>
                   <TableCellStyled align="left"></TableCellStyled>
                   <TableCellStyled align="left"></TableCellStyled>
