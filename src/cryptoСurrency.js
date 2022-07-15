@@ -7,7 +7,7 @@ import ltc from './assets/images/ltc.svg';
 import trx from './assets/images/trx.svg';
 import etc from './assets/images/etc.svg';
 
-export const CryptoUrrency = [
+export const CryptoCurrency = [
   {
     img: btc,
     currency: 'BTC',

@@ -26,7 +26,6 @@ export const Market = () => {
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const onChange = (event, newValue) => {
-    console.log(event, newValue);
     if(!newValue){
       setFilteredRows(currencies)
     } else {
@@ -98,6 +97,7 @@ export const Market = () => {
           />}
         />
       </BoxStyled>
+      {/*markettable*/}
       <TableContainer component={Paper} sx={{
         marginTop: '20px',
         borderRadius: '0px',
@@ -105,7 +105,7 @@ export const Market = () => {
         background: 'none',}}>
         <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
           <TableHead sx={{ background: '#191F29', padding: '0px'}}>
-            <TableRow  sx={{ }}>
+            <TableRow>
               <TableCellHeadStyled align="left">Название</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Цена</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Изм за 24ч</TableCellHeadStyled>
@@ -145,7 +145,8 @@ export const Market = () => {
           onChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </TableContainer>
+      </TableContainer>
+      {/*//*/}
     </>
   );
 }

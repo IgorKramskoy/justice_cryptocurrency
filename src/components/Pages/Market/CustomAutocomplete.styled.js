@@ -4,6 +4,7 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '&': {
     width: 300,
     margin: '10px',
+    border: 'none',
   },
   '& .MuiInputLabel-root': {
     color: '#8C939D',
@@ -14,6 +15,7 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '& .MuiInputLabel-root.Mui-focused': {
     color: '#8C939D',
     top: '15px',
+    border: 'none',
   },
   '& .MuiInputLabel-root.Mui-disabled': {
     color: 'rgba(255,255,255,.5)',
@@ -23,6 +25,9 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
     color: 'rgba(255,255,255,.5)',
   },
   '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none',
+  },
+  '& .MuiOutlinedInput': {
     border: 'none',
   },
   '& .MuiFormLabel-filled': {
@@ -36,14 +41,12 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '& .MuiOutlinedInput-input.Mui-focused': {
     color: '#8C939D',
   },
-  '& .MuiOutlinedInput-input.MuiInputBase-input': {
-  },
   '&.MuiFormControl-root': {
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
   '&.MuiFormControl-root .Miu-focused': {
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
   ['&.MuiAutocomplete-root'] : {
@@ -53,5 +56,8 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   ['& .MuiOutlinedInput-root'] : {
     border:'none',
     padding: '4px!important',
+  },
+  ['& .MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root'] : {
+    border:'none',
   },
 }))

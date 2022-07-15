@@ -1,25 +1,79 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  Alert,
   Box,
   Button,
-  Typography
 } from '@mui/material';
+import { Content,
+  ContentBottom,
+  ContentTop,
+  Info,
+  Label,
+  Title
+} from './ComponentConvecter.styles';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import swap from '../../../assets/images/swap.svg';
-import { CryptoUrrency } from  '../../../cryptoСurrency'
-
+import { allWalletRefill, walletRefill } from '../../../redux/action';
+import * as Navigate from '../../../routesNavigate';
+import { useNavigate } from 'react-router-dom';
 
 export const Convecter = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [item, setItem] = useState({});
+  const [itemUp, setItemUp] = useState({});
+  const [price, setPrice] = useState(0);
+  const [reversPrice, setReversPrice] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [error, setError] = useState(false);
+
+  const currentUser = useSelector((state) => state.users.currentUser);
+  const currencies  = useSelector((state) => state.money.money);
+  const walletUserRedux = useSelector((state) => state.money.walletUser);
+  const allWalletRedux = useSelector((state) => state.money.allWallets);
 
   const formik = useFormik({
     initialValues: {
       currenciesValue: '',
       count: 0,
+      currenciesValueUp: '',
+      countUp: 0,
     },
     onSubmit: (values) => {
-      console.log('1')
+      const id = currentUser.id
+      const key = values.currenciesValue.toLowerCase();
+      const keyUp = values.currenciesValueUp.toLowerCase()
+      const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
+      console.log(id, key, keyUp, findWallet)
+      if(walletUserRedux.crypto[key] > values.count) {
+        const newWallet = {
+          ...findWallet,
+          crypto: {
+            ...findWallet.crypto,
+            [key]:  Number(findWallet.crypto[key]) - Number(formik.values.count),
+            [keyUp]: findWallet.crypto[keyUp]
+              ? Number(findWallet.crypto[keyUp]) + Number(formik.values.countUp)
+              : Number(formik.values.countUp)
+          }
+        }
+        dispatch(walletRefill(newWallet))
+        localStorage.setItem('userWallet', JSON.stringify(newWallet))
+        const newAllWallets = allWalletRedux.map((wallet) => {
+        if (wallet.userId === newWallet.userId) {
+            return newWallet
+          }
+          return wallet
+        })
+        dispatch(allWalletRefill(newAllWallets));
+        localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
+        navigate(Navigate.WALLET)
+      } else (
+        setError(true)
+      )
     },
   });
 
@@ -27,19 +81,43 @@ export const Convecter = () => {
     formik.setFieldValue('currenciesValue', name);
   }, [])
 
-  const handleChangeCount = useCallback((name) => {
-    formik.setFieldValue('count', name);
+  const handleChangeCount = useCallback((count) => {
+    formik.setFieldValue('count', count);
   }, [])
+
+  const handleChangeCurrencyUp = useCallback((name) => {
+    formik.setFieldValue('currenciesValueUp', name);
+  }, [])
+
+  const handleChangeCountUp = useCallback((count) => {
+    formik.setFieldValue('countUp', count);
+  }, [])
+
+  useEffect(() => {
+    if(formik.values.currenciesValueUp && formik.values.currenciesValue && formik.values.count) {
+      const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
+      setItem(itemNew);
+      const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp)
+      setItemUp(itemUpNew)
+      const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''))
+      setPrice(newPrice);
+      const newReversPrice = Number(itemUpNew.PRICE.slice(2).split(',').join('')) / Number(itemNew.PRICE.slice(2).split(',').join(''))
+      setReversPrice(newReversPrice);
+      const newTotal = newPrice * Number(formik.values.count)
+      setTotal(newTotal)
+      handleChangeCountUp(newTotal)
+    }
+  },[formik.values])
 
   return (
     <Box>
-      <Typography sx={{color: '#FFFFFF',textAlign:'left', marginTop: '30px',}} variant="h4">Конвертер</Typography>
-      <Box sx={{ background: '#191F29', width: '1088px'}}>
-        <Box sx={{ display: 'flex', gap: '10px', padding: '20px', alignItems: 'center', borderBottom: '1px solid #8C939D'}}>
+      <Title variant="h4">Конвертер</Title>
+      <Content>
+        <ContentTop onSubmit={formik.handleSubmit}>
           <Box >
-            <Typography sx={{color: '#8C939D',textAlign:'left', fontSize: '14px',}} variant="h4">Отдаю</Typography>
+            <Label variant="h4">Отдаю</Label>
             <AutocompleteCurrencyInfo
-              arr={CryptoUrrency}
+              arr={currencies}
               handleChangeCurrency={handleChangeCurrency}
               handleChangeCount={handleChangeCount}
             />
@@ -48,23 +126,41 @@ export const Convecter = () => {
             <img src={swap} alt='logo'/>
           </Box>
           <Box >
-            <Typography sx={{color: '#8C939D',textAlign:'left', fontSize: '14px',}} variant="h4">Получаю</Typography>
+            <Label variant="h4">Получаю</Label>
             <AutocompleteCurrencyInfo
-              arr={CryptoUrrency}
-              handleChangeCurrency={handleChangeCurrency}
-              handleChangeCount={handleChangeCount}
+              textFieldDisabled
+              textFieldValue={formik.values.countUp}
+              arr={currencies}
+              handleChangeCurrency={handleChangeCurrencyUp}
+              handleChangeCount={handleChangeCountUp}
             />
           </Box>
           <Button
+            sx={{ marginTop: '15px', }}
             type="submit"
-            size="small"
+            size="large"
             variant="contained"
             color="primary"
             >
-            Сохранить изменения
-          </Button>
-        </Box>
-      </Box>
+              Конвертировать
+            </Button>
+        </ContentTop>
+        <ContentBottom>
+          <Box>
+            <Label variant="h4">Цена</Label>
+            {price ? <Info variant="h4">1 {item.currency} = {price} {itemUp.currency}</Info> : null}
+          </Box>
+          <Box>
+            <Label variant="h4">Обратный курс</Label>
+            {reversPrice ? <Info variant="h4"> 1 {itemUp.currency} = {reversPrice} {item.currency} </Info> : null }
+          </Box>
+          <Box>
+            <Label variant="h4">Вы получите</Label>
+            {total ? <Info variant="h4"> {total} {itemUp.currency} </Info> : null}
+          </Box>
+          { error ? <Alert color='error' variant='filledLarge' icon={false}>Недостаточно средств. Пополните баланс.</Alert> : <Box/>}
+        </ContentBottom>
+      </Content>
     </Box>
   )
 }

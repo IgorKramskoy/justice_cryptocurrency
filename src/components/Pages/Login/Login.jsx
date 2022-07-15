@@ -14,7 +14,6 @@ import { LinkStyled } from './Link.styled';
 import * as Navigate from '../../../routesNavigate';
 
 export const Login = () => {
-
   return (
     <BoxLog>
       <BoxLog mode='left'>

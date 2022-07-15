@@ -115,6 +115,7 @@ export const customTheme = createTheme({
           },
           '& .Mui-disabled': {
             background: '#1C2027',
+            color: '#FFFFFF',
           },
           '& .Mui-error .MuiOutlinedInput-notchedOutline': {
             border: 'none',

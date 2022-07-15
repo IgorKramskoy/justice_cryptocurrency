@@ -8,7 +8,7 @@ import {
   WALLET_USER_REFILL,
   WALLETS_ALL
 } from './types';
-import { CryptoUrrency } from '../cryptoСurrency';
+import { CryptoCurrency } from '../cryptoСurrency';
 
 export function createUser(user) {
   return {
@@ -41,7 +41,7 @@ export function fetchMoney() {
         Apikey: 'de42efd4a118fc97380190a2b2c42fa9910d4ee5661a95df48c78fa94a6551ff',
       }
     })
-    let arr = CryptoUrrency.map((item) => ({
+    let arr = CryptoCurrency.map((item) => ({
       ...response.data.DISPLAY[item.currency].RUB,
       ...item,
     }))

@@ -17,10 +17,10 @@ export function SimpleDialogDemo({ open, handleClose }) {
       </DialogTitle>
       <DialogContent sx={{ gap: '10px'}}>
         <img src={modal} alt='modal icon'/>
-        <Typography variant={'subtitle1'} sx={{ color: '#FFFFFF'}}>
+        <Typography variant='subtitle1' sx={{ color: '#FFFFFF'}}>
           Пополнение прошло успешно
         </Typography>
-        <Typography variant={'subtitle2'} sx={{ color: '#8C939D'}}>
+        <Typography variant='subtitle2' sx={{ color: '#8C939D'}}>
           Вы успешно пополнили свой кошелек.
         </Typography>
       </DialogContent>
