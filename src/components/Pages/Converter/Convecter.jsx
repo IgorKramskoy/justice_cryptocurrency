@@ -2,17 +2,22 @@ import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 
 import {
+  Alert,
   Box,
   Button,
-  Typography
 } from '@mui/material';
+import { Content,
+  ContentBottom,
+  ContentTop,
+  Info,
+  Label,
+  Title
+} from './ComponentConvecter.styles';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import swap from '../../../assets/images/swap.svg';
-import { CryptoUrrency } from  '../../../cryptoСurrency'
-
+import { CryptoCurrency } from  '../../../cryptoСurrency'
 
 export const Convecter = () => {
-
   const formik = useFormik({
     initialValues: {
       currenciesValue: '',
@@ -31,15 +36,23 @@ export const Convecter = () => {
     formik.setFieldValue('count', name);
   }, [])
 
+  const handleChangeCurrencyUp = useCallback((name) => {
+    formik.setFieldValue('currenciesValue', name);
+  }, [])
+
+  const handleChangeCountUp = useCallback((name) => {
+    formik.setFieldValue('count', name);
+  }, [])
+
   return (
     <Box>
-      <Typography sx={{color: '#FFFFFF',textAlign:'left', marginTop: '30px',}} variant="h4">Конвертер</Typography>
-      <Box sx={{ background: '#191F29', width: '1088px'}}>
-        <Box sx={{ display: 'flex', gap: '10px', padding: '20px', alignItems: 'center', borderBottom: '1px solid #8C939D'}}>
+      <Title variant="h4">Конвертер</Title>
+      <Content>
+        <ContentTop>
           <Box >
-            <Typography sx={{color: '#8C939D',textAlign:'left', fontSize: '14px',}} variant="h4">Отдаю</Typography>
+            <Label variant="h4">Отдаю</Label>
             <AutocompleteCurrencyInfo
-              arr={CryptoUrrency}
+              arr={CryptoCurrency}
               handleChangeCurrency={handleChangeCurrency}
               handleChangeCount={handleChangeCount}
             />
@@ -48,23 +61,39 @@ export const Convecter = () => {
             <img src={swap} alt='logo'/>
           </Box>
           <Box >
-            <Typography sx={{color: '#8C939D',textAlign:'left', fontSize: '14px',}} variant="h4">Получаю</Typography>
+            <Label variant="h4">Получаю</Label>
             <AutocompleteCurrencyInfo
-              arr={CryptoUrrency}
-              handleChangeCurrency={handleChangeCurrency}
-              handleChangeCount={handleChangeCount}
+              arr={CryptoCurrency}
+              handleChangeCurrency={handleChangeCurrencyUp}
+              handleChangeCount={handleChangeCountUp}
             />
           </Box>
           <Button
+            sx={{ marginTop: '15px', }}
             type="submit"
-            size="small"
+            size="large"
             variant="contained"
             color="primary"
             >
-            Сохранить изменения
-          </Button>
-        </Box>
-      </Box>
+              Конвертировать
+            </Button>
+        </ContentTop>
+        <ContentBottom>
+          <Box>
+            <Label variant="h4">Цена</Label>
+            <Info variant="h4">1 BTC = 4343432EFIR</Info>
+          </Box>
+          <Box>
+            <Label variant="h4">Обратный курс</Label>
+            <Info variant="h4"> 4343432 EFIR = 1 BTC</Info>
+          </Box>
+          <Box>
+            <Label variant="h4">Вы получите</Label>
+            <Info variant="h4"> 4343432 EFIR </Info>
+          </Box>
+          <Alert color='error' variant='filledLarge' icon={false}>Недостаточно средств. Пополните баланс.</Alert>
+        </ContentBottom>
+      </Content>
     </Box>
   )
 }

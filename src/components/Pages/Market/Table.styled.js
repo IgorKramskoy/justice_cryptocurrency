@@ -1,6 +1,9 @@
-import { Box, styled, TablePagination, } from '@mui/material';
-import TableCell from '@mui/material/TableCell';
-
+import {
+  Box,
+  styled,
+  TablePagination,
+  TableCell
+} from '@mui/material';
 
 export const TableCellHeadStyled = styled(TableCell) (() => ({
   '&': {

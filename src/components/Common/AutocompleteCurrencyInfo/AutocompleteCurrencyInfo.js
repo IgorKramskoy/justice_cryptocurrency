@@ -34,12 +34,9 @@ export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency, handl
         onChange={handleSearch}
       />
       <AutocompleteStyled
-        // disablePortal
         options={arr}
         onChange={handleOnChangeValue}
-        getOptionLabel={(option) => (
-          option.name
-        )}
+        getOptionLabel={(option) => option.name}
         renderOption={(props, option) => (
           <Box {...props} sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
             <Box><img src={option?.img} alt='icon'/></Box>

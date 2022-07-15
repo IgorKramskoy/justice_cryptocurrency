@@ -16,7 +16,6 @@ export const CardForm = ({ handleOpen, handleSubmit }) => {
     },
     validationSchema: CardFormValidation,
     onSubmit: () => {
-      console.log(111)
       handleOpen();
       handleSubmit()
     },
@@ -24,6 +23,7 @@ export const CardForm = ({ handleOpen, handleSubmit }) => {
 
   return (
     <FormCardStyled onSubmit={formik.handleSubmit}>
+      {/*map*/}
       <Box sx={{ width: '100%' }}>
         <CustomTextField
           label='Номер карты'

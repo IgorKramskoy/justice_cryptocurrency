@@ -162,9 +162,11 @@ export const Refill = () => {
     <ContentСontainer >
       <Content>
         <ContentHeader>
+          {/*title*/}
           <Box >
             <Typography sx={{color: '#FFFFFF'}} variant="h5">Пополнение</Typography>
           </Box>
+          {/*//*/}
           <Box >
             <Button
               type="submit"
@@ -179,7 +181,6 @@ export const Refill = () => {
         </ContentHeader>
           <ContentLeft>
               <RefillForm >
-
                 { activeStep === 0 ? (
                   <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '50px'}}>
                     <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
@@ -199,7 +200,6 @@ export const Refill = () => {
                       Продолжить
                     </Button>
                   </Box> ) : null}
-
                 { activeStep === 1 ? (
                   <Box sx={{ textAlign:'start'}}>
                     <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>

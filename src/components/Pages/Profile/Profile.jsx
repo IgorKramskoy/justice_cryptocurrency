@@ -11,8 +11,7 @@ export const Profile = () => {
     <BoxBlock>
       <BoxLeft>
         <ProfileDataForm/>
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)', minWidth: '95%', margin: '40px 10px', }}
-        />
+        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)', minWidth: '95%', margin: '40px 10px', }} />
         <ProfilePasswordForm/>
       </BoxLeft>
       <BoxRight>

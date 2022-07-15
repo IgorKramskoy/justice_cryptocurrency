@@ -8,7 +8,7 @@ import {
   CssBaseline,
   Toolbar,
   Avatar,
-  Divider, Typography,
+  Divider,
 } from '@mui/material';
 import {
   AppBarStyles,
@@ -47,15 +47,16 @@ export const Wrapper = ({ children }) => {
   return (
     <Box sx={{ display: 'flex'}}>
       <CssBaseline />
+      {/*//navbar*/}
       <AppBarStyles>
         <Toolbar sx={{display: 'flex', justifyContent:'space-between' }}>
           <img src={logo} alt="logo"/>
           <Avatar src={currentUser.avatar}/>
         </Toolbar>
       </AppBarStyles>
-
-
+      {/*//*/}
       {location.pathname !== Navigate.REFILL ? <DrawerStyles variant="permanent">
+        {/*//sidebar*/}
         <BoxConteinerStyles>
           <BoxStyles>
             {links.map(({ path, text, image }) => (
@@ -67,7 +68,7 @@ export const Wrapper = ({ children }) => {
             <CustomNavLink path={Navigate.LOGIN} image={logout} text="Выход" onClick={logOut} />
           </BoxStyles>
         </BoxConteinerStyles>
-
+        {/*//*/}
       </DrawerStyles> : null}
       <BoxChildrenStyles component="main">
         {children}
