@@ -48,7 +48,6 @@ export const Convecter = () => {
       const key = values.currenciesValue.toLowerCase();
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
-      console.log(id, key, keyUp, findWallet)
       if(walletUserRedux.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
