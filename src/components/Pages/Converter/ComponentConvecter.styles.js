@@ -9,7 +9,7 @@ export const Content = styled(Box) (() => ({
   margin: '30px auto',
   padding: '40px'
 }))
-export const ContentTop = styled(Box) (() => ({
+export const ContentTop = styled('form') (() => ({
   display: 'flex',
   justifyContent: 'space-between',
   paddingBottom: '30px',

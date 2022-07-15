@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,11 +26,11 @@ import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
 
 export const Refill = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [open, setOpen] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
@@ -49,11 +49,11 @@ export const Refill = () => {
   const money = [
     {
       img: rub,
-      name: 'RUB'
+      currency: 'RUB'
     },
     {
       img: usd,
-      name: 'USD'
+      currency: 'USD'
     },
   ]
 
@@ -103,7 +103,6 @@ export const Refill = () => {
           }
           return wallet
         })
-        console.log(allWalletRedux)
         dispatch(allWalletRefill(newAllWallets));
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
@@ -112,7 +111,8 @@ export const Refill = () => {
           currencies: {
             rub: +formik.values.count ,
             usd: 0,
-          }
+          },
+          crypto: {}
         }
         dispatch(walletRefill(walletUser));
         localStorage.setItem('userWallet', JSON.stringify(walletUser))
@@ -137,7 +137,6 @@ export const Refill = () => {
           }
           return wallet
         })
-        console.log(allWalletRedux)
         dispatch(allWalletRefill(newAllWallets));
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
@@ -146,7 +145,8 @@ export const Refill = () => {
           currencies: {
             rub:  0,
             usd: +formik.values.count,
-          }
+          },
+          crypto: {}
         }
         dispatch(walletRefill(walletUser));
         localStorage.setItem('userWallet', JSON.stringify(walletUser))

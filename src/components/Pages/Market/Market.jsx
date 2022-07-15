@@ -26,7 +26,6 @@ export const Market = () => {
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const onChange = (event, newValue) => {
-    console.log(event, newValue);
     if(!newValue){
       setFilteredRows(currencies)
     } else {

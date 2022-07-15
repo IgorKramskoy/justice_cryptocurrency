@@ -8,12 +8,19 @@ import {
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
-export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency, handleChangeCount }) => {
+export const AutocompleteCurrencyInfo = memo((
+  {
+    arr,
+    handleChangeCurrency,
+    handleChangeCount,
+    textFieldValue,
+    textFieldDisabled = false,
+  }) => {
   const [icon, setIcon] = useState();
 
   const handleOnChangeValue = (event, newValue) => {
     setIcon(newValue.img);
-    handleChangeCurrency(newValue.name);
+    handleChangeCurrency(newValue.currency);
   }
 
   const handleSearch = (e) => {
@@ -31,16 +38,18 @@ export const AutocompleteCurrencyInfo = memo(({ arr, handleChangeCurrency, handl
       <TextFieldStyled
         label='Кол-во'
         type="number"
+        value={textFieldValue}
         onChange={handleSearch}
+        disabled={textFieldDisabled}
       />
       <AutocompleteStyled
         options={arr}
         onChange={handleOnChangeValue}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => option.currency}
         renderOption={(props, option) => (
           <Box {...props} sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
             <Box><img src={option?.img} alt='icon'/></Box>
-            <Box>{option?.name}</Box>
+            <Box>{option?.currency}</Box>
           </Box>
         )}
         renderInput={(params) => (
