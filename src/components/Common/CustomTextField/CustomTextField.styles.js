@@ -1,6 +1,8 @@
 import { TextField, styled} from '@mui/material';
 
 export const TextFieldStyled = styled(TextField) (() => ({
+  '& ::-webkit-inner-spin-button':
+    { display: 'none' },
   '&.MuiTextField-root': {
     width: 'calc(100% - 150px)',
   },

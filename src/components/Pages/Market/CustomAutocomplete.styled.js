@@ -3,14 +3,10 @@ import { styled, Autocomplete } from '@mui/material';
 export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '&': {
     width: 300,
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    margin: '10px'
+    margin: '10px',
   },
   '& .MuiInputLabel-root': {
     color: '#8C939D',
-  },
-  '& .MuiSvgIcon-root': {
-    display: 'none',
   },
   '& .Mui-disabled': {
     background: '#1C2027',
@@ -49,5 +45,13 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
   '&.MuiFormControl-root .Miu-focused': {
     border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
+  },
+  ['&.MuiAutocomplete-root'] : {
+    margin: '0px',
+    width: '280px',
+  },
+  ['& .MuiOutlinedInput-root'] : {
+    border:'none',
+    padding: '4px!important',
   },
 }))

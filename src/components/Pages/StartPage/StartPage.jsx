@@ -5,9 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
-  Toolbar,
   Typography
 } from '@mui/material';
+import {
+  Body,
+  Content,
+  ContentBoxImage,
+  ContentImageBig,
+  ContentImageSmall,
+  GroupBottom,
+  GroupTop,
+  Heder
+} from './StartPage.styles';
 import * as Navigate from '../../../routesNavigate';
 import logo from '../../../assets/images/logo.png';
 import main from '../../../assets/images/main-table.png';
@@ -38,9 +47,7 @@ export const StartPage = () => {
 
   return (
     <Box sx={{ height: '100vh' }}>
-      <Toolbar
-        sx={{display: 'flex', justifyContent:'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.1)',}}
-      >
+      <Heder>
         <Box sx={{ margin: '0px 60px'}}>
           <img src={logo} alt="logo"/>
         </Box>
@@ -55,9 +62,9 @@ export const StartPage = () => {
             Войти
           </Button>
         </Box>
-      </Toolbar>
-      <Box sx={{ display: 'flex', justifyContent: 'center',position: 'relative'}}>
-        <Box sx={{ width: '1000px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '64px', paddingTop: '150px',}}>
+      </Heder>
+      <Body>
+        <Content>
           <Typography variant="h2" sx={{ color: 'white' }}>
             Присоединяйтесь к лучшей криптовалютной бирже
           </Typography>
@@ -70,47 +77,23 @@ export const StartPage = () => {
           >
             Начать торговать
           </Button>
-          <Box sx={{
-            marginTop: '80px',
-            borderRadius: '8px',
-            border: '8px solid rgba(17, 18, 18, 0.4)'
-          }}>
-            <img src={main} alt="logo" width='900px' height='300'/>
-          </Box>
-          <Box sx={{
-            position: 'absolute',
-            top: '520px',
-            left: '400px',
-            zIndex: '-1',
-          }}>
+          <ContentBoxImage>
+            <img src={main} alt="main" width='900px' height='300'/>
+          </ContentBoxImage>
+          <ContentImageBig>
             <img src={big} alt="logo" />
-          </Box>
-          <Box sx={{
-            position: 'absolute',
-            top: '620px',
-            left: '1340px',
-            zIndex: '3',
-          }}>
+          </ContentImageBig>
+          <ContentImageSmall>
             <img src={small} alt="logo" />
-          </Box>
-          <Box sx={{
-            position: 'absolute',
-            top: '40px',
-            left: '0px',
-            zIndex: '3',
-          }}>
+          </ContentImageSmall>
+          <GroupTop>
             <img src={groupTop} alt="logo" />
-          </Box>
-          <Box sx={{
-            position: 'absolute',
-            bottom: '0px',
-            right: '0px',
-            zIndex: '3',
-          }}>
+          </GroupTop>
+          <GroupBottom >
             <img src={groupBottom} alt="logo" />
-          </Box>
-        </Box>
-      </Box>
+          </GroupBottom>
+        </Content>
+      </Body>
     </Box>
   );
 }

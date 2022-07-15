@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { Wrapper } from './components/Common/Wrapper';
@@ -9,8 +9,6 @@ import { ThemeProvider } from '@mui/material';
 import { customTheme } from './theme';
 import { fetchMoney } from './redux/action';
 import { useDispatch } from 'react-redux';
-
-export const Context = createContext({});
 
 function App() {
   const dispatch = useDispatch()
