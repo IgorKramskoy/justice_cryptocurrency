@@ -31,7 +31,6 @@ export const Wallet = () => {
   const [rowsPerPage] = useState(8);
 
   const walletUserRedux = useSelector((state) => state.money.walletUser);
-  // const allWalletRedux = useSelector((state) => state.money.allWallets);
   const currencies  = useSelector((state) => state.money.money );
 
   let rows = [
@@ -39,33 +38,16 @@ export const Wallet = () => {
       img: rub,
       name: 'RUB',
       title: 'Russian Ruble',
-      cunt: 0 ,
-
+      cunt: walletUserRedux?.currencies.rub,
     },
     {
       img: usd,
       name: 'USD',
       title: 'American dollar',
-      cunt: 0 ,
+      cunt: walletUserRedux?.currencies.usd,
     },
   ]
-  if(walletUserRedux) {
-    rows = [
-      {
-        img: rub,
-        name: 'RUB',
-        title: 'Russian Ruble',
-        cunt: walletUserRedux.currencies.rub,
 
-      },
-      {
-        img: usd,
-        name: 'USD',
-        title: 'American dollar',
-        cunt: walletUserRedux.currencies.usd,
-      },
-    ]
-  }
 
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
@@ -132,7 +114,7 @@ export const Wallet = () => {
                       <Box>{row?.title}</Box>
                     </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="left">{row.cunt}</TableCellStyled>
+                  <TableCellStyled align="left">{walletUserRedux ? row?.cunt : 0}</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>
                   <TableCellStyled align="left">000</TableCellStyled>
@@ -175,10 +157,10 @@ export const Wallet = () => {
                       <Box>{row?.name}</Box>
                     </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="left">{walletUserRedux.crypto[row.currency.toLowerCase()]}</TableCellStyled>
-                  <TableCellStyled align="left"></TableCellStyled>
-                  <TableCellStyled align="left"></TableCellStyled>
-                  <TableCellStyled align="left"></TableCellStyled>
+                  <TableCellStyled align="left">{walletUserRedux?.crypto[row.currency.toLowerCase()] ? walletUserRedux.crypto[row.currency.toLowerCase()] : 0.00}</TableCellStyled>
+                  <TableCellStyled align="left">0.00</TableCellStyled>
+                  <TableCellStyled align="left">0.00</TableCellStyled>
+                  <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">
                     <Button size="small" variant="contained" disabled={false} color="info">Торговать</Button>
                   </TableCellStyled>
@@ -192,7 +174,6 @@ export const Wallet = () => {
           rowsperpage={rowsPerPage}
           page={page + 1}
           onChange={handleChangePage}
-          // onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
     </>

@@ -1,7 +1,6 @@
 import { TRANSACTIONS_ALL } from './types';
 
 const initialState = {
-  transactionUser: JSON.parse(localStorage.getItem('transactionUser')) ?? null,
   transactionAll: JSON.parse(localStorage.getItem('transactionAll')) ?? [],
 }
 
