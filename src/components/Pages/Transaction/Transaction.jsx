@@ -96,7 +96,7 @@ export const Transaction = () => {
                   </TableCellStyled>
                   <TableCellStyled align="left">{row?.count}</TableCellStyled>
                   <TableCellStyled align="left">{row?.countUp}</TableCellStyled>
-                  <TableCellStyled align="left">{row?.data}</TableCellStyled>
+                  <TableCellStyled align="left">{new Date(row?.data).toLocaleString()}</TableCellStyled>
                   <TableCellStyled align="left">
                     {row?.status ?
                     (<Alert color='success' variant='filledMedium' icon={false}>Успешно</Alert>) :
