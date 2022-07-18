@@ -1,4 +1,9 @@
-import { AppBar, Box, Drawer, styled } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Drawer,
+  styled
+} from '@mui/material';
 
 export const AppBarStyles  = styled(AppBar) (() => ({
   ['&.MuiPaper-root'] : {

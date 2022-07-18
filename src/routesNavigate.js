@@ -7,5 +7,6 @@ export const TRANSACTION = '/transaction';
 export const LOGIN = '/login';
 export const REGISTER = '/register';
 export const REFILL = '/refill';
+export const WITHDRAWAL = '/withdrawal';
 
 

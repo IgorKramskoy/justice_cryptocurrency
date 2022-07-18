@@ -52,6 +52,10 @@ export const Wallet = () => {
     navigate(Navigate.REFILL)
   }
 
+  const currencyWithdrawalCrypto = () => {
+    navigate(Navigate.WITHDRAWAL)
+  }
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage - 1);
   };
@@ -161,7 +165,7 @@ export const Wallet = () => {
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">
-                    <Button size="small" variant="contained" disabled={false} color="info">Вывод</Button>
+                    <Button size="small" variant="contained" disabled={false} color="info" onClick={currencyWithdrawalCrypto}>Вывод</Button>
                   </TableCellStyled>
                 </TableRow>
               ))}
