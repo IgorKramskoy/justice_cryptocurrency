@@ -101,7 +101,6 @@ export const Convecter = () => {
             status: true,
           }
           findTransactions.transactions.push(newTransaction)
-          console.log(findTransactions, newTransaction)
           const newTransactionAll = transactionAll.map((transaction) => {
             if (transaction.userId === findTransactions.userId) {
               return findTransactions
