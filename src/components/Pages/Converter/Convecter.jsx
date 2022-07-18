@@ -111,9 +111,45 @@ export const Convecter = () => {
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
         navigate(Navigate.WALLET)
-      } else (
+      } else {
+        if(!findTransactions) {
+          const newTransactions = {
+            userId: currentUser.id,
+            transactions: [
+              {
+                data: Date.now(),
+                currenciesValue: values.currenciesValue,
+                count: values.count,
+                currenciesValueUp: values.currenciesValueUp,
+                countUp: values.countUp,
+                status: false,
+              }
+            ]
+          }
+          transactionAll.push(newTransactions);
+          dispatch(transactionsALL(transactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
+        } else {
+          const newTransaction = {
+            data: Date.now(),
+            currenciesValue: values.currenciesValue,
+            count: values.count,
+            currenciesValueUp: values.currenciesValueUp,
+            countUp: values.countUp,
+            status: false,
+          }
+          findTransactions.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll.map((transaction) => {
+            if (transaction.userId === findTransactions.userId) {
+              return findTransactions
+            }
+            return findTransactions
+          })
+          dispatch(allWalletRefill(newTransactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
+        }
         setError(true)
-      )
+      }
     },
   });
 
