@@ -48,7 +48,6 @@ export const Wallet = () => {
     },
   ]
 
-
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
   }
@@ -162,7 +161,7 @@ export const Wallet = () => {
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">
-                    <Button size="small" variant="contained" disabled={false} color="info">Торговать</Button>
+                    <Button size="small" variant="contained" disabled={false} color="info">Вывод</Button>
                   </TableCellStyled>
                 </TableRow>
               ))}
