@@ -4,6 +4,7 @@ import {
   CREATE_USER,
   CREATE_USER_AUTH,
   FETCH_MONEY,
+  TRANSACTIONS_ALL,
   UPDATE_USER,
   WALLET_USER_REFILL,
   WALLETS_ALL
@@ -58,6 +59,12 @@ export function allWalletRefill(allWallets) {
   return {
     type: WALLETS_ALL,
     payload: allWallets,
+  }
+}
+export function transactionsALL(transactionsALL) {
+  return {
+    type: TRANSACTIONS_ALL,
+    payload: transactionsALL,
   }
 }
 

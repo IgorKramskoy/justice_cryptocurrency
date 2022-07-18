@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Alert,
   Box,
   Button,
 } from '@mui/material';
-import { Content,
+import {
+  Content,
   ContentBottom,
   ContentTop,
   Info,
@@ -16,9 +18,9 @@ import { Content,
 } from './ComponentConvecter.styles';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import swap from '../../../assets/images/swap.svg';
-import { allWalletRefill, walletRefill } from '../../../redux/action';
+import { allWalletRefill, transactionsALL, walletRefill } from '../../../redux/action';
 import * as Navigate from '../../../routesNavigate';
-import { useNavigate } from 'react-router-dom';
+
 
 export const Convecter = () => {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ export const Convecter = () => {
   const currencies  = useSelector((state) => state.money.money);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
+  const transactionAll = useSelector((state) => state.transaction.transactionAll);
 
   const formik = useFormik({
     initialValues: {
@@ -48,7 +51,8 @@ export const Convecter = () => {
       const key = values.currenciesValue.toLowerCase();
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
-      console.log(id, key, keyUp, findWallet)
+      const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
+
       if(walletUserRedux.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
@@ -60,8 +64,8 @@ export const Convecter = () => {
               : Number(formik.values.countUp)
           }
         }
-        dispatch(walletRefill(newWallet))
-        localStorage.setItem('userWallet', JSON.stringify(newWallet))
+        dispatch(walletRefill(newWallet));
+        localStorage.setItem('userWallet', JSON.stringify(newWallet));
         const newAllWallets = allWalletRedux.map((wallet) => {
         if (wallet.userId === newWallet.userId) {
             return newWallet
@@ -69,11 +73,83 @@ export const Convecter = () => {
           return wallet
         })
         dispatch(allWalletRefill(newAllWallets));
-        localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
+        localStorage.setItem('allWallets', JSON.stringify(newAllWallets));
+        if(!findTransactions) {
+          const newTransactions = {
+            userId: currentUser.id,
+            transactions: [
+              {
+                data: Date.now(),
+                currenciesValue: values.currenciesValue,
+                count: values.count,
+                currenciesValueUp: values.currenciesValueUp,
+                countUp: values.countUp,
+                status: true,
+              }
+            ]
+          }
+          transactionAll.push(newTransactions);
+          dispatch(transactionsALL(transactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
+        } else {
+          const newTransaction = {
+            data: Date.now(),
+            currenciesValue: values.currenciesValue,
+            count: values.count,
+            currenciesValueUp: values.currenciesValueUp,
+            countUp: values.countUp,
+            status: true,
+          }
+          findTransactions.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll.map((transaction) => {
+            if (transaction.userId === findTransactions.userId) {
+              return findTransactions
+            }
+            return findTransactions
+          })
+          dispatch(allWalletRefill(newTransactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
+        }
         navigate(Navigate.WALLET)
-      } else (
+      } else {
+        if(!findTransactions) {
+          const newTransactions = {
+            userId: currentUser.id,
+            transactions: [
+              {
+                data: Date.now(),
+                currenciesValue: values.currenciesValue,
+                count: values.count,
+                currenciesValueUp: values.currenciesValueUp,
+                countUp: values.countUp,
+                status: false,
+              }
+            ]
+          }
+          transactionAll.push(newTransactions);
+          dispatch(transactionsALL(transactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
+        } else {
+          const newTransaction = {
+            data: Date.now(),
+            currenciesValue: values.currenciesValue,
+            count: values.count,
+            currenciesValueUp: values.currenciesValueUp,
+            countUp: values.countUp,
+            status: false,
+          }
+          findTransactions.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll.map((transaction) => {
+            if (transaction.userId === findTransactions.userId) {
+              return findTransactions
+            }
+            return findTransactions
+          })
+          dispatch(allWalletRefill(newTransactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
+        }
         setError(true)
-      )
+      }
     },
   });
 

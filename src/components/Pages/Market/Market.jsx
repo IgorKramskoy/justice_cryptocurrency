@@ -15,15 +15,19 @@ import {
   Box,
 } from '@mui/material';
 
-import { BoxStyled, TableCellHeadStyled, TableCellStyled } from './Table.styled';
+import {
+  BoxStyled,
+  TableCellHeadStyled,
+  TableCellStyled
+} from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
 
 export const Market = () => {
-  const currencies  = useSelector((state) => state.money.money );
-
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
+
+  const currencies  = useSelector((state) => state.money.money );
 
   const onChange = (event, newValue) => {
     if(!newValue){
@@ -32,7 +36,6 @@ export const Market = () => {
       setFilteredRows(currencies.filter((item) => (
         item.currency.includes(newValue.currency)
       )))
-
     }
   }
 
@@ -143,7 +146,6 @@ export const Market = () => {
           rowsperpage={rowsPerPage}
           page={page + 1}
           onChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableContainer>
       {/*//*/}
