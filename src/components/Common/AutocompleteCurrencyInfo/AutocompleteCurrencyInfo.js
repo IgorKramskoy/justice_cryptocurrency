@@ -12,17 +12,19 @@ export const AutocompleteCurrencyInfo = memo((
   {
     inputValue,
     arr,
-    defaultValue,
     handleChangeCurrency,
     handleChangeCount,
     textFieldValue,
     textFieldDisabled = false,
   }) => {
+
   const [icon, setIcon] = useState();
+  const [ value, setValue ] = useState(inputValue)
 
   const handleOnChangeValue = (event, newValue) => {
+    setValue(newValue.currency)
     setIcon(newValue.img);
-    handleChangeCurrency(newValue.currency);
+    handleChangeCurrency(newValue.currency );
   }
 
   const handleSearch = (e) => {
@@ -45,8 +47,7 @@ export const AutocompleteCurrencyInfo = memo((
         disabled={textFieldDisabled}
       />
       <AutocompleteStyled
-        // inputValue={inputValue}
-        defaultValue={defaultValue}
+        inputValue={value}
         options={arr}
         onChange={handleOnChangeValue}
         getOptionLabel={(option) => option.currency}

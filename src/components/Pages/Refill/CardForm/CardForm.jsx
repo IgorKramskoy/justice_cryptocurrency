@@ -6,7 +6,7 @@ import { CustomTextField } from '../../../Common/CustomTextField';
 import { CardFormValidation } from './CardFormValidation';
 import { FormCardStyled } from './CardForm.styles';
 
-export const CardForm = ({ handleOpen, handleSubmit, handleNext }) => {
+export const CardForm = ({ handleOpen, handleSubmit, handleNext, ident }) => {
   const formik = useFormik({
     initialValues: {
       number: '',
@@ -16,16 +16,14 @@ export const CardForm = ({ handleOpen, handleSubmit, handleNext }) => {
     },
     validationSchema: CardFormValidation,
     onSubmit: () => {
-      // handleOpen();
+      if(ident === 'draw') {
+        console.log('DRAW')
+      }
+      handleOpen();
       handleSubmit();
-      handleNext();
     },
   });
-
-  const handler = () => {
-    formik.handleSubmit()
-    handleNext()
-  }
+  console.log(ident)
 
   return (
     <FormCardStyled onSubmit={formik.handleSubmit}>
@@ -83,7 +81,7 @@ export const CardForm = ({ handleOpen, handleSubmit, handleNext }) => {
         size="large"
         variant="contained"
         color="primary"
-        onClick={handler}
+        onClick={formik.handleSubmit}
       >
         Пополнить кошелек
       </Button>

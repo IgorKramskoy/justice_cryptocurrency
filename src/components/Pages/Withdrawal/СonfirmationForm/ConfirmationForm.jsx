@@ -5,14 +5,14 @@ import { FormCardStyled } from './ConfirmationForm.styles';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { AutocompleteCurrencyInfo } from '../../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 
-export const ConfirmationForm = ({arr}) => {
+export const ConfirmationForm = ({arr, data}) => {
   return (
     <FormCardStyled >
       {/*map*/}
       <Box sx={{ width: '100%' }}>
         <CustomTextField
           label='Номер карты'
-          value={'5554356565676767645'}
+          value={data.card.number}
           type="text"
           disabled={true}
         />
@@ -20,13 +20,16 @@ export const ConfirmationForm = ({arr}) => {
       <Box sx={{ width: '100%' }}>
         <CustomTextField
           label='Владелец карты'
-          value={'Igor Kramskoy'}
+          value={data.card.name}
           type="text"
           disabled={true}
         />
       </Box>
       <AutocompleteCurrencyInfo
         arr={arr}
+        textFieldDisabled
+        textFieldValue={data.countUp}
+        inputValue={data.currenciesValueUp}
       />
       <Button
         type="submit"

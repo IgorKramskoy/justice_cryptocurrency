@@ -4,6 +4,7 @@ body {
   box-sizing: border-box;
   height: 100vh;
   background: #111823;
+
 }
 
 .App {
@@ -43,4 +44,8 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled {
+  -webkit-text-fill-color: #8C939D;
 }

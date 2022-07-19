@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -19,28 +19,48 @@ import { Steper } from './Steper/Steper';
 import * as Navigate from '../../../routesNavigate';
 import { steps } from './Steper/step'
 import { ConfirmationForm } from './СonfirmationForm';
+import rub from '../../../assets/images/rub.svg';
+import usd from '../../../assets/images/usd.svg';
+
 
 export const Withdrawal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [item, setItem] = useState({});
+  const [reversPrice, setReversPrice] = useState(0);
 
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
-  const currencies  = useSelector((state) => state.money.money );
+  const currencies = useSelector((state) => state.money.money);
   const cryptoId = useSelector((state) => state.money.cryptoId);
-  const cryptoFind = currencies.find((item) => item.currency === cryptoId)
+  const findCrypto = currencies.find((item) => item.currency === cryptoId)
+  const ident = 'draw'
+
+  let money = [
+    {
+      img: rub,
+      currency: 'RUB',
+    },
+    // {
+    //   img: usd,
+    //   currency: 'USD',
+    // },
+  ]
 
   const formik = useFormik({
     initialValues: {
-      currenciesValue: '',
+      currenciesValue: cryptoId,
       count: 0,
       currenciesValueUp: '',
       countUp: 0,
+      number: '',
     },
-    onSubmit: () => {},
+    onSubmit: () => {
+    },
   });
 
   const goToWallet = () => {
@@ -49,7 +69,6 @@ export const Withdrawal = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log(formik.values)
   };
 
   const handleOpen = () => {
@@ -61,39 +80,50 @@ export const Withdrawal = () => {
     navigate(Navigate.WALLET);
   };
 
-  const handleChangeCurrency = useCallback((name) => {
-    formik.setFieldValue('currenciesValue', name);
+  const handleChangeCurrency = useCallback((currency) => {
+    formik.setFieldValue('currenciesValue', currency);
   }, [])
 
   const handleChangeCount = useCallback((count) => {
     formik.setFieldValue('count', count);
   }, [])
 
-  const handleChangeCurrencyUp = useCallback((name) => {
-    formik.setFieldValue('currenciesValueUp', name);
+  const handleChangeCurrencyUp = useCallback((currency) => {
+    formik.setFieldValue('currenciesValueUp', currency);
   }, [])
 
   const handleChangeCountUp = useCallback((count) => {
     formik.setFieldValue('countUp', count);
   }, [])
 
-
+  const handleChangeCard = useCallback((name) => {
+    formik.setFieldValue('card', name);
+  }, [])
 
   const handleSubmit = () => {
-    console.log('submit' )
+    console.log('submit')
   }
+
+  useEffect(() => {
+    if (formik.values.currenciesValueUp && formik.values.count) {
+      const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
+      setItem(itemNew);
+      const newReversPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) * Number(formik.values.count)
+      setReversPrice(newReversPrice);
+      handleChangeCountUp(newReversPrice)
+    }
+  }, [formik.values])
+
   return (
     <>
       <Box sx={{color: '#FFFFFF'}}>Withdrawal</Box>
-      <ContentСontainer >
+      <ContentСontainer>
         <Content>
           <ContentHeader>
-            {/*title*/}
-            <Box >
+            <Box>
               <Typography sx={{color: '#FFFFFF'}} variant="h5">Вывод криптовалюты</Typography>
             </Box>
-            {/*//*/}
-            <Box >
+            <Box>
               <Button
                 type="submit"
                 size="small"
@@ -106,25 +136,40 @@ export const Withdrawal = () => {
             </Box>
           </ContentHeader>
           <ContentLeft>
-            <RefillForm >
-              { activeStep === 0 ? (
-                <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '0px', gap: '20px'}}>
-                  <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите монету которую хотите вывести</Typography>
-                  <Box >
-                    <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '10px'}}>
-                      <Typography sx={{color: '#8C939D', fontSize: '14px', }} variant="h5">Монета</Typography>
+            <RefillForm>
+              {activeStep === 0 ? (
+                <Box
+                  sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '0px', gap: '20px'}}>
+                  <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите монету которую хотите
+                    вывести</Typography>
+                  <Box>
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'start',
+                      paddingTop: '20px',
+                      gap: '10px'
+                    }}>
+                      <Typography sx={{color: '#8C939D', fontSize: '14px',}} variant="h5">Монета</Typography>
                       <AutocompleteCurrencyInfo
                         arr={currencies}
                         handleChangeCurrency={handleChangeCurrency}
                         handleChangeCount={handleChangeCount}
-                        inputValue={cryptoFind}
-                        defaultValue={cryptoFind}
+                        inputValue={cryptoId}
                       />
                     </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '10px'}}>
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'start',
+                      paddingTop: '20px',
+                      gap: '10px'
+                    }}>
                       <Typography sx={{color: '#8C939D', fontSize: '14px',}} variant="h5">Валюта</Typography>
                       <AutocompleteCurrencyInfo
-                        arr={currencies}
+                        arr={money}
+                        textFieldValue={formik.values.countUp}
+                        textFieldDisabled
                         handleChangeCurrency={handleChangeCurrencyUp}
                         handleChangeCount={handleChangeCountUp}
                       />
@@ -138,27 +183,28 @@ export const Withdrawal = () => {
                   >
                     Продолжить
                   </Button>
-                </Box> ) : null}
-              { activeStep === 1 ? (
-                <Box sx={{ textAlign:'start'}}>
+                </Box>) : null}
+              {activeStep === 1 ? (
+                <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
                   <CardForm
-                    // handleOpen={handleOpen}
-                    // handleSubmit={handleSubmit}
                     handleNext={handleNext}
+                    handleChangeCard={handleChangeCard}
+                    ident={ident}
                   />
-                </Box> ) : null}
-              { activeStep === 2 ? (
-                <Box sx={{ textAlign:'start'}}>
-                  <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения перевода</Typography>
-                  <ConfirmationForm arr={currencies}/>
-                </Box> ) : null}
-              { open ? (
-                <Box>
-                  <SimpleDialogDemo open={open} handleClose={handleClose}/>
-                </Box> ) : null}
+                </Box>) : null}
+              {activeStep === 2 ? (
+                <Box sx={{textAlign: 'start'}}>
+                  <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения
+                    перевода</Typography>
+                  <ConfirmationForm arr={currencies} data={formik.values} handleSubmit={handleSubmit}/>
+                </Box>) : null}
+              {/*{ open ? (*/}
+              {/*  <Box>*/}
+              {/*    <SimpleDialogDemo open={open} handleClose={handleClose}/>*/}
+              {/*  </Box> ) : null}*/}
             </RefillForm>
-            <ContentRight >
+            <ContentRight>
               <Steper activeStep={activeStep} steps={steps}/>
             </ContentRight>
           </ContentLeft>

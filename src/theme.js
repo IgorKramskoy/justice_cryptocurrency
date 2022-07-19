@@ -115,11 +115,12 @@ export const customTheme = createTheme({
           },
           '& .MuiOutlinedInput-root.Mui-disabled': {
             background: '#1C2027',
-            webkitTextFillColor: 'rgb(255 254 254 / 68%)',
+            color: '#FFFFFF' ,
           },
           '& .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled': {
             background: '#1C2027',
             color: '#FFFFFF',
+
           },
           '& .Mui-error .MuiOutlinedInput-notchedOutline': {
             border: 'none',
