@@ -24,6 +24,7 @@ import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
+import { steps } from './Steper/step'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -212,7 +213,7 @@ export const Refill = () => {
 
               </RefillForm>
             <ContentRight >
-              <Steper activeStep={activeStep}/>
+              <Steper activeStep={activeStep} steps={steps}/>
             </ContentRight>
           </ContentLeft>
       </Content>

@@ -113,7 +113,11 @@ export const customTheme = createTheme({
             fontSize: '0.875rem',
             padding: '22px 16px 10px',
           },
-          '& .Mui-disabled': {
+          '& .MuiOutlinedInput-root.Mui-disabled': {
+            background: '#1C2027',
+            webkitTextFillColor: 'rgb(255 254 254 / 68%)',
+          },
+          '& .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled': {
             background: '#1C2027',
             color: '#FFFFFF',
           },

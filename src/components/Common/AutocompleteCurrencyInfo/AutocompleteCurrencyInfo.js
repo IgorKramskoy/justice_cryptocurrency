@@ -10,7 +10,9 @@ import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
 export const AutocompleteCurrencyInfo = memo((
   {
+    inputValue,
     arr,
+    defaultValue,
     handleChangeCurrency,
     handleChangeCount,
     textFieldValue,
@@ -43,6 +45,8 @@ export const AutocompleteCurrencyInfo = memo((
         disabled={textFieldDisabled}
       />
       <AutocompleteStyled
+        // inputValue={inputValue}
+        defaultValue={defaultValue}
         options={arr}
         onChange={handleOnChangeValue}
         getOptionLabel={(option) => option.currency}

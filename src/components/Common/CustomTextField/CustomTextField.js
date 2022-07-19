@@ -5,7 +5,7 @@ import { Box,
   Typography
 } from '@mui/material';
 
-export const CustomTextField = ({ label, value, onChange, name, error, type, errorMessage, touched }) => {
+export const CustomTextField = ({ label, value, onChange, name, error, type, errorMessage, touched, disabled }) => {
   return (
     <Box>
       <TextField
@@ -16,6 +16,7 @@ export const CustomTextField = ({ label, value, onChange, name, error, type, err
         onChange={onChange}
         error={error}
         type={type}
+        disabled={disabled}
       />
       {errorMessage && touched ? (
         <Typography variant="caption" sx={{
