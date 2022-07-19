@@ -5,7 +5,11 @@ import { FormCardStyled } from './ConfirmationForm.styles';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { AutocompleteCurrencyInfo } from '../../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 
-export const ConfirmationForm = ({arr, data, handleWithdrawal}) => {
+export const ConfirmationForm = ({arr, data, handleWithdrawal, handleOpen}) => {
+  const handleSubmit = () => {
+    handleWithdrawal()
+    handleOpen()
+  }
 
   return (
     <FormCardStyled >
@@ -37,7 +41,7 @@ export const ConfirmationForm = ({arr, data, handleWithdrawal}) => {
         size="large"
         variant="contained"
         color="primary"
-        onClick={handleWithdrawal}
+        onClick={handleSubmit}
       >
         Пополнить кошелек
       </Button>

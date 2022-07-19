@@ -22,7 +22,7 @@ import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { ConfirmationForm } from './СonfirmationForm';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
-
+import {cryptoMessage} from '../../../ModalMessage/cryptoMessage'
 
 export const Withdrawal = () => {
   const dispatch = useDispatch();
@@ -222,12 +222,16 @@ export const Withdrawal = () => {
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения
                     перевода</Typography>
-                  <ConfirmationForm arr={currencies} data={formik.values} handleWithdrawal={handleWithdrawal}/>
+                  <ConfirmationForm
+                    arr={currencies}
+                    data={formik.values}
+                    handleWithdrawal={handleWithdrawal}
+                    handleOpen={handleOpen}/>
                 </Box>) : null}
-              {/*{ open ? (*/}
-              {/*  <Box>*/}
-              {/*    <SimpleDialogDemo open={open} handleClose={handleClose}/>*/}
-              {/*  </Box> ) : null}*/}
+              { open ? (
+                <Box>
+                  <SimpleDialogDemo open={open} handleClose={handleClose} messageText={cryptoMessage}/>
+                </Box> ) : null}
             </RefillForm>
             <ContentRight>
               <Steper activeStep={activeStep} steps={steps}/>

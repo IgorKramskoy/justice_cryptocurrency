@@ -25,7 +25,7 @@ import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
 import { steps } from './Steper/step';
-import { walletMessage } from '../../../ModalMessage/walletMessage'
+import {walletMessage} from '../../../ModalMessage/walletMessage'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,6 @@ export const Refill = () => {
   const [open, setOpen] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
-  const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const ident = 'refill'
 
@@ -214,7 +213,7 @@ export const Refill = () => {
                   </Box> ) : null}
                 { open ? (
                   <Box>
-                    <SimpleDialogDemo open={open} handleClose={handleClose} />
+                    <SimpleDialogDemo open={open} handleClose={handleClose} messageText={walletMessage}/>
                   </Box> ) : null}
               </RefillForm>
             <ContentRight >
