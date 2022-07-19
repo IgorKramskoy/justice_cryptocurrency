@@ -21,6 +21,7 @@ import { steps } from './Steper/step'
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { ConfirmationForm } from './СonfirmationForm';
+import { allWalletRefill, walletRefill } from '../../../redux/action';
 
 
 export const Withdrawal = () => {
@@ -37,7 +38,7 @@ export const Withdrawal = () => {
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const currencies = useSelector((state) => state.money.money);
   const cryptoId = useSelector((state) => state.money.cryptoId);
-  const findCrypto = currencies.find((item) => item.currency === cryptoId)
+
   const ident = 'draw'
 
   let money = [
@@ -100,8 +101,33 @@ export const Withdrawal = () => {
     formik.setFieldValue('number', name);
   }, [])
 
-  const handleSubmit = () => {
-    console.log('submit')
+  const handleWithdrawal = () => {
+    const id = currentUser.id
+    const key = formik.values.currenciesValue.toLowerCase();
+    const keyUp = formik.values.currenciesValueUp.toLowerCase();
+    const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
+    const newWallet = {
+      ...findWallet,
+      currencies: {
+        ...findWallet.currencies,
+        [keyUp]: Number(formik.values.countUp) + Number(findWallet.currencies.rub)
+      },
+      crypto: {
+        ...findWallet.crypto,
+        [key]:  Number(findWallet.crypto[key]) - Number(formik.values.count)
+      }
+    }
+    console.log(newWallet);
+    dispatch(walletRefill(newWallet))
+    localStorage.setItem('userWallet', JSON.stringify(newWallet))
+    const newAllWallets = allWalletRedux.map((wallet) => {
+      if (wallet.userId === newWallet.userId) {
+        return newWallet
+      }
+      return wallet
+    })
+    dispatch(allWalletRefill(newAllWallets));
+    localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
   }
 
   useEffect(() => {
@@ -116,7 +142,6 @@ export const Withdrawal = () => {
 
   return (
     <>
-      <Box sx={{color: '#FFFFFF'}}>Withdrawal</Box>
       <ContentСontainer>
         <Content>
           <ContentHeader>
@@ -197,7 +222,7 @@ export const Withdrawal = () => {
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения
                     перевода</Typography>
-                  <ConfirmationForm arr={currencies} data={formik.values} handleSubmit={handleSubmit}/>
+                  <ConfirmationForm arr={currencies} data={formik.values} handleWithdrawal={handleWithdrawal}/>
                 </Box>) : null}
               {/*{ open ? (*/}
               {/*  <Box>*/}
