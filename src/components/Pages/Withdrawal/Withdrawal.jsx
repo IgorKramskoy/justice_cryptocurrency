@@ -18,9 +18,9 @@ import { SimpleDialogDemo } from '../Refill/ModalWindow';
 import { Steper } from './Steper/Steper';
 import * as Navigate from '../../../routesNavigate';
 import { steps } from './Steper/step'
-import { ConfirmationForm } from './СonfirmationForm';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
+import { ConfirmationForm } from './СonfirmationForm';
 
 
 export const Withdrawal = () => {
@@ -97,7 +97,7 @@ export const Withdrawal = () => {
   }, [])
 
   const handleChangeCard = useCallback((name) => {
-    formik.setFieldValue('card', name);
+    formik.setFieldValue('number', name);
   }, [])
 
   const handleSubmit = () => {

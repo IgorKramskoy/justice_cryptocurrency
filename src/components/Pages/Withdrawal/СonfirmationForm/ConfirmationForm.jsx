@@ -12,7 +12,7 @@ export const ConfirmationForm = ({arr, data}) => {
       <Box sx={{ width: '100%' }}>
         <CustomTextField
           label='Номер карты'
-          value={data.card.number}
+          value={data.number.number}
           type="text"
           disabled={true}
         />
@@ -20,7 +20,7 @@ export const ConfirmationForm = ({arr, data}) => {
       <Box sx={{ width: '100%' }}>
         <CustomTextField
           label='Владелец карты'
-          value={data.card.name}
+          value={data.number.name}
           type="text"
           disabled={true}
         />
