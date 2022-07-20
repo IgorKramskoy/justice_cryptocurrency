@@ -13,7 +13,7 @@ export const Steper = ({ activeStep, steps }) => {
   return (
     <Box sx={{ maxWidth: 400}}>
       <StepperStyles activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
+        {steps.map((step) => (
           <Step key={step.label} >
             <StepLabel>
               {step.label}
