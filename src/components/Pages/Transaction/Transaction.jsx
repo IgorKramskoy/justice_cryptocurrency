@@ -17,7 +17,7 @@ import { TableCellHeadStyled } from '../Market/Table.styled';
 import { TableCellStyled } from '../Wallet/Wallet.styles';
 
 import arrow from '../../../assets/images/arrow.svg';
-import {CryptoCurrency} from '../../../cryptoСurrency'
+import { CryptoCurrency } from '../../../cryptoСurrency'
 
 export const Transaction = () => {
   const [transactionRows, setTransactionUser] = useState([]);
@@ -32,7 +32,7 @@ export const Transaction = () => {
 
   const findItem = (findValue, arr) => {
     const findObj = arr.find(item => item.currency === findValue)
-    if(findObj === undefined) return {}
+    if (findObj === undefined) return {}
     return findObj
   }
 
@@ -53,14 +53,14 @@ export const Transaction = () => {
     setPage(newPage - 1);
   };
 
-  useEffect( () => {
+  useEffect(() => {
     if (transactionRows.length === 0) {
-      setTransactionUser(createTransactionArr(CryptoCurrency,transactionArr))
+      setTransactionUser(createTransactionArr(CryptoCurrency, transactionArr))
     }
   }, [transactionArr]);
   return (
     <Box>
-      <Typography sx={{color: '#FFFFFF',textAlign:'left', marginTop:'10px'}} variant="h4">Транзакции</Typography>
+      <Typography sx={{color: '#FFFFFF', textAlign: 'left', marginTop: '10px'}} variant="h4">Транзакции</Typography>
       <TableContainer component={Paper} sx={{
         marginTop: '20px',
         borderRadius: '0px',
@@ -68,9 +68,9 @@ export const Transaction = () => {
         background: 'none',
         marginBottom: '20px',
       }}>
-        <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
-          <TableHead sx={{ background: '#191F29', padding: '0px'}}>
-            <TableRow  sx={{ }}>
+        <Table sx={{minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
+          <TableHead sx={{background: '#191F29', padding: '0px'}}>
+            <TableRow sx={{}}>
               <TableCellHeadStyled align="left">Актив</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Отдал</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Получил</TableCellHeadStyled>
@@ -79,18 +79,18 @@ export const Transaction = () => {
               <TableCellHeadStyled align="left"></TableCellHeadStyled>
             </TableRow>
           </TableHead>
-          <TableBody sx={{ background: '#111823',}}>
-            { transactionRows
+          <TableBody sx={{background: '#111823',}}>
+            {transactionRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={`${row.data}`}>
                   <TableCellStyled align="left">
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                      <Box sx={{paddingTop: '5px'}}> <img src={row?.newItem?.img} alt='revers'/></Box>
+                      <Box sx={{paddingTop: '5px'}}> <img src={row?.newItem?.img} alt="revers"/></Box>
                       <Box>{row?.currenciesValue}</Box>
                       <Box>{row?.newItem?.name}</Box>
-                      <Box sx={{paddingTop: '5px'}}> <img src={arrow} alt='revers'/></Box>
-                      <Box sx={{paddingTop: '5px'}}> <img src={row?.newItemUp?.img} alt='revers'/></Box>
+                      <Box sx={{paddingTop: '5px'}}> <img src={arrow} alt="revers"/></Box>
+                      <Box sx={{paddingTop: '5px'}}> <img src={row?.newItemUp?.img} alt="revers"/></Box>
                       <Box>{row?.currenciesValueUp}</Box>
                       <Box>{row?.newItemUp?.name}</Box>
                     </Box>
@@ -100,9 +100,9 @@ export const Transaction = () => {
                   <TableCellStyled align="left">{new Date(row?.data).toLocaleString()}</TableCellStyled>
                   <TableCellStyled align="left">
                     {row?.status ?
-                    (<Alert color='success' variant='filledMedium' icon={false}>Успешно</Alert>) :
-                    (<Alert color='error' variant='filledMedium' icon={false}>Отклонено</Alert>)
-                  }
+                      (<Alert color="success" variant="filledMedium" icon={false}>Успешно</Alert>) :
+                      (<Alert color="error" variant="filledMedium" icon={false}>Отклонено</Alert>)
+                    }
                   </TableCellStyled>
                 </TableRow>
               ))}

@@ -32,6 +32,7 @@ export const AvatarUser = () => {
         reject(error)
       }
     })
+
   async function handleImageChange(e) {
     e.preventDefault();
     let reader = new FileReader();
@@ -48,9 +49,10 @@ export const AvatarUser = () => {
     dispatch(updateUser(userFind))
     dispatch(updateUsers(usersRedux))
   }
+
   return (
-    <BoxConteinerStyled >
-      <BoxStyled >
+    <BoxConteinerStyled>
+      <BoxStyled>
         <ConteinerStyled>
           <AvatarStyled src={photo}/>
         </ConteinerStyled>
@@ -66,8 +68,8 @@ export const AvatarUser = () => {
           />
         </ButtonStyled>
       </BoxStyled>
-      <Typography variant="caption" sx={{ color: 'white' }}>
-       Name User
+      <Typography variant="caption" sx={{color: 'white'}}>
+        Name User
       </Typography>
     </BoxConteinerStyled>
   );

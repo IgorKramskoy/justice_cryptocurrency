@@ -1,6 +1,6 @@
 import { Box, styled, Typography } from '@mui/material';
 
-export const Container = styled( 'form' ) (() => ({
+export const Container = styled('form')(() => ({
   display: 'flex',
   flexWrap: 'wrap',
   gap: '20px',
@@ -10,12 +10,12 @@ export const Container = styled( 'form' ) (() => ({
     width: '48%',
   }
 }))
-export const TitleStyled = styled( Typography ) (() => ({
+export const TitleStyled = styled(Typography)(() => ({
   color: 'white',
   alignSelf: 'start',
   padding: '0px 10px',
 }))
-export const BoxStyled = styled( Box ) (() => ({
+export const BoxStyled = styled(Box)(() => ({
   width: '50%',
   display: 'flex',
   justifyContent: 'start',

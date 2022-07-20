@@ -6,17 +6,19 @@ import {
 } from '@mui/material';
 import { TypographyError } from './CustomTextField.styles';
 
-export const CustomTextField = ({
-                                  label,
-                                  value,
-                                  onChange,
-                                  name,
-                                  error,
-                                  type,
-                                  errorMessage,
-                                  touched,
-                                  disabled
-}) => {
+export const CustomTextField = (
+  {
+    label,
+    value,
+    onChange,
+    name,
+    error,
+    type,
+    errorMessage,
+    touched,
+    disabled
+  }
+) => {
   return (
     <Box>
       <TextField

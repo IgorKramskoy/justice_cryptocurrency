@@ -19,12 +19,12 @@ export const AutocompleteCurrencyInfo = memo((
   }) => {
 
   const [icon, setIcon] = useState();
-  const [ value, setValue ] = useState(inputValue)
+  const [value, setValue] = useState(inputValue)
 
   const handleOnChangeValue = (event, newValue) => {
     setValue(newValue.currency)
     setIcon(newValue.img);
-    handleChangeCurrency(newValue.currency );
+    handleChangeCurrency(newValue.currency);
   }
 
   const handleSearch = (e) => {
@@ -40,7 +40,7 @@ export const AutocompleteCurrencyInfo = memo((
       border: '1px solid rgba(255, 255, 255, 0.1)',
     }}>
       <TextFieldStyled
-        label='Кол-во'
+        label="Кол-во"
         type="number"
         value={textFieldValue}
         onChange={handleSearch}
@@ -53,7 +53,7 @@ export const AutocompleteCurrencyInfo = memo((
         getOptionLabel={(option) => option.currency}
         renderOption={(props, option) => (
           <Box {...props} sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-            <Box><img src={option?.img} alt='icon'/></Box>
+            <Box><img src={option?.img} alt="icon"/></Box>
             <Box>{option?.currency}</Box>
           </Box>
         )}
@@ -71,7 +71,8 @@ export const AutocompleteCurrencyInfo = memo((
             }}
             InputProps={{
               ...params.InputProps,
-              startAdornment: <InputAdornment position="start">{icon ? <img src={icon} alt="icon"/> : ''}</InputAdornment>,
+              startAdornment: <InputAdornment position="start">{icon ?
+                <img src={icon} alt="icon"/> : ''}</InputAdornment>,
             }}
           />
         )}

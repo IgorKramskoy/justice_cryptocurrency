@@ -115,7 +115,7 @@ export const customTheme = createTheme({
           },
           '& .MuiOutlinedInput-root.Mui-disabled': {
             background: '#1C2027',
-            color: '#FFFFFF' ,
+            color: '#FFFFFF',
           },
           '& .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled': {
             background: '#1C2027',
@@ -144,7 +144,7 @@ export const customTheme = createTheme({
     },
     MuiChip: {
       styleOverrides: {
-        root: ({ ownerState, theme }) => ({
+        root: ({ownerState, theme}) => ({
           padding: '4px 8px',
           height: theme.spacing(3),
           borderRadius: 3,
@@ -162,20 +162,20 @@ export const customTheme = createTheme({
     MuiAlert: {
       variants: [
         {
-          props: { variant: 'filledMedium' },
+          props: {variant: 'filledMedium'},
           style: {
             height: 40,
           },
         },
         {
-          props: { variant: 'filledLarge' },
+          props: {variant: 'filledLarge'},
           style: {
             height: 48,
           },
         },
       ],
       styleOverrides: {
-        root: ({ ownerState, theme }) => ({
+        root: ({ownerState, theme}) => ({
           padding: '4px 8px',
           display: 'flex',
           justifyContent: 'center',

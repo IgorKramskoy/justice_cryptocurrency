@@ -1,6 +1,6 @@
 import { Stepper, styled } from '@mui/material';
 
-export const StepperStyles = styled(Stepper) (() => ({
+export const StepperStyles = styled(Stepper)(() => ({
   ['& .MuiStepContent-root']: {
     color: '#8C939D',
     fontSize: '12px',

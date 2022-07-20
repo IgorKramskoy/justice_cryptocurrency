@@ -26,10 +26,10 @@ export const Market = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
-  const currencies  = useSelector((state) => state.money.money );
+  const currencies = useSelector((state) => state.money.money);
 
   const onChange = (event, newValue) => {
-    if(!newValue){
+    if (!newValue) {
       setFilteredRows(currencies)
     } else {
       setFilteredRows(currencies.filter((item) => (
@@ -39,7 +39,7 @@ export const Market = () => {
   }
 
   const handleSearch = (e) => {
-    if(!e.target.value){
+    if (!e.target.value) {
       setFilteredRows(currencies)
     } else {
       setFilteredRows(currencies.filter((item) => (
@@ -57,7 +57,7 @@ export const Market = () => {
     setPage(0);
   };
 
-  useEffect( () => {
+  useEffect(() => {
     if (filteredRows.length === 0) {
       setFilteredRows(currencies)
     }
@@ -65,9 +65,9 @@ export const Market = () => {
 
   return (
     <>
-      <BoxStyled sx={{marginTop: '20px', }}>
-        <Typography variant="h4" sx={{ color: 'white' }}>
-           Курсы валют
+      <BoxStyled sx={{marginTop: '20px',}}>
+        <Typography variant="h4" sx={{color: 'white'}}>
+          Курсы валют
         </Typography>
         <AutocompleteStyled
           disablePortal
@@ -78,7 +78,7 @@ export const Market = () => {
           )}
           renderOption={(props, option) => (
             <Box{...props} sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-              <Box><img src={option?.img} alt='icon'/></Box>
+              <Box><img src={option?.img} alt="icon"/></Box>
               <Box>{option?.currency}</Box>
               <Box>{option?.name}</Box>
             </Box>
@@ -104,9 +104,10 @@ export const Market = () => {
         marginTop: '20px',
         borderRadius: '0px',
         boxShadow: 'none',
-        background: 'none',}}>
-        <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
-          <TableHead sx={{ background: '#191F29', padding: '0px'}}>
+        background: 'none',
+      }}>
+        <Table sx={{minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
+          <TableHead sx={{background: '#191F29', padding: '0px'}}>
             <TableRow>
               <TableCellHeadStyled align="left">Название</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Цена</TableCellHeadStyled>
@@ -116,14 +117,14 @@ export const Market = () => {
               <TableCellHeadStyled align="left"></TableCellHeadStyled>
             </TableRow>
           </TableHead>
-          <TableBody sx={{ background: '#111823',}}>
-            { filteredRows
+          <TableBody sx={{background: '#111823',}}>
+            {filteredRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={`${row.name}-${row.currency}`}>
                   <TableCellStyled align="left">
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                      <Box><img src={row?.img} alt='icon'/></Box>
+                      <Box><img src={row?.img} alt="icon"/></Box>
                       <Box>{row?.currency}</Box>
                       <Box>{row?.name}</Box>
                     </Box>

@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch()
-  useEffect( () => {
+  useEffect(() => {
     dispatch(fetchMoney());
   }, [])
 
@@ -24,15 +24,15 @@ function App() {
 
   return (
     <div className="App">
-        <ThemeProvider theme={customTheme}>
-          <Wrapper>
-            <Routes>
-              {routes.map(({ path, element }) => (
-                <Route key={path} path={path} element={element} />
-              ))}
-            </Routes>
-          </Wrapper>
-        </ThemeProvider>
+      <ThemeProvider theme={customTheme}>
+        <Wrapper>
+          <Routes>
+            {routes.map(({path, element}) => (
+              <Route key={path} path={path} element={element}/>
+            ))}
+          </Routes>
+        </Wrapper>
+      </ThemeProvider>
     </div>
   );
 }

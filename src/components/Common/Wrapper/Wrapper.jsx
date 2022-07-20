@@ -17,14 +17,14 @@ import {
   BoxStyles,
   DrawerStyles
 } from './StylesWraper.styled';
-import { CustomNavLink} from '../CustomNavLink';
+import { CustomNavLink } from '../CustomNavLink';
 
 import { links } from '../../../links';
 import * as Navigate from '../../../routesNavigate';
 import logo from '../../../assets/images/logo.png';
 import logout from '../../../assets/images/logout.svg';
 
-export const Wrapper = ({ children }) => {
+export const Wrapper = ({children}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const Wrapper = ({ children }) => {
   }
 
   useEffect(() => {
-    if(!currentUser) {
+    if (!currentUser) {
       navigate(Navigate.LOGIN)
     }
   }, []);
@@ -47,31 +47,32 @@ export const Wrapper = ({ children }) => {
   }
 
   return (
-    <Box sx={{ display: 'flex'}}>
-      <CssBaseline />
+    <Box sx={{display: 'flex'}}>
+      <CssBaseline/>
       {/*//navbar*/}
       <AppBarStyles>
-        <Toolbar sx={{display: 'flex', justifyContent:'space-between' }}>
+        <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
           <img src={logo} alt="logo"/>
           <Avatar src={currentUser.avatar}/>
         </Toolbar>
       </AppBarStyles>
       {/*//*/}
-      {(location.pathname !== Navigate.REFILL &&  location.pathname !== Navigate.WITHDRAWAL) ? <DrawerStyles variant="permanent">
-        {/*//sidebar*/}
-        <BoxConteinerStyles>
-          <BoxStyles>
-            {links.map(({ path, text, image }) => (
-              <CustomNavLink key={path} path={path} image={image} text={text}/>
-            ))}
-          </BoxStyles>
-          <BoxStyles >
-            <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}/>
-            <CustomNavLink path={Navigate.LOGIN} image={logout} text="Выход" onClick={logOut} />
-          </BoxStyles>
-        </BoxConteinerStyles>
-        {/*//*/}
-      </DrawerStyles> : null}
+      {(location.pathname !== Navigate.REFILL && location.pathname !== Navigate.WITHDRAWAL) ?
+        <DrawerStyles variant="permanent">
+          {/*//sidebar*/}
+          <BoxConteinerStyles>
+            <BoxStyles>
+              {links.map(({path, text, image}) => (
+                <CustomNavLink key={path} path={path} image={image} text={text}/>
+              ))}
+            </BoxStyles>
+            <BoxStyles>
+              <Divider sx={{borderColor: 'rgba(255, 255, 255, 0.1)'}}/>
+              <CustomNavLink path={Navigate.LOGIN} image={logout} text="Выход" onClick={logOut}/>
+            </BoxStyles>
+          </BoxConteinerStyles>
+          {/*//*/}
+        </DrawerStyles> : null}
       <BoxChildrenStyles component="main">
         {children}
       </BoxChildrenStyles>

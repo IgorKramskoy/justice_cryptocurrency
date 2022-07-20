@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
@@ -8,7 +8,7 @@ import {
   TitleStyled
 } from './ProfilePasswordFormContainer.styled';
 import { CustomTextField } from '../../../Common/CustomTextField';
-import {  Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import { ProfilePasswordFormValidation } from './ProfilePasswordFormValidation';
 import { updateUser, updateUsers } from '../../../../redux/action';
@@ -29,8 +29,8 @@ export const ProfilePasswordForm = () => {
       repeatNewPassword: '',
     },
     validationSchema: ProfilePasswordFormValidation,
-    onSubmit: ({ repeatNewPassword, newPassword, oldPassword, }) => {
-      if(currentUser.password === oldPassword && newPassword === repeatNewPassword) {
+    onSubmit: ({repeatNewPassword, newPassword, oldPassword,}) => {
+      if (currentUser.password === oldPassword && newPassword === repeatNewPassword) {
         const userFind = usersRedux.find((user) => user.password === oldPassword)
         userFind.password = newPassword
         localStorage.setItem('userAuth', JSON.stringify(userFind))
@@ -38,7 +38,9 @@ export const ProfilePasswordForm = () => {
         dispatch(updateUser(userFind))
         dispatch(updateUsers(usersRedux))
         setError('')
-      } else { setError('Пароли не совпадают!')}
+      } else {
+        setError('Пароли не совпадают!')
+      }
     },
   });
   const inputs = [
@@ -60,11 +62,11 @@ export const ProfilePasswordForm = () => {
   ]
   return (
     <>
-      <TitleStyled variant="h5" >
-         Пароль
+      <TitleStyled variant="h5">
+        Пароль
       </TitleStyled>
       <Container onSubmit={formik.handleSubmit}>
-        {inputs.map(({ label, name, type }) => (
+        {inputs.map(({label, name, type}) => (
           <CustomTextField
             key={name}
             label={label}
@@ -75,10 +77,10 @@ export const ProfilePasswordForm = () => {
             type={type}
             errorMessage={formik.errors[name]}
             touched={formik.touched[name]}
-            sx={{display:'flex', flexDirection:'column',}}
+            sx={{display: 'flex', flexDirection: 'column',}}
           />
         ))}
-        <BoxStyled >
+        <BoxStyled>
           <Button
             type="submit"
             size="large"

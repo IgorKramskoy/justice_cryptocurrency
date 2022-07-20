@@ -7,14 +7,14 @@ import {
   StepContent,
   Typography
 } from '@mui/material';
-import {  StepperStyles } from './Steper.styles';
+import { StepperStyles } from './Steper.styles';
 
-export const Steper = ({ activeStep, steps }) => {
+export const Steper = ({activeStep, steps}) => {
   return (
-    <Box sx={{ maxWidth: 400}}>
+    <Box sx={{maxWidth: 400}}>
       <StepperStyles activeStep={activeStep} orientation="vertical">
         {steps.map((step) => (
-          <Step key={step.label} >
+          <Step key={step.id}>
             <StepLabel>
               {step.label}
             </StepLabel>

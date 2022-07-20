@@ -1,5 +1,3 @@
-import { Checkbox, styled} from '@mui/material';
+import { Checkbox, styled } from '@mui/material';
 
-export const CheckboxStyled = styled(Checkbox) (() => ({
-
-}))
+export const CheckboxStyled = styled(Checkbox)(() => ({}))

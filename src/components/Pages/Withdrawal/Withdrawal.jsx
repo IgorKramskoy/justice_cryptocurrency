@@ -27,7 +27,7 @@ import { steps } from './Steper/step'
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
-import {cryptoMessage} from '../../../ModalMessage/cryptoMessage'
+import { cryptoMessage } from '../../../ModalMessage/cryptoMessage'
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 
 export const Withdrawal = () => {
@@ -120,7 +120,7 @@ export const Withdrawal = () => {
       },
       crypto: {
         ...findWallet.crypto,
-        [key]:  Number(findWallet.crypto[key]) - Number(formik.values.count)
+        [key]: Number(findWallet.crypto[key]) - Number(formik.values.count)
       }
     }
     console.log(newWallet);
@@ -168,7 +168,7 @@ export const Withdrawal = () => {
           </ContentHeader>
           <ContentLeft>
             <RefillForm>
-              {activeStep === 0 ? (
+              {activeStep === 0 && (
                 <BoxStep>
                   <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите монету которую хотите
                     вывести</Typography>
@@ -201,8 +201,8 @@ export const Withdrawal = () => {
                   >
                     Продолжить
                   </Button>
-                </BoxStep>) : null}
-              {activeStep === 1 ? (
+                </BoxStep>)}
+              {activeStep === 1 && (
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
                   <CardForm
@@ -210,8 +210,8 @@ export const Withdrawal = () => {
                     handleChangeCard={handleChangeCard}
                     ident={ident}
                   />
-                </Box>) : null}
-              {activeStep === 2 ? (
+                </Box>)}
+              {activeStep === 2 && (
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения
                     перевода</Typography>
@@ -220,11 +220,11 @@ export const Withdrawal = () => {
                     data={formik.values}
                     handleWithdrawal={handleWithdrawal}
                     handleOpen={handleOpen}/>
-                </Box>) : null}
-              { open ? (
+                </Box>)}
+              {open ? (
                 <Box>
                   <SimpleDialogDemo open={open} handleClose={handleClose} messageText={cryptoMessage}/>
-                </Box> ) : null}
+                </Box>) : null}
             </RefillForm>
             <ContentRight>
               <Steper activeStep={activeStep} steps={steps}/>

@@ -11,6 +11,7 @@ export const transactionReducer = (state = initialState, action) => {
         ...state,
         transactionAll: action.payload,
       }
-    default: return state
+    default:
+      return state
   }
 }

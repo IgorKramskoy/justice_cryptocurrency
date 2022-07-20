@@ -3,14 +3,14 @@ import {
   styled,
 } from '@mui/material';
 
-export const BoxStep  = styled(Box) (() => ({
+export const BoxStep = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
   paddingTop: '0px',
   gap: '20px'
 }))
-export const StepItem  = styled(Box) (() => ({
+export const StepItem = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
