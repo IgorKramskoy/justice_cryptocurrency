@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { Steper } from './Steper';
 import {
+  BoxStep,
   Content,
   ContentHeader,
   ContentLeft,
@@ -18,14 +19,14 @@ import {
   RefillForm
 } from './Refill.styles';
 import * as Navigate from '../../../routesNavigate';
-import { CardForm} from './CardForm';
+import { CardForm } from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
 import { steps } from './Steper/step';
-import {walletMessage} from '../../../ModalMessage/walletMessage'
+import { walletMessage } from '../../../ModalMessage/walletMessage'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -88,8 +89,8 @@ export const Refill = () => {
     const id = currentUser.id
     const key = formik.values.currenciesValue.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
-    if(key === 'rub') {
-      if(findWallet) {
+    if (key === 'rub') {
+      if (findWallet) {
         const newWallet = {
           ...findWallet,
           currencies: {
@@ -111,7 +112,7 @@ export const Refill = () => {
         const walletUser = {
           userId: currentUser.id,
           currencies: {
-            rub: +formik.values.count ,
+            rub: +formik.values.count,
             usd: 0,
           },
           crypto: {}
@@ -123,7 +124,7 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(allWalletRedux))
       }
     } else {
-      if(findWallet) {
+      if (findWallet) {
         const newWallet = {
           ...findWallet,
           currencies: {
@@ -145,7 +146,7 @@ export const Refill = () => {
         const walletUser = {
           userId: currentUser.id,
           currencies: {
-            rub:  0,
+            rub: 0,
             usd: +formik.values.count,
           },
           crypto: {}
@@ -161,15 +162,15 @@ export const Refill = () => {
   }
 
   return (
-    <ContentСontainer >
+    <ContentСontainer>
       <Content>
         <ContentHeader>
           {/*title*/}
-          <Box >
+          <Box>
             <Typography sx={{color: '#FFFFFF'}} variant="h5">Пополнение</Typography>
           </Box>
           {/*//*/}
-          <Box >
+          <Box>
             <Button
               type="submit"
               size="small"
@@ -181,45 +182,55 @@ export const Refill = () => {
             </Button>
           </Box>
         </ContentHeader>
-          <ContentLeft>
-              <RefillForm >
-                { activeStep === 0 ? (
-                  <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '50px'}}>
-                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
-                    <Box sx={{ color: '#FFFFFF'}}>
-                     <AutocompleteCurrencyInfo
-                       arr={money}
-                       handleChangeCurrency={handleChangeCurrency}
-                       handleChangeCount={handleChangeCount}
-                     />
-                    </Box>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                    >
-                      Продолжить
-                    </Button>
-                  </Box> ) : null}
-                { activeStep === 1 ? (
-                  <Box sx={{ textAlign:'start'}}>
-                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
-                    <CardForm
-                      handleOpen={handleOpen}
-                      handleSubmit={handleSubmit}
-                      ident={ident}
-                    />
-                  </Box> ) : null}
-                { open ? (
-                  <Box>
-                    <SimpleDialogDemo open={open} handleClose={handleClose} messageText={walletMessage}/>
-                  </Box> ) : null}
-              </RefillForm>
-            <ContentRight >
-              <Steper activeStep={activeStep} steps={steps}/>
-            </ContentRight>
-          </ContentLeft>
+        <ContentLeft>
+          <RefillForm>
+            {activeStep === 0 && (
+              <BoxStep>
+                <Typography
+                  sx={{color: '#FFFFFF'}}
+                  variant="subtitle1"
+                >
+                  Выберите валюту для пополнения
+                </Typography>
+                <Box sx={{color: '#FFFFFF'}}>
+                  <AutocompleteCurrencyInfo
+                    arr={money}
+                    handleChangeCurrency={handleChangeCurrency}
+                    handleChangeCount={handleChangeCount}
+                  />
+                </Box>
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
+                  Продолжить
+                </Button>
+              </BoxStep>)}
+            {activeStep === 1 && (
+              <Box sx={{textAlign: 'start'}}>
+                <Typography
+                  sx={{color: '#FFFFFF'}}
+                  variant="subtitle1"
+                >
+                  Введите данные для пополнения
+                </Typography>
+                <CardForm
+                  handleOpen={handleOpen}
+                  handleSubmit={handleSubmit}
+                  ident={ident}
+                />
+              </Box>)}
+            {open ? (
+              <Box>
+                <SimpleDialogDemo open={open} handleClose={handleClose} messageText={walletMessage}/>
+              </Box>) : null}
+          </RefillForm>
+          <ContentRight>
+            <Steper activeStep={activeStep} steps={steps}/>
+          </ContentRight>
+        </ContentLeft>
       </Content>
     </ContentСontainer>
   );

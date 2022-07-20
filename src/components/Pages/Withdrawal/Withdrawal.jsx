@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography
+} from '@mui/material';
 import {
   Content,
   ContentHeader,
@@ -12,17 +16,19 @@ import {
   ContentСontainer,
   RefillForm
 } from '../Refill/Refill.styles';
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 import { CardForm } from '../Refill/CardForm';
 import { SimpleDialogDemo } from '../Refill/ModalWindow';
 import { Steper } from './Steper/Steper';
+import { ConfirmationForm } from './СonfirmationForm';
+import { BoxStep, StepItem } from './Withdrawal.styles';
+
 import * as Navigate from '../../../routesNavigate';
 import { steps } from './Steper/step'
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
-import { ConfirmationForm } from './СonfirmationForm';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
-import {cryptoMessage} from '../../../ModalMessage/cryptoMessage'
+import { cryptoMessage } from '../../../ModalMessage/cryptoMessage'
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
 
 export const Withdrawal = () => {
   const dispatch = useDispatch();
@@ -114,7 +120,7 @@ export const Withdrawal = () => {
       },
       crypto: {
         ...findWallet.crypto,
-        [key]:  Number(findWallet.crypto[key]) - Number(formik.values.count)
+        [key]: Number(findWallet.crypto[key]) - Number(formik.values.count)
       }
     }
     console.log(newWallet);
@@ -162,19 +168,12 @@ export const Withdrawal = () => {
           </ContentHeader>
           <ContentLeft>
             <RefillForm>
-              {activeStep === 0 ? (
-                <Box
-                  sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '0px', gap: '20px'}}>
+              {activeStep === 0 && (
+                <BoxStep>
                   <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите монету которую хотите
                     вывести</Typography>
                   <Box>
-                    <Box sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'start',
-                      paddingTop: '20px',
-                      gap: '10px'
-                    }}>
+                    <StepItem>
                       <Typography sx={{color: '#8C939D', fontSize: '14px',}} variant="h5">Монета</Typography>
                       <AutocompleteCurrencyInfo
                         arr={currencies}
@@ -182,14 +181,8 @@ export const Withdrawal = () => {
                         handleChangeCount={handleChangeCount}
                         inputValue={cryptoId}
                       />
-                    </Box>
-                    <Box sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'start',
-                      paddingTop: '20px',
-                      gap: '10px'
-                    }}>
+                    </StepItem>
+                    <StepItem>
                       <Typography sx={{color: '#8C939D', fontSize: '14px',}} variant="h5">Валюта</Typography>
                       <AutocompleteCurrencyInfo
                         arr={money}
@@ -198,7 +191,7 @@ export const Withdrawal = () => {
                         handleChangeCurrency={handleChangeCurrencyUp}
                         handleChangeCount={handleChangeCountUp}
                       />
-                    </Box>
+                    </StepItem>
                   </Box>
                   <Button
                     size="small"
@@ -208,8 +201,8 @@ export const Withdrawal = () => {
                   >
                     Продолжить
                   </Button>
-                </Box>) : null}
-              {activeStep === 1 ? (
+                </BoxStep>)}
+              {activeStep === 1 && (
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
                   <CardForm
@@ -217,8 +210,8 @@ export const Withdrawal = () => {
                     handleChangeCard={handleChangeCard}
                     ident={ident}
                   />
-                </Box>) : null}
-              {activeStep === 2 ? (
+                </Box>)}
+              {activeStep === 2 && (
                 <Box sx={{textAlign: 'start'}}>
                   <Typography sx={{color: '#FFFFFF', fontSize: '16px'}} variant="subtitle1">Подтверждения
                     перевода</Typography>
@@ -227,11 +220,11 @@ export const Withdrawal = () => {
                     data={formik.values}
                     handleWithdrawal={handleWithdrawal}
                     handleOpen={handleOpen}/>
-                </Box>) : null}
-              { open ? (
+                </Box>)}
+              {open ? (
                 <Box>
                   <SimpleDialogDemo open={open} handleClose={handleClose} messageText={cryptoMessage}/>
-                </Box> ) : null}
+                </Box>) : null}
             </RefillForm>
             <ContentRight>
               <Steper activeStep={activeStep} steps={steps}/>

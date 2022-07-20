@@ -1,8 +1,12 @@
 import React from 'react';
 
-import { BoxBlock, BoxLeft, BoxRight } from './Box.styled';
+import {
+  BoxBlock,
+  BoxLeft,
+  BoxRight,
+  DividerStyles
+} from './Box.styled';
 import { ProfileDataForm } from './ProfileDataForm';
-import { Divider } from '@mui/material';
 import { ProfilePasswordForm } from './ProfilePasswordForm';
 import { AvatarUser } from './Avataruser';
 
@@ -11,7 +15,7 @@ export const Profile = () => {
     <BoxBlock>
       <BoxLeft>
         <ProfileDataForm/>
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)', minWidth: '95%', margin: '40px 10px', }} />
+        <DividerStyles/>
         <ProfilePasswordForm/>
       </BoxLeft>
       <BoxRight>

@@ -17,6 +17,7 @@ import {
   Title
 } from './ComponentConvecter.styles';
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+
 import swap from '../../../assets/images/swap.svg';
 import { allWalletRefill, transactionsALL, walletRefill } from '../../../redux/action';
 import * as Navigate from '../../../routesNavigate';
@@ -34,7 +35,7 @@ export const Convecter = () => {
   const [error, setError] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
-  const currencies  = useSelector((state) => state.money.money);
+  const currencies = useSelector((state) => state.money.money);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
@@ -53,12 +54,12 @@ export const Convecter = () => {
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
 
-      if(walletUserRedux.crypto[key] > values.count) {
+      if (walletUserRedux.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
           crypto: {
             ...findWallet.crypto,
-            [key]:  Number(findWallet.crypto[key]) - Number(formik.values.count),
+            [key]: Number(findWallet.crypto[key]) - Number(formik.values.count),
             [keyUp]: findWallet.crypto[keyUp]
               ? Number(findWallet.crypto[keyUp]) + Number(formik.values.countUp)
               : Number(formik.values.countUp)
@@ -67,14 +68,14 @@ export const Convecter = () => {
         dispatch(walletRefill(newWallet));
         localStorage.setItem('userWallet', JSON.stringify(newWallet));
         const newAllWallets = allWalletRedux.map((wallet) => {
-        if (wallet.userId === newWallet.userId) {
+          if (wallet.userId === newWallet.userId) {
             return newWallet
           }
           return wallet
         })
         dispatch(allWalletRefill(newAllWallets));
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets));
-        if(!findTransactions) {
+        if (!findTransactions) {
           const newTransactions = {
             userId: currentUser.id,
             transactions: [
@@ -112,7 +113,7 @@ export const Convecter = () => {
         }
         navigate(Navigate.WALLET)
       } else {
-        if(!findTransactions) {
+        if (!findTransactions) {
           const newTransactions = {
             userId: currentUser.id,
             transactions: [
@@ -170,7 +171,7 @@ export const Convecter = () => {
   }, [])
 
   useEffect(() => {
-    if(formik.values.currenciesValueUp && formik.values.currenciesValue && formik.values.count) {
+    if (formik.values.currenciesValueUp && formik.values.currenciesValue && formik.values.count) {
       const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
       setItem(itemNew);
       const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp)
@@ -183,14 +184,14 @@ export const Convecter = () => {
       setTotal(newTotal)
       handleChangeCountUp(newTotal)
     }
-  },[formik.values])
+  }, [formik.values])
 
   return (
     <Box>
       <Title variant="h4">Конвертер</Title>
       <Content>
         <ContentTop onSubmit={formik.handleSubmit}>
-          <Box >
+          <Box>
             <Label variant="h4">Отдаю</Label>
             <AutocompleteCurrencyInfo
               arr={currencies}
@@ -199,9 +200,9 @@ export const Convecter = () => {
             />
           </Box>
           <Box sx={{paddingTop: '20px'}}>
-            <img src={swap} alt='logo'/>
+            <img src={swap} alt="logo"/>
           </Box>
-          <Box >
+          <Box>
             <Label variant="h4">Получаю</Label>
             <AutocompleteCurrencyInfo
               textFieldDisabled
@@ -212,14 +213,14 @@ export const Convecter = () => {
             />
           </Box>
           <Button
-            sx={{ marginTop: '15px', }}
+            sx={{marginTop: '15px',}}
             type="submit"
             size="large"
             variant="contained"
             color="primary"
-            >
-              Конвертировать
-            </Button>
+          >
+            Конвертировать
+          </Button>
         </ContentTop>
         <ContentBottom>
           <Box>
@@ -228,13 +229,15 @@ export const Convecter = () => {
           </Box>
           <Box>
             <Label variant="h4">Обратный курс</Label>
-            {reversPrice ? <Info variant="h4"> 1 {itemUp.currency} = {reversPrice} {item.currency} </Info> : null }
+            {reversPrice ? <Info variant="h4"> 1 {itemUp.currency} = {reversPrice} {item.currency} </Info> : null}
           </Box>
           <Box>
             <Label variant="h4">Вы получите</Label>
             {total ? <Info variant="h4"> {total} {itemUp.currency} </Info> : null}
           </Box>
-          { error ? <Alert color='error' variant='filledLarge' icon={false}>Недостаточно средств. Пополните баланс.</Alert> : <Box/>}
+          {error ?
+            <Alert color="error" variant="filledLarge" icon={false}>Недостаточно средств. Пополните баланс.</Alert> :
+            <Box/>}
         </ContentBottom>
       </Content>
     </Box>

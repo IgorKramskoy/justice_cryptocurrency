@@ -13,7 +13,7 @@ export const usersReducer = (state = initialState, action) => {
         allUsers: [...state.allUsers, action.payload],
         currentUser: action.payload,
       }
-      case CREATE_USER_AUTH:
+    case CREATE_USER_AUTH:
       return {
         ...state,
         currentUser: action.payload,
@@ -29,6 +29,7 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         allUsers: [...state.allUsers, action.payload],
       }
-    default: return state
+    default:
+      return state
   }
 }

@@ -24,11 +24,12 @@ export const moneyReducer = (state = initialState, action) => {
         ...state,
         allWallets: action.payload,
       }
-      case CRYPTO_ID:
+    case CRYPTO_ID:
       return {
         ...state,
         cryptoId: action.payload,
       }
-    default: return state
+    default:
+      return state
   }
 }

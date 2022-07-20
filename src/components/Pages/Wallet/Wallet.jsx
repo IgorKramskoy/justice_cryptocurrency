@@ -12,12 +12,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Toolbar,
   Typography
 } from '@mui/material';
-import { BoxTableStyles } from './Wallet.styles';
+import {
+  BoxTableStyles,
+  ToolbarStyles,
+  TypographyStyles
+} from './Wallet.styles';
 import { TableCellHeadStyled} from '../Market/Table.styled';
 import { TableCellStyled } from './Wallet.styles';
+
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import * as Navigate from '../../../routesNavigate';
@@ -70,9 +74,7 @@ export const Wallet = () => {
   }, [currencies]);
   return (
     <>
-      <Toolbar
-        sx={{display: 'flex', justifyContent:'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.1)',}}
-      >
+      <ToolbarStyles>
         <Box sx={{ margin: '0px 60px'}}>
           <Typography sx={{color: '#FFFFFF'}} variant="h5">Кошелек</Typography>
         </Box>
@@ -95,8 +97,10 @@ export const Wallet = () => {
             Пополнить
           </Button>
         </Box>
-      </Toolbar>
-      <Typography sx={{color: '#8C939D',textAlign:'left', marginTop:'30px', fontSize:'15px'}} variant="h5">Фиатый баланс</Typography>
+      </ToolbarStyles>
+      <TypographyStyles variant="h5">
+        Фиатый баланс
+      </TypographyStyles>
       <BoxTableStyles sx={{marginTop: '20px'}}>
         <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
           <TableHead sx={{ background: '#191F29', padding: '0px'}}>
@@ -132,7 +136,9 @@ export const Wallet = () => {
           </TableBody>
         </Table>
       </BoxTableStyles>
-      <Typography sx={{color: '#8C939D',textAlign:'left', marginTop:'30px', fontSize:'15px'}} variant="h5">Криптовалютный баланс</Typography>
+      <TypographyStyles variant="h5">
+        Криптовалютный баланс
+      </TypographyStyles>
       <TableContainer component={Paper} sx={{
         marginTop: '20px',
         borderRadius: '0px',

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
 import {
   AvatarStyled,
   BoxConteinerStyled,
@@ -11,14 +10,17 @@ import {
   ButtonStyled,
   ConteinerStyled
 } from './Avatar.styled';
+
 import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const AvatarUser = () => {
   const dispatch = useDispatch();
+
   const usersRedux = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const [photo, setPhoto] = useState(currentUser.avatar);
+
   const convertBase64 = (file) =>
     new Promise((resolve, reject) => {
       const fileReader = new FileReader()
@@ -30,6 +32,7 @@ export const AvatarUser = () => {
         reject(error)
       }
     })
+
   async function handleImageChange(e) {
     e.preventDefault();
     let reader = new FileReader();
@@ -46,9 +49,10 @@ export const AvatarUser = () => {
     dispatch(updateUser(userFind))
     dispatch(updateUsers(usersRedux))
   }
+
   return (
-    <BoxConteinerStyled >
-      <BoxStyled >
+    <BoxConteinerStyled>
+      <BoxStyled>
         <ConteinerStyled>
           <AvatarStyled src={photo}/>
         </ConteinerStyled>
@@ -64,8 +68,8 @@ export const AvatarUser = () => {
           />
         </ButtonStyled>
       </BoxStyled>
-      <Typography variant="caption" sx={{ color: 'white' }}>
-       Name User
+      <Typography variant="caption" sx={{color: 'white'}}>
+        Name User
       </Typography>
     </BoxConteinerStyled>
   );

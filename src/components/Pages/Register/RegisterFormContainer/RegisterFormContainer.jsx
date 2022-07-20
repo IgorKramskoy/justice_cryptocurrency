@@ -10,20 +10,20 @@ import {
 } from '@mui/material';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { StylesBoxReg } from './RefisterFormContainer.styled';
+
 import { RegisterFormValidation } from './RegisterFormValidation';
 import * as Navigate from '../../../../routesNavigate';
 import { createUser } from '../../../../redux/action';
 
 
 export const RegisterFormContainer = () => {
-  const dispatch = useDispatch()
-
-  const usersRedux = useSelector((state) => state.users.allUsers)
-  const currentUser = useSelector((state) => state.users.currentUser)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
+  const usersRedux = useSelector((state) => state.users.allUsers);
+  const currentUser = useSelector((state) => state.users.currentUser);
 
   const formik = useFormik({
     initialValues: {

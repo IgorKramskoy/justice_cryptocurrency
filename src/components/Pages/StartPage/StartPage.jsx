@@ -31,7 +31,7 @@ export const StartPage = () => {
   const navigate = useNavigate();
 
   const authFind = () => {
-    if(currentUser) {
+    if (currentUser) {
       navigate(Navigate.MARKET)
     } else {
       navigate(Navigate.LOGIN)
@@ -39,25 +39,25 @@ export const StartPage = () => {
   }
 
   useEffect(() => {
-    if(!currentUser) {
+    if (!currentUser) {
       navigate(Navigate.MAIN)
     }
   }, []);
 
 
   return (
-    <Box sx={{ height: '100vh' }}>
+    <Box sx={{height: '100vh'}}>
       <Heder>
-        <Box sx={{ margin: '0px 60px'}}>
+        <Box sx={{margin: '0px 60px'}}>
           <img src={logo} alt="logo"/>
         </Box>
-        <Box sx={{ margin: '0px 60px'}}>
+        <Box sx={{margin: '0px 60px'}}>
           <Button
-          type="submit"
-          size="small"
-          variant="contained"
-          color="info"
-          onClick={authFind}
+            type="submit"
+            size="small"
+            variant="contained"
+            color="info"
+            onClick={authFind}
           >
             Войти
           </Button>
@@ -65,7 +65,7 @@ export const StartPage = () => {
       </Heder>
       <Body>
         <Content>
-          <Typography variant="h2" sx={{ color: 'white' }}>
+          <Typography variant="h2" sx={{color: 'white'}}>
             Присоединяйтесь к лучшей криптовалютной бирже
           </Typography>
           <Button
@@ -78,19 +78,19 @@ export const StartPage = () => {
             Начать торговать
           </Button>
           <ContentBoxImage>
-            <img src={main} alt="main" width='900px' height='300'/>
+            <img src={main} alt="main" width="900px" height="300"/>
           </ContentBoxImage>
           <ContentImageBig>
-            <img src={big} alt="logo" />
+            <img src={big} alt="logo"/>
           </ContentImageBig>
           <ContentImageSmall>
-            <img src={small} alt="logo" />
+            <img src={small} alt="logo"/>
           </ContentImageSmall>
           <GroupTop>
-            <img src={groupTop} alt="logo" />
+            <img src={groupTop} alt="logo"/>
           </GroupTop>
-          <GroupBottom >
-            <img src={groupBottom} alt="logo" />
+          <GroupBottom>
+            <img src={groupBottom} alt="logo"/>
           </GroupBottom>
         </Content>
       </Body>

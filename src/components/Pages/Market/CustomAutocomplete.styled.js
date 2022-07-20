@@ -1,6 +1,6 @@
 import { styled, Autocomplete } from '@mui/material';
 
-export const AutocompleteStyled = styled(Autocomplete) (() => ({
+export const AutocompleteStyled = styled(Autocomplete)(() => ({
   '&': {
     width: 300,
     margin: '10px',
@@ -42,22 +42,20 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
     color: '#8C939D',
   },
   '&.MuiFormControl-root': {
-    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
   '&.MuiFormControl-root .Miu-focused': {
-    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
-  ['&.MuiAutocomplete-root'] : {
+  ['&.MuiAutocomplete-root']: {
     margin: '0px',
     width: '280px',
   },
-  ['& .MuiOutlinedInput-root'] : {
-    border:'none',
+  ['& .MuiOutlinedInput-root']: {
+    border: 'none',
     padding: '4px!important',
   },
-  ['& .MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root'] : {
-    border:'none',
+  ['& .MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root']: {
+    border: 'none',
   },
 }))

@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
-
 import { StylesBoxReg } from './LoginFormContainer.styled';
+
 import { LoginFormValidation } from './LoginFormValidation';
 import { createUserAuth } from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
@@ -15,10 +15,10 @@ export const LoginFormContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [error, setError] = useState('');
+
   const currentUser = useSelector((state) => state.users.currentUser)
   const usersRedux = useSelector((state) => state.users.allUsers)
-
-  const [error, setError] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -26,9 +26,9 @@ export const LoginFormContainer = () => {
       password: '',
     },
     validationSchema: LoginFormValidation,
-    onSubmit: ({email, password }) => {
+    onSubmit: ({email, password}) => {
       const userAuth = usersRedux.find((user) => user.email === email)
-      if(!userAuth) {
+      if (!userAuth) {
         setError('Пользователь с таким email не существует или неправильный email!')
       } else if (userAuth.password !== password) {
         setError('Неверный пароль!')
@@ -41,16 +41,16 @@ export const LoginFormContainer = () => {
   });
 
   useEffect(() => {
-    if(currentUser) {
+    if (currentUser) {
       navigate(Navigate.MARKET)
     }
   }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{width: '100%'}}>
         <CustomTextField
-          label='Email'
+          label="Email"
           value={formik.values.email}
           name="email"
           error={formik.errors.email && formik.touched.email}
@@ -60,9 +60,9 @@ export const LoginFormContainer = () => {
           touched={formik.touched.email}
         />
       </Box>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{width: '100%'}}>
         <CustomTextField
-          label='Пароль'
+          label="Пароль"
           value={formik.values.password}
           name="password"
           error={formik.errors.password && formik.touched.password}
@@ -72,7 +72,7 @@ export const LoginFormContainer = () => {
           touched={formik.touched.password}
         />
       </Box>
-      {error ? <Typography variant="caption" sx={{ color: '#D24242' }}>{error}</Typography> : null}
+      {error ? <Typography variant="caption" sx={{color: '#D24242'}}>{error}</Typography> : null}
       <Button
         type="submit"
         size="large"
