@@ -1,11 +1,22 @@
 import React from 'react';
 
-import { Box,
+import {
+  Box,
   TextField,
-  Typography
 } from '@mui/material';
+import { TypographyError } from './CustomTextField.styles';
 
-export const CustomTextField = ({ label, value, onChange, name, error, type, errorMessage, touched, disabled }) => {
+export const CustomTextField = ({
+                                  label,
+                                  value,
+                                  onChange,
+                                  name,
+                                  error,
+                                  type,
+                                  errorMessage,
+                                  touched,
+                                  disabled
+}) => {
   return (
     <Box>
       <TextField
@@ -19,14 +30,9 @@ export const CustomTextField = ({ label, value, onChange, name, error, type, err
         disabled={disabled}
       />
       {errorMessage && touched ? (
-        <Typography variant="caption" sx={{
-          display: 'block',
-          fontSize:'11px',
-          textAlign: 'start',
-          color: '#D24242',
-        }}>
+        <TypographyError variant="caption">
           {errorMessage}
-        </Typography>
+        </TypographyError>
       ) : null}
     </Box>
   )

@@ -18,16 +18,18 @@ import {
   DrawerStyles
 } from './StylesWraper.styled';
 import { CustomNavLink} from '../CustomNavLink';
+
 import { links } from '../../../links';
 import * as Navigate from '../../../routesNavigate';
 import logo from '../../../assets/images/logo.png';
 import logout from '../../../assets/images/logout.svg';
 
 export const Wrapper = ({ children }) => {
-  const currentUser = useSelector((state) => state.users.currentUser)
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.users.currentUser);
 
   const logOut = () => {
     localStorage.removeItem('userAuth')
