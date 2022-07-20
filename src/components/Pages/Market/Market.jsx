@@ -20,8 +20,12 @@ import {
   TableCellStyled
 } from './Table.styled';
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
+import { useNavigate } from 'react-router-dom';
+import * as Navigate from '../../../routesNavigate';
 
 export const Market = () => {
+  const navigate = useNavigate();
+
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
@@ -57,6 +61,10 @@ export const Market = () => {
     setPage(0);
   };
 
+  const buyingCurrency = () => {
+    navigate(Navigate.BUYINDING)
+  }
+
   useEffect(() => {
     if (filteredRows.length === 0) {
       setFilteredRows(currencies)
@@ -85,7 +93,7 @@ export const Market = () => {
           )}
           renderInput={(params) => <TextField
             sx={{
-              ['&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink']: {
+              '&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink': {
                 top: '10px', left: '0px'
               },
             }}
@@ -134,7 +142,15 @@ export const Market = () => {
                   <TableCellStyled align="left">{row.TOPTIERVOLUME24HOURTO}</TableCellStyled>
                   <TableCellStyled align="left">{row.MKTCAP}</TableCellStyled>
                   <TableCellStyled align="left">
-                    <Button size="small" variant="contained" disabled={false} color="info">Торговать</Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      disabled={false}
+                      color="info"
+                      onClick={buyingCurrency}
+                    >
+                      Торговать
+                    </Button>
                   </TableCellStyled>
                 </TableRow>
               ))}

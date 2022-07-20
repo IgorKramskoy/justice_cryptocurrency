@@ -9,50 +9,55 @@ import { Test } from './components/Test';
 import { StartPage } from './components/Pages/StartPage';
 import { Refill } from './components/Pages/Refill';
 import { Withdrawal } from './components/Pages/Withdrawal';
+import { BuyingCurrency } from './components/Pages/BuyingCurrency';
 
 export const routes = [
   {
-    path: "/",
-    element: <StartPage />,
+    path: '/',
+    element: <StartPage/>,
   },
   {
-    path: "/test",
-    element: <Test />,
+    path: '/test',
+    element: <Test/>,
   },
   {
-    path: "/market",
-    element: <Market />,
+    path: '/market',
+    element: <Market/>,
   },
   {
-    path: "/profile",
-    element: <Profile />,
+    path: '/profile',
+    element: <Profile/>,
   },
   {
-    path: "/converter",
-    element: <Convecter />,
+    path: '/converter',
+    element: <Convecter/>,
   },
   {
-    path: "/wallet",
-    element: <Wallet />,
+    path: '/wallet',
+    element: <Wallet/>,
   },
   {
-    path: "/transaction",
-    element: <Transaction />,
+    path: '/transaction',
+    element: <Transaction/>,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: '/login',
+    element: <Login/>,
   },
   {
-    path: "/register",
-    element: <Register />,
+    path: '/register',
+    element: <Register/>,
   },
   {
-    path: "/refill",
-    element: <Refill />,
+    path: '/refill',
+    element: <Refill/>,
   },
   {
-    path: "/withdrawal",
-    element: <Withdrawal />,
+    path: '/withdrawal',
+    element: <Withdrawal/>,
+  },
+  {
+    path: '/buyingCurrency',
+    element: <BuyingCurrency/>,
   },
 ]

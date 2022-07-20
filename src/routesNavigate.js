@@ -8,5 +8,7 @@ export const LOGIN = '/login';
 export const REGISTER = '/register';
 export const REFILL = '/refill';
 export const WITHDRAWAL = '/withdrawal';
+export const BUYINDING = '/buyingCurrency';
+
 
 
