@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { Box, Divider, styled } from '@mui/material';
 
 export const BoxBlock = styled(Box) (() => ({
  display: 'flex',
@@ -22,4 +22,9 @@ export const BoxRight = styled(Box) (() => ({
  height: 'calc(100vh - 64px)',
  paddingTop: '24px',
  paddingLeft: '24px',
+}))
+export const DividerStyles = styled(Divider) (() => ({
+ borderColor: 'rgba(255, 255, 255, 0.1)',
+ minWidth: '95%',
+ margin: '40px 10px',
 }))

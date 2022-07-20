@@ -2,7 +2,11 @@ import React, { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { BoxStyled, Container, TitleStyled } from './ProfilePasswordFormContainer.styled';
+import {
+  BoxStyled,
+  Container,
+  TitleStyled
+} from './ProfilePasswordFormContainer.styled';
 import { CustomTextField } from '../../../Common/CustomTextField';
 import {  Button, Typography } from '@mui/material';
 
@@ -12,10 +16,11 @@ import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const ProfilePasswordForm = () => {
   const dispatch = useDispatch()
-  const usersRedux = useSelector((state) => state.users.allUsers)
-  const currentUser = useSelector((state) => state.users.currentUser)
 
   const [error, setError] = useState('');
+
+  const usersRedux = useSelector((state) => state.users.allUsers)
+  const currentUser = useSelector((state) => state.users.currentUser)
 
   const formik = useFormik({
     initialValues: {

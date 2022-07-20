@@ -11,6 +11,7 @@ import { updateUser, updateUsers } from '../../../../redux/action';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
+
   const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
 
