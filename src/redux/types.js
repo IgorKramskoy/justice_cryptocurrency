@@ -6,5 +6,5 @@ export const FETCH_MONEY = 'FETCH_MONEY';
 export const WALLET_USER_REFILL = 'WALLET_USER_REFILL';
 export const WALLETS_ALL = 'WALLETS_ALL';
 export const TRANSACTIONS_ALL = 'TRANSACTIONS_ALL';
-
+export const CRYPTO_ID = 'CRYPTO_ID';
 

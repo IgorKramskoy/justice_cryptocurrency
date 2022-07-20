@@ -24,6 +24,8 @@ import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
+import { steps } from './Steper/step';
+import {walletMessage} from '../../../ModalMessage/walletMessage'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -33,8 +35,8 @@ export const Refill = () => {
   const [open, setOpen] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
-  const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
+  const ident = 'refill'
 
   const formik = useFormik({
     initialValues: {
@@ -203,16 +205,19 @@ export const Refill = () => {
                 { activeStep === 1 ? (
                   <Box sx={{ textAlign:'start'}}>
                     <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
-                    <CardForm handleOpen={handleOpen} handleSubmit={handleSubmit} />
+                    <CardForm
+                      handleOpen={handleOpen}
+                      handleSubmit={handleSubmit}
+                      ident={ident}
+                    />
                   </Box> ) : null}
                 { open ? (
                   <Box>
-                    <SimpleDialogDemo open={open} handleClose={handleClose}/>
+                    <SimpleDialogDemo open={open} handleClose={handleClose} messageText={walletMessage}/>
                   </Box> ) : null}
-
               </RefillForm>
             <ContentRight >
-              <Steper activeStep={activeStep}/>
+              <Steper activeStep={activeStep} steps={steps}/>
             </ContentRight>
           </ContentLeft>
       </Content>

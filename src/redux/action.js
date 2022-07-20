@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   CREATE_USER,
   CREATE_USER_AUTH,
+  CRYPTO_ID,
   FETCH_MONEY,
   TRANSACTIONS_ALL,
   UPDATE_USER,
@@ -65,6 +66,12 @@ export function transactionsALL(transactionsALL) {
   return {
     type: TRANSACTIONS_ALL,
     payload: transactionsALL,
+  }
+}
+export function getCryptoId(id) {
+  return {
+    type: CRYPTO_ID,
+    payload: id,
   }
 }
 

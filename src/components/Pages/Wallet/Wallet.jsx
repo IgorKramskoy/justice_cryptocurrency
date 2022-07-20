@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -21,10 +21,12 @@ import { TableCellStyled } from './Wallet.styles';
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import * as Navigate from '../../../routesNavigate';
+import { getCryptoId } from '../../../redux/action';
 
 
 export const Wallet = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
@@ -50,6 +52,11 @@ export const Wallet = () => {
 
   const currencyWithdrawal = () => {
     navigate(Navigate.REFILL)
+  }
+
+  const currencyWithdrawalCrypto = (link) => {
+    dispatch(getCryptoId(link))
+    navigate(Navigate.WITHDRAWAL)
   }
 
   const handleChangePage = (event, newPage) => {
@@ -135,7 +142,7 @@ export const Wallet = () => {
       }}>
         <Table sx={{ minWidth: 650, borderRadius: '0px'}} aria-label="caption table">
           <TableHead sx={{ background: '#191F29', padding: '0px'}}>
-            <TableRow  sx={{ }}>
+            <TableRow>
               <TableCellHeadStyled align="left">Название</TableCellHeadStyled>
               <TableCellHeadStyled align="left">Всего</TableCellHeadStyled>
               <TableCellHeadStyled align="left">В ордере</TableCellHeadStyled>
@@ -156,12 +163,22 @@ export const Wallet = () => {
                       <Box>{row?.name}</Box>
                     </Box>
                   </TableCellStyled>
-                  <TableCellStyled align="left">{walletUserRedux?.crypto[row.currency.toLowerCase()] ? walletUserRedux.crypto[row.currency.toLowerCase()] : 0.00}</TableCellStyled>
+                  <TableCellStyled align="left">
+                    {walletUserRedux?.crypto[row.currency.toLowerCase()] ? walletUserRedux.crypto[row.currency.toLowerCase()] : 0.00}
+                  </TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">
-                    <Button size="small" variant="contained" disabled={false} color="info">Вывод</Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      disabled={false}
+                      color="info"
+                      onClick={() => currencyWithdrawalCrypto(row.currency)}
+                    >
+                      Вывод
+                    </Button>
                   </TableCellStyled>
                 </TableRow>
               ))}

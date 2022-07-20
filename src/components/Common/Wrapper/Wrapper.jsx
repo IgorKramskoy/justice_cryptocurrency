@@ -55,7 +55,7 @@ export const Wrapper = ({ children }) => {
         </Toolbar>
       </AppBarStyles>
       {/*//*/}
-      {location.pathname !== Navigate.REFILL ? <DrawerStyles variant="permanent">
+      {(location.pathname !== Navigate.REFILL &&  location.pathname !== Navigate.WITHDRAWAL) ? <DrawerStyles variant="permanent">
         {/*//sidebar*/}
         <BoxConteinerStyles>
           <BoxStyles>

@@ -6,7 +6,7 @@ import { CustomTextField } from '../../../Common/CustomTextField';
 import { CardFormValidation } from './CardFormValidation';
 import { FormCardStyled } from './CardForm.styles';
 
-export const CardForm = ({ handleOpen, handleSubmit }) => {
+export const CardForm = ({ handleOpen, handleSubmit, handleNext, handleChangeCard, ident }) => {
   const formik = useFormik({
     initialValues: {
       number: '',
@@ -16,10 +16,15 @@ export const CardForm = ({ handleOpen, handleSubmit }) => {
     },
     validationSchema: CardFormValidation,
     onSubmit: () => {
+      if(ident === 'draw') {
+        handleChangeCard(formik.values)
+        handleNext()
+      }
       handleOpen();
-      handleSubmit()
+      handleSubmit();
     },
   });
+
 
   return (
     <FormCardStyled onSubmit={formik.handleSubmit}>

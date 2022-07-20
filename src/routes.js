@@ -8,6 +8,7 @@ import { Register } from './components/Pages/Register';
 import { Test } from './components/Test';
 import { StartPage } from './components/Pages/StartPage';
 import { Refill } from './components/Pages/Refill';
+import { Withdrawal } from './components/Pages/Withdrawal';
 
 export const routes = [
   {
@@ -49,5 +50,9 @@ export const routes = [
   {
     path: "/refill",
     element: <Refill />,
+  },
+  {
+    path: "/withdrawal",
+    element: <Withdrawal />,
   },
 ]

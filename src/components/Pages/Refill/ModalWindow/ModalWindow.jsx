@@ -9,7 +9,8 @@ import {
 import close from '../../../../assets/images/x.svg';
 import modal from '../../../../assets/images/modal.svg';
 
-export function SimpleDialogDemo({ open, handleClose }) {
+
+export function SimpleDialogDemo({ open, handleClose, messageText }) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>
@@ -18,10 +19,10 @@ export function SimpleDialogDemo({ open, handleClose }) {
       <DialogContent sx={{ gap: '10px'}}>
         <img src={modal} alt='modal icon'/>
         <Typography variant='subtitle1' sx={{ color: '#FFFFFF'}}>
-          Пополнение прошло успешно
+          {messageText.title}
         </Typography>
         <Typography variant='subtitle2' sx={{ color: '#8C939D'}}>
-          Вы успешно пополнили свой кошелек.
+          {messageText.content}
         </Typography>
       </DialogContent>
     </Dialog>
