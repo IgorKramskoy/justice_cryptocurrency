@@ -6,7 +6,13 @@ import { CustomTextField } from '../../../Common/CustomTextField';
 import { CardFormValidation } from './CardFormValidation';
 import { FormCardStyled } from './CardForm.styles';
 
-export const CardForm = ({ handleOpen, handleSubmit, handleNext, handleChangeCard, ident }) => {
+export const CardForm = ({
+                           handleOpen,
+                           handleSubmit,
+                           handleNext,
+                           handleChangeCard,
+                           ident
+}) => {
   const formik = useFormik({
     initialValues: {
       number: '',

@@ -15,19 +15,20 @@ import {
 } from '@mui/material';
 import { TableCellHeadStyled } from '../Market/Table.styled';
 import { TableCellStyled } from '../Wallet/Wallet.styles';
+
 import arrow from '../../../assets/images/arrow.svg';
 import {CryptoCurrency} from '../../../cryptoСurrency'
 
 export const Transaction = () => {
+  const [transactionRows, setTransactionUser] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage] = useState(8);
+
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const transactionUser = transactionAll.find((transaction) => transaction.userId === currentUser.id)
   const transactionArr = transactionUser.transactions
-
-  const [transactionRows, setTransactionUser] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage] = useState(8);
 
   const findItem = (findValue, arr) => {
     const findObj = arr.find(item => item.currency === findValue)

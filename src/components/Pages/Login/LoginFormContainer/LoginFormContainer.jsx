@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
 import { Box, Button, Typography } from '@mui/material';
-
 import { StylesBoxReg } from './LoginFormContainer.styled';
+
 import { LoginFormValidation } from './LoginFormValidation';
 import { createUserAuth } from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
@@ -15,10 +15,10 @@ export const LoginFormContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [error, setError] = useState('');
+
   const currentUser = useSelector((state) => state.users.currentUser)
   const usersRedux = useSelector((state) => state.users.allUsers)
-
-  const [error, setError] = useState('');
 
   const formik = useFormik({
     initialValues: {

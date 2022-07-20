@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { Steper } from './Steper';
 import {
+  BoxStep,
   Content,
   ContentHeader,
   ContentLeft,
@@ -184,8 +185,13 @@ export const Refill = () => {
           <ContentLeft>
               <RefillForm >
                 { activeStep === 0 ? (
-                  <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', paddingTop: '20px', gap: '50px'}}>
-                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Выберите валюту для пополнения</Typography>
+                  <BoxStep >
+                    <Typography
+                      sx={{color: '#FFFFFF'}}
+                      variant="subtitle1"
+                    >
+                      Выберите валюту для пополнения
+                    </Typography>
                     <Box sx={{ color: '#FFFFFF'}}>
                      <AutocompleteCurrencyInfo
                        arr={money}
@@ -201,10 +207,15 @@ export const Refill = () => {
                     >
                       Продолжить
                     </Button>
-                  </Box> ) : null}
+                  </BoxStep> ) : null}
                 { activeStep === 1 ? (
                   <Box sx={{ textAlign:'start'}}>
-                    <Typography sx={{color: '#FFFFFF'}} variant="subtitle1">Введите данные для пополнения</Typography>
+                    <Typography
+                      sx={{color: '#FFFFFF'}}
+                      variant="subtitle1"
+                    >
+                      Введите данные для пополнения
+                    </Typography>
                     <CardForm
                       handleOpen={handleOpen}
                       handleSubmit={handleSubmit}

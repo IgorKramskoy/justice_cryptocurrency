@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Typography
 } from '@mui/material';
+
 import close from '../../../../assets/images/x.svg';
 import modal from '../../../../assets/images/modal.svg';
 

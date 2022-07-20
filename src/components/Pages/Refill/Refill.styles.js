@@ -32,6 +32,13 @@ export const ContentRight = styled(Box) (() => ({
   paddingLeft: '20px',
   paddingTop: '30px',
 }))
+export const BoxStep = styled(Box) (() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  paddingTop: '20px',
+  gap: '50px'
+}))
 export const RefillForm = styled('form') (() => ({
   width: '70%',
   borderRight: '1px solid rgba(255, 255, 255, 0.1)',

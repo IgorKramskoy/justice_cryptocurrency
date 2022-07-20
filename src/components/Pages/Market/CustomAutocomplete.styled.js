@@ -42,11 +42,9 @@ export const AutocompleteStyled = styled(Autocomplete) (() => ({
     color: '#8C939D',
   },
   '&.MuiFormControl-root': {
-    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
   '&.MuiFormControl-root .Miu-focused': {
-    // border: '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: '3px',
   },
   ['&.MuiAutocomplete-root'] : {

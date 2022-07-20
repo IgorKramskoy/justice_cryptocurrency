@@ -2,11 +2,11 @@ import React from 'react';
 
 import { RegisterFormContainer } from './RegisterFormContainer';
 import { Box, Typography } from '@mui/material';
-
-import register from '../../../assets/images/register.png'
 import { BoxReg } from './BoxReg.styled';
-import * as Navigate from '../../../routesNavigate';
 import { LinkStyled } from './Link.styled';
+
+import register from '../../../assets/images/register.png';
+import * as Navigate from '../../../routesNavigate';
 
 export const Register = () => {
   return (

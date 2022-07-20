@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { LoginFormContainer } from './LoginFormContainer';
+
 import {
   Box,
   Checkbox,
   FormControlLabel,
   Typography
 } from '@mui/material';
-
-import login from '../../../assets/images/login.png'
+import { LoginFormContainer } from './LoginFormContainer';
 import { BoxLog } from './BoxLog.styled';
 import { LinkStyled } from './Link.styled';
+
 import * as Navigate from '../../../routesNavigate';
+import login from '../../../assets/images/login.png';
 
 export const Login = () => {
   return (

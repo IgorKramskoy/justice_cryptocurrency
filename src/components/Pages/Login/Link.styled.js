@@ -7,5 +7,4 @@ export const LinkStyled = styled(Link) (() => ({
     fontSize: '14px',
     textDecoration: 'none',
   },
-
 }))
