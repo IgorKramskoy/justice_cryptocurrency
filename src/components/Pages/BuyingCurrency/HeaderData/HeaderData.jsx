@@ -16,19 +16,21 @@ export const HeaderData = () => {
   const [math, setMath] = useState(0);
 
   useEffect(() => {
-    // const newItem = arr[0]
-    // setItem(newItem);
-    // const newItemUp = arr[1]
-    // setItemUp(newItemUp);
-    // const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
-    // setMath(mathItems)
+    const newItem = arr[0]
+    setItem(newItem);
+    const newItemUp = arr[1]
+    setItemUp(newItemUp);
+    if( newItem && newItemUp) {
+      const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
+      setMath(mathItems)
+    }
   }, [arr])
 
   return (
     <HeaderLeft>
       <Box sx={{borderRight: '1px solid rgba(255, 255, 255, 0.1)', padding: ' 10px 20px'}}>
         <Title variant="subtitle1">
-           {/*{itemUp?.currency} / {item?.currency}*/}
+          {arr ? itemUp?.currency / item?.currency : 0 / 0}
         </Title>
       </Box>
       <Box>
@@ -36,7 +38,7 @@ export const HeaderData = () => {
           {math ? math.toFixed(2) : 0}
         </Title>
         <TitleData variant="subtitle2">
-          {/*{math ? (math * Number(item.PRICE.slice(2).split(',').join(''))).toFixed(2) : 0}*/}
+          {math ? (math * Number(item.PRICE.slice(2).split(',').join(''))).toFixed(2) : 0}
         </TitleData>
       </Box>
       <Box>
@@ -45,10 +47,10 @@ export const HeaderData = () => {
         </Title>
         <Box sx={{display: 'flex', gap: '10px'}}>
           <TitleData variant="subtitle2">
-            {/*{itemUp?.CHANGEPCT24HOUR}*/}
+            {arr ? itemUp?.CHANGEPCT24HOUR : 0}
           </TitleData>
           <TitleData variant="subtitle2">
-            {/*{item?.CHANGEPCT24HOUR}*/}
+            {arr ? item?.CHANGEPCT24HOUR : 0}
           </TitleData>
         </Box>
       </Box>
@@ -57,15 +59,15 @@ export const HeaderData = () => {
           Макс 24ч
         </Title>
         <TitleData variant="subtitle2">
-          {/*{itemUp?.VOLUMEDAY}*/}
+          {arr ? itemUp?.VOLUMEDAY : 0}
         </TitleData>
       </Box>
       <Box>
         <Title variant="subtitle1">
-          {/*Объем 24ч ({itemUp?.currency})*/}
+          Объем 24ч ({item ? itemUp?.currency : ''})
         </Title>
         <TitleData variant="subtitle2">
-          {/*{itemUp?.TOPTIERVOLUME24HOURTO}*/}
+          {arr ? itemUp?.TOPTIERVOLUME24HOURTO : 0}
         </TitleData>
       </Box>
       <Box>
@@ -73,7 +75,7 @@ export const HeaderData = () => {
           Объем за 24ч ({item?.currency})
         </Title>
         <TitleData variant="subtitle2">
-          {/*{item?.TOPTIERVOLUME24HOURTO}*/}
+          {arr ? item?.TOPTIERVOLUME24HOURTO : 0}
         </TitleData>
       </Box>
     </HeaderLeft>
