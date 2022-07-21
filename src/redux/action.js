@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
   CREATE_USER,
-  CREATE_USER_AUTH,
+  CREATE_USER_AUTH, CRYPTO_BUY,
   CRYPTO_ID,
   FETCH_MONEY,
   TRANSACTIONS_ALL,
@@ -80,6 +80,12 @@ export function getCryptoId(id) {
   return {
     type: CRYPTO_ID,
     payload: id,
+  }
+}
+export function cryptoBuy(arr) {
+  return {
+    type: CRYPTO_BUY,
+    payload: arr,
   }
 }
 

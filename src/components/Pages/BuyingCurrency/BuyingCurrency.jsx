@@ -7,6 +7,7 @@ import {
 } from './Buying.style';
 import { HeaderData } from './HeaderData';
 import { BuyForm } from './BuyForm/BuyForm';
+import { Chart } from './Chart/Chart';
 
 export const BuyingCurrency = () => {
   return (
@@ -14,7 +15,7 @@ export const BuyingCurrency = () => {
       <ContainerLeft>
         <HeaderData/>
         <Box>
-          Currency chart)
+          <Chart/>
         </Box>
       </ContainerLeft>
       <ContainerRight>

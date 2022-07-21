@@ -9,62 +9,71 @@ import {
 } from '../Buying.style';
 
 export const HeaderData = () => {
-  const currencies = useSelector((state) => state.money.money);
+  const arr = useSelector((state) => state.money.cryptoBuy);
 
-  const [dollar, setDollar] = useState({})
+  const [item, setItem] = useState(null);
+  const [itemUp, setItemUp] = useState(null);
+  const [math, setMath] = useState(0);
 
-  const dollarArr = currencies.filter((item) => item.currency === 'USDT');
+  useEffect(() => {
+    // const newItem = arr[0]
+    // setItem(newItem);
+    // const newItemUp = arr[1]
+    // setItemUp(newItemUp);
+    // const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
+    // setMath(mathItems)
+  }, [arr])
 
-  useEffect(()=> {
-    const dollar = currencies.find((item) => item.currency === 'USDT');
-    setDollar(dollar)
-  }, [currencies])
-  if(dollar === {}) return  null
   return (
     <HeaderLeft>
       <Box sx={{borderRight: '1px solid rgba(255, 255, 255, 0.1)', padding: ' 10px 20px'}}>
         <Title variant="subtitle1">
-          ADA / {dollar ? dollar.currency : null}
+           {/*{itemUp?.currency} / {item?.currency}*/}
         </Title>
       </Box>
       <Box>
         <Title variant="subtitle1">
-          0.958
+          {math ? math.toFixed(2) : 0}
         </Title>
         <TitleData variant="subtitle2">
-          ₽76.89
+          {/*{math ? (math * Number(item.PRICE.slice(2).split(',').join(''))).toFixed(2) : 0}*/}
         </TitleData>
       </Box>
       <Box>
         <Title variant="subtitle1">
           Изменение за 24ч
         </Title>
-        <TitleData variant="subtitle2">
-          ₽76.89
-        </TitleData>
+        <Box sx={{display: 'flex', gap: '10px'}}>
+          <TitleData variant="subtitle2">
+            {/*{itemUp?.CHANGEPCT24HOUR}*/}
+          </TitleData>
+          <TitleData variant="subtitle2">
+            {/*{item?.CHANGEPCT24HOUR}*/}
+          </TitleData>
+        </Box>
       </Box>
       <Box>
         <Title variant="subtitle1">
           Макс 24ч
         </Title>
         <TitleData variant="subtitle2">
-          ₽76.89
+          {/*{itemUp?.VOLUMEDAY}*/}
         </TitleData>
       </Box>
       <Box>
         <Title variant="subtitle1">
-          Объем 24ч (ADA)
+          {/*Объем 24ч ({itemUp?.currency})*/}
         </Title>
         <TitleData variant="subtitle2">
-          ₽76.89
+          {/*{itemUp?.TOPTIERVOLUME24HOURTO}*/}
         </TitleData>
       </Box>
       <Box>
         <Title variant="subtitle1">
-          Объем за 24ч (USDT)
+          Объем за 24ч ({item?.currency})
         </Title>
         <TitleData variant="subtitle2">
-          {/*{dollar.TOPTIERVOLUME24HOURTO}*/}
+          {/*{item?.TOPTIERVOLUME24HOURTO}*/}
         </TitleData>
       </Box>
     </HeaderLeft>

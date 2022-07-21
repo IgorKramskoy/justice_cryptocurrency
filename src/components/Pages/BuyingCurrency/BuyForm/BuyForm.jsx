@@ -21,7 +21,7 @@ import {
 } from './BuyForm.style';
 
 import swap from '../../../../assets/images/swap.svg';
-import { allWalletRefill, transactionsALL, walletRefill } from '../../../../redux/action';
+import { allWalletRefill, cryptoBuy, transactionsALL, walletRefill } from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
 import { useNavigate } from 'react-router-dom';
 
@@ -213,7 +213,6 @@ export const BuyForm = () => {
   }, [])
 
   useEffect(() => {
-
     if (walletUserRedux && formik.values.currenciesValue) {
       const newMoneyUser = walletUserRedux.crypto[formik.values.currenciesValue.toLowerCase()];
       setUserMoney(newMoneyUser)
@@ -223,6 +222,11 @@ export const BuyForm = () => {
         setItem(itemNew);
         const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp);
         setItemUp(itemUpNew);
+
+        const arr = [];
+        arr.push( itemNew, itemUpNew)
+        dispatch(cryptoBuy(arr));
+
         const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''));
         setPrice(newPrice);
         const newReversPrice = Number(itemUpNew.PRICE.slice(2).split(',').join('')) / Number(itemNew.PRICE.slice(2).split(',').join(''));
