@@ -235,9 +235,10 @@ export const Convecter = () => {
             <Label variant="h4">Вы получите</Label>
             {total ? <Info variant="h4"> {total} {itemUp.currency} </Info> : null}
           </Box>
-          {error ?
-            <Alert color="error" variant="filledLarge" icon={false}>Недостаточно средств. Пополните баланс.</Alert> :
-            <Box/>}
+          {error ? (
+            <Alert color="error" variant="filledLarge" icon={false}>Недостаточно средств. Пополните баланс.</Alert>
+          ) : null }
+
         </ContentBottom>
       </Content>
     </Box>

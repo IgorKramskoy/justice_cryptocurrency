@@ -13,3 +13,10 @@ export const Info = styled(Typography)(() => ({
   textAlign: 'start',
   fontSize: '12px',
 }))
+export const FormBuy = styled('form')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '30px 20px',
+  width: '100%',
+  gap: '10px',
+}))

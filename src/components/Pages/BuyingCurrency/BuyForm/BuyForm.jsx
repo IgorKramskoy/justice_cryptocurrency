@@ -1,53 +1,200 @@
-import React from 'react';
+import
+  React,
+{
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
+import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 
-import { Box, Button } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button
+} from '@mui/material';
 import { AutocompleteCurrencyInfo } from '../../../Common/AutocompleteCurrencyInfo';
-import { Info, Label } from './BuyForm.style';
+import {
+  FormBuy,
+  Info,
+  Label
+} from './BuyForm.style';
 
 import swap from '../../../../assets/images/swap.svg';
-import { buttons } from './buttons'
 
 export const BuyForm = () => {
+  const [item, setItem] = useState({});
+  const [itemUp, setItemUp] = useState({});
+  const [price, setPrice] = useState(0);
+  const [reversPrice, setReversPrice] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [error, setError] = useState(false);
+  const [userMoney, setUserMoney] = useState(0)
 
+  const currencies = useSelector((state) => state.money.money);
+  const walletUserRedux = useSelector((state) => state.money.walletUser);
+
+  const buttons = [
+    {
+      id: 1,
+      text: '25%',
+      func: function () {
+        const math = userMoney * 0.25
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 2,
+      text: '50%',
+      func: function () {
+        const math = userMoney * 0.5
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 3,
+      text: '75%',
+      func: function () {
+        const math = userMoney * 0.75
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 4,
+      text: '100%',
+      func: function () {
+        const math = userMoney * 1
+        handleChangeCount(math)
+      },
+    },
+  ]
+
+  const formik = useFormik({
+    initialValues: {
+      currenciesValue: '',
+      count: 0,
+      currenciesValueUp: '',
+      countUp: 0,
+      countMath: 0,
+      currenciesValueMath: itemUp.currency || '' ,
+    },
+    onSubmit: (values) => {
+      if( values.count > userMoney  ) {
+        setError(true)
+      } else {
+        setError(false)
+      }
+    }
+  })
+  const handleChangeCountMath = useCallback((count) => {
+    formik.setFieldValue('countMath', count);
+  }, [])
+  const handleChangeCurrencyMath = useCallback((name) => {
+    formik.setFieldValue('currenciesValueMath', name);
+  }, [])
+  const handleChangeCurrency = useCallback((name) => {
+    formik.setFieldValue('currenciesValue', name);
+  }, [])
+  const handleChangeCount = useCallback((count) => {
+    formik.setFieldValue('count', count);
+  }, [])
+  const handleChangeCurrencyUp = useCallback((name) => {
+    formik.setFieldValue('currenciesValueUp', name);
+  }, [])
+  const handleChangeCountUp = useCallback((count) => {
+    formik.setFieldValue('countUp', count);
+  }, [])
+
+  useEffect(() => {
+    if (walletUserRedux && formik.values.currenciesValue) {
+      const newMoneyUser = walletUserRedux.crypto[formik.values.currenciesValue.toLowerCase()];
+      setUserMoney(newMoneyUser)
+      if (formik.values.currenciesValueUp) {
+        handleChangeCurrencyMath(formik.values.currenciesValueUp)
+        const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue);
+        setItem(itemNew);
+        const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp);
+        setItemUp(itemUpNew);
+        const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''));
+        setPrice(newPrice);
+        const newReversPrice = Number(itemUpNew.PRICE.slice(2).split(',').join('')) / Number(itemNew.PRICE.slice(2).split(',').join(''));
+        setReversPrice(newReversPrice);
+        const newTotal = newPrice * Number(formik.values.count);
+        setTotal(newTotal);
+        handleChangeCountMath(newPrice);
+        handleChangeCountUp(newTotal);
+      }
+    }
+  }, [formik.values])
 
   return (
-
-    <>
+    <FormBuy onSubmit={formik.handleSubmit}>
       <Label variant="subtitle1">
         Отдаю
       </Label>
-      <AutocompleteCurrencyInfo/>
+      <AutocompleteCurrencyInfo
+        arr={currencies}
+        label="Цена"
+        handleChangeCount={handleChangeCountMath}
+        textFieldValue={formik.values.countMath}
+        inputValue={formik.values.currenciesValueMath}
+      />
       <Box>
         <img src={swap} alt={'swap'}/>
       </Box>
       <Label variant="subtitle1">
         Получаю
       </Label>
-      <AutocompleteCurrencyInfo/>
+      <AutocompleteCurrencyInfo
+        arr={currencies}
+        handleChangeCurrency={handleChangeCurrencyUp}
+        handleChangeCount={handleChangeCountUp}
+        textFieldValue={formik.values.countUp}
+      />
       <Box sx={{display: 'flex', gap: '10px',}}>
-        {buttons.map(({id, text}) => (
+        {buttons.map(({id, text, func}) => (
           <Button
             size="small"
             variant="contained"
             disabled={false}
             color="info"
             key={id}
+            onClick={() => func()}
           >
             {text}
           </Button>
         ))}
       </Box>
-      <AutocompleteCurrencyInfo/>
+      <AutocompleteCurrencyInfo
+        textFieldValue={formik.values.count}
+        arr={currencies}
+        handleChangeCurrency={handleChangeCurrency}
+        handleChangeCount={handleChangeCount}
+        label="Всего"
+      />
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Info variant="subtitle1">
           Доступно
         </Info>
         <Info variant="subtitle1">
-          0000000000
+          {userMoney ? userMoney : 0.0}
         </Info>
       </Box>
-      <Button size="large" variant="contained" disabled={false} color="success">Купить ADA</Button>
-    </>
+      <Button
+        size="large"
+        variant="contained"
+        disabled={false}
+        color="success"
+        type="submit"
+      >
+        Купить ADA
+      </Button>
+      {error ? (
+        <Box>
+          <Alert color="error" variant="filledLarge" icon={false}>
+            Недостаточный баланс.
+          </Alert></Box>
+      ) : null }
+    </FormBuy>
   )
-
 }

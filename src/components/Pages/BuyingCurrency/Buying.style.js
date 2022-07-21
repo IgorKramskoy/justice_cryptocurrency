@@ -11,13 +11,8 @@ export const ContainerLeft = styled(Box)(() => ({
   padding: '10px 20px',
   width: '75%'
 }))
-export const ContainerRight= styled(Box)(() => ({
-  color: '#FFFFFF',
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '30px 20px',
+export const ContainerRight = styled(Box)(() => ({
   width: '25%',
-  gap: '10px',
 }))
 export const HeaderLeft = styled(Box)(() => ({
   display: 'flex',
