@@ -5,7 +5,7 @@ import
   useEffect,
   useState
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
 import {
@@ -21,18 +21,27 @@ import {
 } from './BuyForm.style';
 
 import swap from '../../../../assets/images/swap.svg';
+import { allWalletRefill, transactionsALL, walletRefill } from '../../../../redux/action';
+import * as Navigate from '../../../../routesNavigate';
+import { useNavigate } from 'react-router-dom';
 
 export const BuyForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [item, setItem] = useState({});
   const [itemUp, setItemUp] = useState({});
   const [price, setPrice] = useState(0);
   const [reversPrice, setReversPrice] = useState(0);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(false);
-  const [userMoney, setUserMoney] = useState(0)
+  const [userMoney, setUserMoney] = useState(0);
 
+  const currentUser = useSelector((state) => state.users.currentUser);
   const currencies = useSelector((state) => state.money.money);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
+  const allWalletRedux = useSelector((state) => state.money.allWallets);
+  const transactionAll = useSelector((state) => state.transaction.transactionAll);
 
   const buttons = [
     {
@@ -76,13 +85,111 @@ export const BuyForm = () => {
       currenciesValueUp: '',
       countUp: 0,
       countMath: 0,
-      currenciesValueMath: itemUp.currency || '' ,
+      currenciesValueMath: itemUp.currency || '',
     },
     onSubmit: (values) => {
-      if( values.count > userMoney  ) {
-        setError(true)
+      const id = currentUser.id
+      const key = values.currenciesValue.toLowerCase();
+      const keyUp = values.currenciesValueUp.toLowerCase()
+      const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
+      const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
+
+      if (walletUserRedux.crypto[key] > values.count) {
+        const newWallet = {
+          ...findWallet,
+          crypto: {
+            ...findWallet.crypto,
+            [key]: Number(findWallet.crypto[key]) - Number(formik.values.count),
+            [keyUp]: findWallet.crypto[keyUp]
+              ? Number(findWallet.crypto[keyUp]) + Number(formik.values.countUp)
+              : Number(formik.values.countUp)
+          }
+        }
+        dispatch(walletRefill(newWallet));
+        localStorage.setItem('userWallet', JSON.stringify(newWallet));
+        const newAllWallets = allWalletRedux.map((wallet) => {
+          if (wallet.userId === newWallet.userId) {
+            return newWallet
+          }
+          return wallet
+        })
+        dispatch(allWalletRefill(newAllWallets));
+        localStorage.setItem('allWallets', JSON.stringify(newAllWallets));
+        if (!findTransactions) {
+          const newTransactions = {
+            userId: currentUser.id,
+            transactions: [
+              {
+                data: Date.now(),
+                currenciesValue: values.currenciesValue,
+                count: values.count,
+                currenciesValueUp: values.currenciesValueUp,
+                countUp: values.countUp,
+                status: true,
+              }
+            ]
+          }
+          transactionAll.push(newTransactions);
+          dispatch(transactionsALL(transactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
+        } else {
+          const newTransaction = {
+            data: Date.now(),
+            currenciesValue: values.currenciesValue,
+            count: values.count,
+            currenciesValueUp: values.currenciesValueUp,
+            countUp: values.countUp,
+            status: true,
+          }
+          findTransactions.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll.map((transaction) => {
+            if (transaction.userId === findTransactions.userId) {
+              return findTransactions
+            }
+            return findTransactions
+          })
+          dispatch(allWalletRefill(newTransactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
+        }
+        navigate(Navigate.WALLET)
       } else {
-        setError(false)
+        if (!findTransactions) {
+          const newTransactions = {
+            userId: currentUser.id,
+            transactions: [
+              {
+                data: Date.now(),
+                currenciesValue: values.currenciesValue,
+                count: values.count,
+                currenciesValueUp: values.currenciesValueUp,
+                countUp: values.countUp,
+                status: false,
+              }
+            ]
+          }
+          transactionAll.push(newTransactions);
+          dispatch(transactionsALL(transactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
+        } else {
+          const newTransaction = {
+            data: Date.now(),
+            currenciesValue: values.currenciesValue,
+            count: values.count,
+            currenciesValueUp: values.currenciesValueUp,
+            countUp: values.countUp,
+            status: false,
+          }
+          findTransactions.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll.map((transaction) => {
+            if (transaction.userId === findTransactions.userId) {
+              return findTransactions
+            }
+            return findTransactions
+          })
+          dispatch(allWalletRefill(newTransactionAll));
+          localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
+        }
+        setError(true)
       }
     }
   })
@@ -106,6 +213,7 @@ export const BuyForm = () => {
   }, [])
 
   useEffect(() => {
+
     if (walletUserRedux && formik.values.currenciesValue) {
       const newMoneyUser = walletUserRedux.crypto[formik.values.currenciesValue.toLowerCase()];
       setUserMoney(newMoneyUser)
@@ -194,7 +302,7 @@ export const BuyForm = () => {
           <Alert color="error" variant="filledLarge" icon={false}>
             Недостаточный баланс.
           </Alert></Box>
-      ) : null }
+      ) : null}
     </FormBuy>
   )
 }
