@@ -16,9 +16,8 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchMoney());
-    dispatch(fetchData());
+    dispatch(fetchData('1M'));
   }, [])
-
 
   return (
     <div className="App">

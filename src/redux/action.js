@@ -92,9 +92,9 @@ export function cryptoBuy(arr) {
   }
 }
 
-export function fetchData() {
+export function fetchData(time) {
   return async dispatch => {
-    const response = await axios.get('https://www.binance.com/api/v3/uiKlines?limit=1000&symbol=BNBBUSD&interval=3d', {})
+    const response = await axios.get(`https://www.binance.com/api/v3/uiKlines?limit=1000&symbol=BNBBUSD&interval=${time}`, {})
     const test = response.data.map((item) => {
       item[0] = new Date(item[0]).toLocaleString()
       return item

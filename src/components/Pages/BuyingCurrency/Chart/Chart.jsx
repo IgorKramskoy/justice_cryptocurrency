@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Echarts from 'echarts-for-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Box } from '@mui/material';
+
+import { TitleData } from '../Buying.style';
+import { fetchData } from '../../../../redux/action';
+import { ButtonTime } from './Chart.styles';
+
 
 export const Chart = () => {
+  const dispatch = useDispatch()
+
   const [arrData, setArrData] = useState([]);
+  const [crypto, setCrypto] = useState([]);
 
   const rawData = useSelector((state) => state.money.cryptoData);
   const arr = useSelector((state) => state.money.cryptoBuy);
 
+  let nowTime = new Date().toLocaleDateString()
 
   function calculateMA(dayCount, data) {
     var result = [];
@@ -25,6 +36,7 @@ export const Chart = () => {
     return result;
   }
 
+
   const dates = arrData.map(function (item) {
     return item[0];
   });
@@ -32,6 +44,7 @@ export const Chart = () => {
     // return [+item[1], +item[2], +item[5], +item[6]];
     return [+item[1], +item[2], +item[3], +item[4]];
   });
+
   const options = {
     tooltip: {
       trigger: 'axis',
@@ -56,7 +69,7 @@ export const Chart = () => {
       splitLine: {show: false}
     },
     grid: {
-      bottom: 80
+      bottom: 80,
     },
     dataZoom: [
       {
@@ -87,7 +100,8 @@ export const Chart = () => {
           color: '#FD1050',
           color0: '#0CF49B',
           borderColor: '#FD1050',
-          borderColor0: '#0CF49B'
+          borderColor0: '#0CF49B',
+          height: '600px'
         }
       },
       {
@@ -129,6 +143,37 @@ export const Chart = () => {
     ]
   };
 
+  const buttons = [
+    {
+      id: 11,
+      text: '30m',
+      func: () => {
+        dispatch(fetchData('30m'));
+      }
+    },
+    {
+      id: 12,
+      text: '1Ч',
+      func: () => {
+        dispatch(fetchData('1h'));
+      }
+    },
+    {
+      id: 13,
+      text: '1Д',
+      func: () => {
+        dispatch(fetchData('1d'));
+      }
+    },
+    {
+      id: 14,
+      text: '1М',
+      func: () => {
+        dispatch(fetchData('1M'));
+      }
+    },
+  ]
+
   useEffect(() => {
     if (rawData.length > 0) {
       const newArr = rawData.map((item) => {
@@ -143,12 +188,42 @@ export const Chart = () => {
         return newEl
       })
       setArrData(newArr)
+      setCrypto(data[0])
     }
 
   }, [rawData])
+
   return (
     <>
-      {arr.length > 0 ? <Echarts option={options}/> : null}
+      <Box sx={{display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px', width: '100%'}}>
+        <TitleData>{nowTime}</TitleData>
+        <TitleData>Открыть:</TitleData>
+        <TitleData>656</TitleData>
+        <TitleData>56565</TitleData>
+        <TitleData>65666</TitleData>
+        <TitleData>Мининимум:</TitleData>
+        <TitleData>655</TitleData>
+        <Box sx={{
+          borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+          paddingRight: '20px',
+          display: 'flex',
+          width: '110px',
+          alignItems: 'center'
+        }}>
+          <TitleData>ИЗМ:</TitleData>
+          <TitleData>vdgdf</TitleData>
+        </Box>
+        <TitleData>Время</TitleData>
+        {buttons.map(({id, text, func}) => (
+          <ButtonTime
+            onClick={() => func()}
+            key={id}
+          >
+            {text}
+          </ButtonTime>
+        ))}
+      </Box>
+      {arr.length > 0 ? <Echarts option={options} style={{height: '600px',}}/> : null}
     </>
 
   )
