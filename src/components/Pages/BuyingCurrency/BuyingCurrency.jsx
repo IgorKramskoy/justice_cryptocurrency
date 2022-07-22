@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Box } from '@mui/material';
 import {
@@ -14,7 +14,7 @@ export const BuyingCurrency = () => {
     <Box sx={{display: 'flex',}}>
       <ContainerLeft>
         <HeaderData/>
-        <Box>
+        <Box sx={{ height: '800px'}}>
           <Chart/>
         </Box>
       </ContainerLeft>

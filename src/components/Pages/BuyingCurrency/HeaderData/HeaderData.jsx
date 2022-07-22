@@ -9,36 +9,37 @@ import {
 } from '../Buying.style';
 
 export const HeaderData = () => {
-  const arr = useSelector((state) => state.money.cryptoBuy);
-
   const [item, setItem] = useState(null);
   const [itemUp, setItemUp] = useState(null);
   const [math, setMath] = useState(0);
+
+  const arr = useSelector((state) => state.money.cryptoBuy);
 
   useEffect(() => {
     const newItem = arr[0]
     setItem(newItem);
     const newItemUp = arr[1]
     setItemUp(newItemUp);
-    if( newItem && newItemUp) {
+    if (newItem && newItemUp) {
       const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
       setMath(mathItems)
     }
+
   }, [arr])
 
   return (
     <HeaderLeft>
       <Box sx={{borderRight: '1px solid rgba(255, 255, 255, 0.1)', padding: ' 10px 20px'}}>
         <Title variant="subtitle1">
-          {arr ? itemUp?.currency / item?.currency : 0 / 0}
+          {arr.length > 0 ? <>{itemUp?.currency} / {item?.currency}</> : '0 / 0'}
         </Title>
       </Box>
       <Box>
         <Title variant="subtitle1">
-          {math ? math.toFixed(2) : 0}
+          {math ? math : 0}
         </Title>
         <TitleData variant="subtitle2">
-          {math ? (math * Number(item.PRICE.slice(2).split(',').join(''))).toFixed(2) : 0}
+          {math ? (math * Number(item.PRICE.slice(2).split(',').join(''))) : 0}
         </TitleData>
       </Box>
       <Box>

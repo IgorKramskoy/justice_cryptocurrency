@@ -1,4 +1,4 @@
-import { CRYPTO_BUY, CRYPTO_ID, FETCH_MONEY, WALLET_USER_REFILL, WALLETS_ALL } from './types';
+import { CRYPTO_BUY, CRYPTO_ID, FETCH_DATA, FETCH_MONEY, WALLET_USER_REFILL, WALLETS_ALL } from './types';
 
 const initialState = {
   money: [],
@@ -6,6 +6,7 @@ const initialState = {
   allWallets: JSON.parse(localStorage.getItem('allWallets')) ?? [],
   cryptoId: '',
   cryptoBuy: [],
+  cryptoData: [],
 }
 
 export const moneyReducer = (state = initialState, action) => {
@@ -34,6 +35,11 @@ export const moneyReducer = (state = initialState, action) => {
       return {
         ...state,
         cryptoBuy: action.payload,
+      }
+    case FETCH_DATA:
+      return {
+        ...state,
+        cryptoData: action.payload,
       }
     default:
       return state
