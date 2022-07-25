@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 import Echarts from 'echarts-for-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box } from '@mui/material';
-
+import {
+  BoxStyles,
+  ButtonTime,
+  ConteinerStyles,
+  Negative,
+  Positive
+} from './Chart.styles';
 import { TitleData } from '../Buying.style';
-import { fetchData } from '../../../../redux/action';
-import { ButtonTime } from './Chart.styles';
 
+import { fetchData } from '../../../../redux/action';
 
 export const Chart = () => {
   const dispatch = useDispatch()
 
   const [arrData, setArrData] = useState([]);
   const [crypto, setCrypto] = useState([]);
+  const [percentChange, setPercentChange] = useState(0)
 
   const rawData = useSelector((state) => state.money.cryptoData);
   const arr = useSelector((state) => state.money.cryptoBuy);
@@ -41,7 +46,6 @@ export const Chart = () => {
     return item[0];
   });
   const data = arrData.map(function (item) {
-    // return [+item[1], +item[2], +item[5], +item[6]];
     return [+item[1], +item[2], +item[3], +item[4]];
   });
 
@@ -94,7 +98,6 @@ export const Chart = () => {
     series: [
       {
         type: 'candlestick',
-        // name: 'Day',
         data: data,
         itemStyle: {
           color: '#FD1050',
@@ -192,27 +195,36 @@ export const Chart = () => {
     }
 
   }, [rawData])
+  
+  useEffect(() => {
+    if (crypto) {
+      const newPercentChange = Number(crypto[1]) / Number(crypto[3])
+      setPercentChange(newPercentChange)
+    }
+  }, [crypto])
 
   return (
     <>
-      <Box sx={{display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px', width: '100%'}}>
+      <ConteinerStyles>
         <TitleData>{nowTime}</TitleData>
         <TitleData>Открыть:</TitleData>
-        <TitleData>656</TitleData>
-        <TitleData>56565</TitleData>
-        <TitleData>65666</TitleData>
+        {crypto && Number(crypto[0]) > 0 && <Positive>{crypto[0]}</Positive>}
+        {crypto && Number(crypto[0]) < 0 && <Negative>{crypto[0]}</Negative>}
+        {!crypto && <TitleData>0</TitleData>}
+        <TitleData>Максимум:</TitleData>
+        {crypto && Number(crypto[1]) > 0 && <Positive>{crypto[1]}</Positive>}
+        {crypto && Number(crypto[1]) < 0 && <Negative>{crypto[1]}</Negative>}
+        {!crypto && <TitleData>0</TitleData>}
         <TitleData>Мининимум:</TitleData>
-        <TitleData>655</TitleData>
-        <Box sx={{
-          borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-          paddingRight: '20px',
-          display: 'flex',
-          width: '110px',
-          alignItems: 'center'
-        }}>
+        {crypto && Number(crypto[3]) > 0 && <Positive>{crypto[3]}</Positive>}
+        {crypto && Number(crypto[3]) < 0 && <Negative>{crypto[3]}</Negative>}
+        {!crypto && <TitleData>0</TitleData>}
+        <BoxStyles sx={{}}>
           <TitleData>ИЗМ:</TitleData>
-          <TitleData>vdgdf</TitleData>
-        </Box>
+          {Number(percentChange) > 0 && <Positive>{Number(percentChange).toFixed(2)}%</Positive>}
+          {Number(percentChange) < 0 && <Negative>{Number(percentChange).toFixed(2)}%</Negative>}
+          {Number(percentChange) === 0 && <TitleData>{Number(percentChange)} %</TitleData>}
+        </BoxStyles>
         <TitleData>Время</TitleData>
         {buttons.map(({id, text, func}) => (
           <ButtonTime
@@ -222,7 +234,7 @@ export const Chart = () => {
             {text}
           </ButtonTime>
         ))}
-      </Box>
+      </ConteinerStyles>
       {arr.length > 0 ? <Echarts option={options} style={{height: '600px',}}/> : null}
     </>
 
