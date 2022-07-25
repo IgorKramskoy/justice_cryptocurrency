@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
-
 import {
   Box,
   InputAdornment,
   TextField
 } from '@mui/material';
+
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 

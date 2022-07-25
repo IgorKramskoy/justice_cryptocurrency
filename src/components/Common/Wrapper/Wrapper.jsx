@@ -32,13 +32,13 @@ export const Wrapper = ({children}) => {
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const logOut = () => {
-    localStorage.removeItem('userAuth')
-    dispatch(createUserAuth(null))
+    localStorage.removeItem('userAuth');
+    dispatch(createUserAuth(null));
   }
 
   useEffect(() => {
     if (!currentUser) {
-      navigate(Navigate.LOGIN)
+      navigate(Navigate.MAIN)
     }
   }, []);
 
@@ -49,17 +49,14 @@ export const Wrapper = ({children}) => {
   return (
     <Box sx={{display: 'flex'}}>
       <CssBaseline/>
-      {/*//navbar*/}
       <AppBarStyles>
         <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
           <img src={logo} alt="logo"/>
           <Avatar src={currentUser.avatar}/>
         </Toolbar>
       </AppBarStyles>
-      {/*//*/}
       {(location.pathname !== Navigate.REFILL && location.pathname !== Navigate.WITHDRAWAL) ?
         <DrawerStyles variant="permanent">
-          {/*//sidebar*/}
           <BoxConteinerStyles>
             <BoxStyles>
               {links.map(({path, text, image}) => (
@@ -68,10 +65,9 @@ export const Wrapper = ({children}) => {
             </BoxStyles>
             <BoxStyles>
               <Divider sx={{borderColor: 'rgba(255, 255, 255, 0.1)'}}/>
-              <CustomNavLink path={Navigate.LOGIN} image={logout} text="Выход" onClick={logOut}/>
+              <CustomNavLink path={Navigate.MAIN} image={logout} text="Выход" onClick={logOut}/>
             </BoxStyles>
           </BoxConteinerStyles>
-          {/*//*/}
         </DrawerStyles> : null}
       <BoxChildrenStyles component="main">
         {children}

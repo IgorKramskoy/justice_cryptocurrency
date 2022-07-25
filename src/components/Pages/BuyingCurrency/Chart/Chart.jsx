@@ -26,14 +26,14 @@ export const Chart = () => {
   let nowTime = new Date().toLocaleDateString()
 
   function calculateMA(dayCount, data) {
-    var result = [];
-    for (var i = 0, len = data.length; i < len; i++) {
+    let result = [];
+    for (let i = 0, len = data.length; i < len; i++) {
       if (i < dayCount) {
         result.push('-');
         continue;
       }
-      var sum = 0;
-      for (var j = 0; j < dayCount; j++) {
+      let sum = 0;
+      for (let j = 0; j < dayCount; j++) {
         sum += +data[i - j][1];
       }
       result.push(sum / dayCount);
@@ -191,17 +191,16 @@ export const Chart = () => {
         return newEl
       })
       setArrData(newArr)
-      setCrypto(data[0])
     }
-
   }, [rawData])
-  
+
   useEffect(() => {
+    setCrypto(data[0])
     if (crypto) {
       const newPercentChange = Number(crypto[1]) / Number(crypto[3])
       setPercentChange(newPercentChange)
     }
-  }, [crypto])
+  }, [arr])
 
   return (
     <>
@@ -235,7 +234,7 @@ export const Chart = () => {
           </ButtonTime>
         ))}
       </ConteinerStyles>
-      {arr.length > 0 ? <Echarts option={options} style={{height: '600px',}}/> : null}
+      {arr.length > 0 && <Echarts option={options} style={{height: '600px',}}/>}
     </>
 
   )
