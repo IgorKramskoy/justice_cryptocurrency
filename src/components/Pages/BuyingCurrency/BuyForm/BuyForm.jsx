@@ -1,29 +1,31 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useFormik } from 'formik';
+import
+  React,
+{
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 
 import {
   Alert,
   Box,
-  Button,
+  Button
 } from '@mui/material';
+import { AutocompleteCurrencyInfo } from '../../../Common/AutocompleteCurrencyInfo';
 import {
-  Content,
-  ContentBottom,
-  ContentTop,
+  FormBuy,
   Info,
-  Label,
-  Title
-} from './ComponentConvecter.styles';
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+  Label
+} from './BuyForm.style';
 
-import swap from '../../../assets/images/swap.svg';
-import { allWalletRefill, transactionsALL, walletRefill } from '../../../redux/action';
-import * as Navigate from '../../../routesNavigate';
+import swap from '../../../../assets/images/swap.svg';
+import { allWalletRefill, cryptoBuy, transactionsALL, walletRefill } from '../../../../redux/action';
+import * as Navigate from '../../../../routesNavigate';
+import { useNavigate } from 'react-router-dom';
 
-
-export const Convecter = () => {
+export const BuyForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,19 +35,59 @@ export const Convecter = () => {
   const [reversPrice, setReversPrice] = useState(0);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(false);
+  const [userMoney, setUserMoney] = useState(0);
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const currencies = useSelector((state) => state.money.money);
   const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
+  const cryptoCurrency = useSelector((state) => state.money.cryptoId);
+  const cryptoCurrencyDefault = 'USDT'
+
+  const buttons = [
+    {
+      id: 1,
+      text: '25%',
+      func: function () {
+        const math = userMoney * 0.25
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 2,
+      text: '50%',
+      func: function () {
+        const math = userMoney * 0.5
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 3,
+      text: '75%',
+      func: function () {
+        const math = userMoney * 0.75
+        handleChangeCount(math)
+      },
+    },
+    {
+      id: 4,
+      text: '100%',
+      func: function () {
+        const math = userMoney * 1
+        handleChangeCount(math)
+      },
+    },
+  ]
 
   const formik = useFormik({
     initialValues: {
-      currenciesValue: '',
+      currenciesValue: cryptoCurrencyDefault,
       count: 0,
-      currenciesValueUp: '',
+      currenciesValueUp: cryptoCurrency,
       countUp: 0,
+      countMath: 0,
+      currenciesValueMath: itemUp.currency || '',
     },
     onSubmit: (values) => {
       const id = currentUser.id
@@ -151,96 +193,124 @@ export const Convecter = () => {
         }
         setError(true)
       }
-    },
-  });
-
+    }
+  })
+  const handleChangeCountMath = useCallback((count) => {
+    formik.setFieldValue('countMath', count);
+  }, [])
+  const handleChangeCurrencyMath = useCallback((name) => {
+    formik.setFieldValue('currenciesValueMath', name);
+  }, [])
   const handleChangeCurrency = useCallback((name) => {
     formik.setFieldValue('currenciesValue', name);
   }, [])
-
   const handleChangeCount = useCallback((count) => {
     formik.setFieldValue('count', count);
   }, [])
-
   const handleChangeCurrencyUp = useCallback((name) => {
     formik.setFieldValue('currenciesValueUp', name);
   }, [])
-
   const handleChangeCountUp = useCallback((count) => {
     formik.setFieldValue('countUp', count);
   }, [])
 
   useEffect(() => {
-    if (formik.values.currenciesValueUp && formik.values.currenciesValue && formik.values.count) {
-      const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
-      setItem(itemNew);
-      const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp)
-      setItemUp(itemUpNew)
-      const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''))
-      setPrice(newPrice);
-      const newReversPrice = Number(itemUpNew.PRICE.slice(2).split(',').join('')) / Number(itemNew.PRICE.slice(2).split(',').join(''))
-      setReversPrice(newReversPrice);
-      const newTotal = newPrice * Number(formik.values.count)
-      setTotal(newTotal)
-      handleChangeCountUp(newTotal)
+    if (walletUserRedux && formik.values.currenciesValue) {
+      const newMoneyUser = walletUserRedux.crypto[formik.values.currenciesValue.toLowerCase()];
+      setUserMoney(newMoneyUser)
+      if (formik.values.currenciesValueUp) {
+        handleChangeCurrencyMath(formik.values.currenciesValueUp)
+        const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue);
+        setItem(itemNew);
+        const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp);
+        setItemUp(itemUpNew);
+
+        const arr = [];
+        arr.push( itemNew, itemUpNew)
+        dispatch(cryptoBuy(arr));
+
+        const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''));
+        setPrice(newPrice);
+        const newReversPrice = Number(itemUpNew.PRICE.slice(2).split(',').join('')) / Number(itemNew.PRICE.slice(2).split(',').join(''));
+        setReversPrice(newReversPrice);
+        const newTotal = newPrice * Number(formik.values.count);
+        setTotal(newTotal);
+        handleChangeCountMath(newPrice);
+        handleChangeCountUp(newTotal);
+      }
     }
   }, [formik.values])
 
   return (
-    <Box>
-      <Title variant="h4">Конвертер</Title>
-      <Content>
-        <ContentTop onSubmit={formik.handleSubmit}>
-          <Box>
-            <Label variant="h4">Отдаю</Label>
-            <AutocompleteCurrencyInfo
-              arr={currencies}
-              handleChangeCurrency={handleChangeCurrency}
-              handleChangeCount={handleChangeCount}
-            />
-          </Box>
-          <Box sx={{paddingTop: '20px'}}>
-            <img src={swap} alt="logo"/>
-          </Box>
-          <Box>
-            <Label variant="h4">Получаю</Label>
-            <AutocompleteCurrencyInfo
-              textFieldDisabled
-              textFieldValue={formik.values.countUp}
-              arr={currencies}
-              handleChangeCurrency={handleChangeCurrencyUp}
-              handleChangeCount={handleChangeCountUp}
-            />
-          </Box>
+    <FormBuy onSubmit={formik.handleSubmit}>
+      <Label variant="subtitle1">
+        Отдаю
+      </Label>
+      <AutocompleteCurrencyInfo
+        arr={currencies}
+        label="Цена"
+        handleChangeCount={handleChangeCountMath}
+        textFieldValue={formik.values.countMath}
+        inputValue={formik.values.currenciesValueUp}
+      />
+      <Box>
+        <img src={swap} alt={'swap'}/>
+      </Box>
+      <Label variant="subtitle1">
+        Получаю
+      </Label>
+      <AutocompleteCurrencyInfo
+        arr={currencies}
+        inputValue={cryptoCurrency}
+        handleChangeCurrency={handleChangeCurrencyUp}
+        handleChangeCount={handleChangeCountUp}
+        textFieldValue={formik.values.countUp}
+      />
+      <Box sx={{display: 'flex', gap: '10px',}}>
+        {buttons.map(({id, text, func}) => (
           <Button
-            sx={{marginTop: '15px',}}
-            type="submit"
-            size="large"
+            size="small"
             variant="contained"
-            color="primary"
+            disabled={false}
+            color="info"
+            key={id}
+            onClick={() => func()}
           >
-            Конвертировать
+            {text}
           </Button>
-        </ContentTop>
-        <ContentBottom>
-          <Box>
-            <Label variant="h4">Цена</Label>
-            {price ? <Info variant="h4">1 {item.currency} = {price} {itemUp.currency}</Info> : null}
-          </Box>
-          <Box>
-            <Label variant="h4">Обратный курс</Label>
-            {reversPrice ? <Info variant="h4"> 1 {itemUp.currency} = {reversPrice} {item.currency} </Info> : null}
-          </Box>
-          <Box>
-            <Label variant="h4">Вы получите</Label>
-            {total ? <Info variant="h4"> {total} {itemUp.currency} </Info> : null}
-          </Box>
-          {error ? (
-            <Alert color="error" variant="filledLarge" icon={false}>Недостаточно средств. Пополните баланс.</Alert>
-          ) : null }
-
-        </ContentBottom>
-      </Content>
-    </Box>
+        ))}
+      </Box>
+      <AutocompleteCurrencyInfo
+        inputValue={cryptoCurrencyDefault}
+        textFieldValue={formik.values.count}
+        arr={currencies}
+        handleChangeCurrency={handleChangeCurrency}
+        handleChangeCount={handleChangeCount}
+        label="Всего"
+      />
+      <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <Info variant="subtitle1">
+          Доступно
+        </Info>
+        <Info variant="subtitle1">
+          {userMoney ? userMoney : 0.0}
+        </Info>
+      </Box>
+      <Button
+        size="large"
+        variant="contained"
+        disabled={false}
+        color="success"
+        type="submit"
+      >
+        Купить ADA
+      </Button>
+      {error ? (
+        <Box>
+          <Alert color="error" variant="filledLarge" icon={false}>
+            Недостаточный баланс.
+          </Alert></Box>
+      ) : null}
+    </FormBuy>
   )
 }

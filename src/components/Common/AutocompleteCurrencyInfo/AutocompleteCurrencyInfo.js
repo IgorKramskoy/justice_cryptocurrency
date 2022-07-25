@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
-
 import {
   Box,
   InputAdornment,
   TextField
 } from '@mui/material';
+
 import { AutocompleteStyled } from '../../Pages/Market/CustomAutocomplete.styled';
 import { TextFieldStyled } from '../CustomTextField/CustomTextField.styles';
 
@@ -12,6 +12,7 @@ export const AutocompleteCurrencyInfo = memo((
   {
     inputValue,
     arr,
+    label = 'Кол-во',
     handleChangeCurrency,
     handleChangeCount,
     textFieldValue,
@@ -40,7 +41,7 @@ export const AutocompleteCurrencyInfo = memo((
       border: '1px solid rgba(255, 255, 255, 0.1)',
     }}>
       <TextFieldStyled
-        label="Кол-во"
+        label={label}
         type="number"
         value={textFieldValue}
         onChange={handleSearch}
@@ -60,7 +61,7 @@ export const AutocompleteCurrencyInfo = memo((
         renderInput={(params) => (
           <TextField
             sx={{
-              ['&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink']: {
+              '&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink': {
                 top: '10px', left: '0px'
               },
             }}
@@ -72,7 +73,7 @@ export const AutocompleteCurrencyInfo = memo((
             InputProps={{
               ...params.InputProps,
               startAdornment: <InputAdornment position="start">{icon ?
-                <img src={icon} alt="icon"/> : ''}</InputAdornment>,
+                <img src={icon} alt="icon"/> : ''}</InputAdornment>
             }}
           />
         )}

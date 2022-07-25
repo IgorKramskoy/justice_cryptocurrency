@@ -26,6 +26,7 @@ export const AutocompleteStyled = styled(Autocomplete)(() => ({
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
+
   },
   '& .MuiOutlinedInput': {
     border: 'none',
@@ -46,16 +47,17 @@ export const AutocompleteStyled = styled(Autocomplete)(() => ({
   },
   '&.MuiFormControl-root .Miu-focused': {
     borderRadius: '3px',
+    width: '150px',
   },
-  ['&.MuiAutocomplete-root']: {
+  '&.MuiAutocomplete-root': {
     margin: '0px',
-    width: '280px',
+    width: '130px',
   },
-  ['& .MuiOutlinedInput-root']: {
+  '& .MuiOutlinedInput-root': {
     border: 'none',
     padding: '4px!important',
   },
-  ['& .MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root']: {
+  '& .MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root': {
     border: 'none',
   },
 }))

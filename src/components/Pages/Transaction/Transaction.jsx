@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import {
   Alert,
   Box,
@@ -13,6 +12,7 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
+
 import { TableCellHeadStyled } from '../Market/Table.styled';
 import { TableCellStyled } from '../Wallet/Wallet.styles';
 
@@ -81,6 +81,7 @@ export const Transaction = () => {
           </TableHead>
           <TableBody sx={{background: '#111823',}}>
             {transactionRows
+              .sort((a, b) => b.data - a.data)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={`${row.data}`}>
@@ -108,13 +109,13 @@ export const Transaction = () => {
               ))}
           </TableBody>
         </Table>
-        <Pagination
+        {transactionRows.length > 8 &&  <Pagination
           count={Math.ceil(transactionRows.transactions / rowsPerPage)}
           shape="rounded"
           rowsperpage={rowsPerPage}
           page={page + 1}
           onChange={handleChangePage}
-        />
+        />}
       </TableContainer>
     </Box>
   );

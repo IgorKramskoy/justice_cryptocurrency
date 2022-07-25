@@ -3,7 +3,7 @@ import * as Validation from '../../../../validationConstants';
 
 export const CardFormValidation = Yup.object().shape({
   number: Yup.string()
-    .matches(/^[0-9]+$/, "Не номер карты")
+    .matches(/^[0-9]+$/, 'Не номер карты')
     .min(16, Validation.TOOSHORT)
     .required(),
   date: Yup.string(Validation.DATE)

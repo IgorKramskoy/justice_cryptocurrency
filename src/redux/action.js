@@ -3,7 +3,9 @@ import axios from 'axios';
 import {
   CREATE_USER,
   CREATE_USER_AUTH,
+  CRYPTO_BUY,
   CRYPTO_ID,
+  FETCH_DATA,
   FETCH_MONEY,
   TRANSACTIONS_ALL,
   UPDATE_USER,
@@ -80,6 +82,24 @@ export function getCryptoId(id) {
   return {
     type: CRYPTO_ID,
     payload: id,
+  }
+}
+
+export function cryptoBuy(arr) {
+  return {
+    type: CRYPTO_BUY,
+    payload: arr,
+  }
+}
+
+export function fetchData(time) {
+  return async dispatch => {
+    const response = await axios.get(`https://www.binance.com/api/v3/uiKlines?limit=1000&symbol=BNBBUSD&interval=${time}`, {})
+    const test = response.data.map((item) => {
+      item[0] = new Date(item[0]).toLocaleString()
+      return item
+    })
+    dispatch({type: FETCH_DATA, payload: test})
   }
 }
 

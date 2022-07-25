@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TableRow,
   TableHead,
@@ -19,9 +18,16 @@ import {
   TableCellHeadStyled,
   TableCellStyled
 } from './Table.styled';
+
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
+import { useNavigate } from 'react-router-dom';
+import * as Navigate from '../../../routesNavigate';
+import { getCryptoId } from '../../../redux/action';
 
 export const Market = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
@@ -57,6 +63,11 @@ export const Market = () => {
     setPage(0);
   };
 
+  const buyingCurrency = (link) => {
+    dispatch(getCryptoId(link))
+    navigate(Navigate.BUYINDING)
+  }
+
   useEffect(() => {
     if (filteredRows.length === 0) {
       setFilteredRows(currencies)
@@ -70,6 +81,7 @@ export const Market = () => {
           Курсы валют
         </Typography>
         <AutocompleteStyled
+
           disablePortal
           options={currencies}
           onChange={onChange}
@@ -85,7 +97,7 @@ export const Market = () => {
           )}
           renderInput={(params) => <TextField
             sx={{
-              ['&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink']: {
+              '&.MuiFormControl-root.MuiTextField-root label.MuiInputLabel-shrink': {
                 top: '10px', left: '0px'
               },
             }}
@@ -134,7 +146,15 @@ export const Market = () => {
                   <TableCellStyled align="left">{row.TOPTIERVOLUME24HOURTO}</TableCellStyled>
                   <TableCellStyled align="left">{row.MKTCAP}</TableCellStyled>
                   <TableCellStyled align="left">
-                    <Button size="small" variant="contained" disabled={false} color="info">Торговать</Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      disabled={false}
+                      color="info"
+                      onClick={() => buyingCurrency(row?.currency)}
+                    >
+                      Торговать
+                    </Button>
                   </TableCellStyled>
                 </TableRow>
               ))}
