@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TableRow,
   TableHead,
@@ -19,12 +18,15 @@ import {
   TableCellHeadStyled,
   TableCellStyled
 } from './Table.styled';
+
 import { AutocompleteStyled } from './CustomAutocomplete.styled';
 import { useNavigate } from 'react-router-dom';
 import * as Navigate from '../../../routesNavigate';
+import { getCryptoId } from '../../../redux/action';
 
 export const Market = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [filteredRows, setFilteredRows] = useState([]);
   const [page, setPage] = useState(0);
@@ -61,7 +63,8 @@ export const Market = () => {
     setPage(0);
   };
 
-  const buyingCurrency = () => {
+  const buyingCurrency = (link) => {
+    dispatch(getCryptoId(link))
     navigate(Navigate.BUYINDING)
   }
 
@@ -78,6 +81,7 @@ export const Market = () => {
           Курсы валют
         </Typography>
         <AutocompleteStyled
+
           disablePortal
           options={currencies}
           onChange={onChange}
@@ -147,7 +151,7 @@ export const Market = () => {
                       variant="contained"
                       disabled={false}
                       color="info"
-                      onClick={buyingCurrency}
+                      onClick={() => buyingCurrency(row?.currency)}
                     >
                       Торговать
                     </Button>

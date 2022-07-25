@@ -42,6 +42,8 @@ export const BuyForm = () => {
   const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
+  const cryptoCurrency = useSelector((state) => state.money.cryptoId);
+  const cryptoCurrencyDefault = 'USDT'
 
   const buttons = [
     {
@@ -80,9 +82,9 @@ export const BuyForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      currenciesValue: '',
+      currenciesValue: cryptoCurrencyDefault,
       count: 0,
-      currenciesValueUp: '',
+      currenciesValueUp: cryptoCurrency,
       countUp: 0,
       countMath: 0,
       currenciesValueMath: itemUp.currency || '',
@@ -249,7 +251,7 @@ export const BuyForm = () => {
         label="Цена"
         handleChangeCount={handleChangeCountMath}
         textFieldValue={formik.values.countMath}
-        inputValue={formik.values.currenciesValueMath}
+        inputValue={formik.values.currenciesValueUp}
       />
       <Box>
         <img src={swap} alt={'swap'}/>
@@ -259,6 +261,7 @@ export const BuyForm = () => {
       </Label>
       <AutocompleteCurrencyInfo
         arr={currencies}
+        inputValue={cryptoCurrency}
         handleChangeCurrency={handleChangeCurrencyUp}
         handleChangeCount={handleChangeCountUp}
         textFieldValue={formik.values.countUp}
@@ -278,6 +281,7 @@ export const BuyForm = () => {
         ))}
       </Box>
       <AutocompleteCurrencyInfo
+        inputValue={cryptoCurrencyDefault}
         textFieldValue={formik.values.count}
         arr={currencies}
         handleChangeCurrency={handleChangeCurrency}
