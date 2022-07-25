@@ -13,25 +13,25 @@ export const HeaderData = () => {
   const [itemUp, setItemUp] = useState(null);
   const [math, setMath] = useState(0);
 
-  const arr = useSelector((state) => state.money.cryptoBuy);
+  const arrCryptoBuy = useSelector((state) => state.money.cryptoBuy);
 
   useEffect(() => {
-    const newItem = arr[0]
+    const newItem = arrCryptoBuy[0]
     setItem(newItem);
-    const newItemUp = arr[1]
+    const newItemUp = arrCryptoBuy[1]
     setItemUp(newItemUp);
     if (newItem && newItemUp) {
       const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
       setMath(mathItems)
     }
 
-  }, [arr])
+  }, [arrCryptoBuy])
 
   return (
     <HeaderLeft>
       <Box sx={{borderRight: '1px solid rgba(255, 255, 255, 0.1)', padding: ' 10px 20px'}}>
         <Title variant="subtitle1">
-          {arr.length > 0 ? <>{itemUp?.currency} / {item?.currency}</> : '0 / 0'}
+          {arrCryptoBuy.length > 0 ? <>{itemUp?.currency} / {item?.currency}</> : '0 / 0'}
         </Title>
       </Box>
       <Box>
@@ -48,10 +48,10 @@ export const HeaderData = () => {
         </Title>
         <Box sx={{display: 'flex', gap: '10px'}}>
           <TitleData variant="subtitle2">
-            {arr ? itemUp?.CHANGEPCT24HOUR : 0}
+            {arrCryptoBuy ? itemUp?.CHANGEPCT24HOUR : 0}
           </TitleData>
           <TitleData variant="subtitle2">
-            {arr ? item?.CHANGEPCT24HOUR : 0}
+            {arrCryptoBuy ? item?.CHANGEPCT24HOUR : 0}
           </TitleData>
         </Box>
       </Box>
@@ -60,7 +60,7 @@ export const HeaderData = () => {
           Макс 24ч
         </Title>
         <TitleData variant="subtitle2">
-          {arr ? itemUp?.VOLUMEDAY : 0}
+          {arrCryptoBuy ? itemUp?.VOLUMEDAY : 0}
         </TitleData>
       </Box>
       <Box>
@@ -68,7 +68,7 @@ export const HeaderData = () => {
           Объем 24ч ({item ? itemUp?.currency : ''})
         </Title>
         <TitleData variant="subtitle2">
-          {arr ? itemUp?.TOPTIERVOLUME24HOURTO : 0}
+          {arrCryptoBuy ? itemUp?.TOPTIERVOLUME24HOURTO : 0}
         </TitleData>
       </Box>
       <Box>
@@ -76,7 +76,7 @@ export const HeaderData = () => {
           Объем за 24ч ({item?.currency})
         </Title>
         <TitleData variant="subtitle2">
-          {arr ? item?.TOPTIERVOLUME24HOURTO : 0}
+          {arrCryptoBuy ? item?.TOPTIERVOLUME24HOURTO : 0}
         </TitleData>
       </Box>
     </HeaderLeft>

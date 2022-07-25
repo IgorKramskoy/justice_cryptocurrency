@@ -21,7 +21,7 @@ export const Chart = () => {
   const [percentChange, setPercentChange] = useState(0)
 
   const rawData = useSelector((state) => state.money.cryptoData);
-  const arr = useSelector((state) => state.money.cryptoBuy);
+  const arrCryptoBuy = useSelector((state) => state.money.cryptoBuy);
 
   let nowTime = new Date().toLocaleDateString()
 
@@ -200,7 +200,7 @@ export const Chart = () => {
       const newPercentChange = Number(crypto[1]) / Number(crypto[3])
       setPercentChange(newPercentChange)
     }
-  }, [arr])
+  }, [arrCryptoBuy])
 
   return (
     <>
@@ -234,7 +234,7 @@ export const Chart = () => {
           </ButtonTime>
         ))}
       </ConteinerStyles>
-      {arr.length > 0 && <Echarts option={options} style={{height: '600px',}}/>}
+      {arrCryptoBuy.length > 0 && <Echarts option={options} style={{height: '600px',}}/>}
     </>
 
   )
