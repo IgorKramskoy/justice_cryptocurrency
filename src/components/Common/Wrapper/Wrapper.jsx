@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMetaMask } from 'metamask-react';
 
 import { createUserAuth } from '../../../redux/action';
 import {
@@ -8,12 +9,14 @@ import {
   CssBaseline,
   Toolbar,
   Avatar,
-  Divider,
+  Divider, Button,
 } from '@mui/material';
 import {
   AppBarStyles,
   BoxChildrenStyles,
   BoxConteinerStyles,
+  BoxMetamask,
+  BoxMetamaskButtons,
   BoxStyles,
   DrawerStyles
 } from './StylesWraper.styled';
@@ -28,13 +31,30 @@ export const Wrapper = ({children}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false)
 
   const currentUser = useSelector((state) => state.users.currentUser);
+  const {status, connect, account, chainId, switchChain, addChain} = useMetaMask();
 
+  const changeShow = () => {
+    setShow(!show)
+  }
+  const gnosisChainNetworkParams = {
+    chainId: '0x64',
+    chainName: 'Gnosis Chain',
+    rpcUrls: ['https://rpc.gnosischain.com/'],
+    nativeCurrency: {
+      name: 'xDAI',
+      symbol: 'xDAI',
+      decimals: 18,
+    },
+    blockExplorerUrls: ['https://blockscout.com/xdai/mainnet/']
+  };
   const logOut = () => {
     localStorage.removeItem('userAuth');
     dispatch(createUserAuth(null));
   }
+
 
   useEffect(() => {
     if (!currentUser) {
@@ -52,8 +72,19 @@ export const Wrapper = ({children}) => {
       <AppBarStyles>
         <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
           <img src={logo} alt="logo"/>
-          <Avatar src={currentUser.avatar}/>
+          <Avatar src={currentUser.avatar} onClick={changeShow}/>
         </Toolbar>
+        {show ? (
+          <BoxMetamask>
+            {status === 'initializing' && <div>Synchronisation with MetaMask ongoing...</div>}
+            {status === 'unavailable' && <div>MetaMask not available :(</div>}
+            {status === 'connected' && <div>Connected account {account} on chain ID {chainId}</div>}
+            <BoxMetamaskButtons >
+              { status === 'notConnected' && <Button size="small" variant="contained" color="primary" onClick={connect}>Connect</Button>}
+              <Button size="small" variant="contained" color="primary" onClick={() => switchChain('0x1')}>Switch to Ethereum Mainnet</Button>
+              <Button size="small" variant="contained" color="primary" onClick={() => addChain(gnosisChainNetworkParams)}>Add Gnosis chain</Button>
+            </BoxMetamaskButtons>
+          </BoxMetamask>) : null}
       </AppBarStyles>
       {(location.pathname !== Navigate.REFILL && location.pathname !== Navigate.WITHDRAWAL) ?
         <DrawerStyles variant="permanent">
