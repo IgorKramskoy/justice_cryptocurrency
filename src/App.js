@@ -8,7 +8,7 @@ import { routes } from './routes';
 import './App.css';
 import { ThemeProvider } from '@mui/material';
 import { customTheme } from './theme';
-import { fetchData, fetchMoney } from './redux/action';
+import { fetchData, fetchMoney} from './redux/action';
 
 
 

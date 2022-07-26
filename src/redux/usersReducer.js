@@ -1,7 +1,7 @@
-import { CREATE_USER, CREATE_USER_AUTH, UPDATE_USER, UPDATE_USERS } from './types';
+import { CREATE_USER, CREATE_USER_AUTH, FETCH_USERS, UPDATE_USER, UPDATE_USERS } from './types';
 
 const initialState = {
-  allUsers: JSON.parse(localStorage.getItem('users')) ?? [],
+  allUsers: [],
   currentUser: JSON.parse(localStorage.getItem('userAuth')) ?? null,
 }
 
@@ -18,8 +18,12 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload,
       }
+      case FETCH_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      }
     case UPDATE_USER:
-      console.log(action)
       return {
         ...state,
         currentUser: action.payload[0] ?? action.payload,

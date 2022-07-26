@@ -10,6 +10,7 @@ import { StylesBoxReg } from './LoginFormContainer.styled';
 import { LoginFormValidation } from './LoginFormValidation';
 import { createUserAuth } from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
+import axios from 'axios';
 
 export const LoginFormContainer = () => {
   const dispatch = useDispatch();
@@ -27,16 +28,21 @@ export const LoginFormContainer = () => {
     },
     validationSchema: LoginFormValidation,
     onSubmit: ({email, password}) => {
-      const userAuth = usersRedux.find((user) => user.email === email)
-      if (!userAuth) {
-        setError('Пользователь с таким email не существует или неправильный email!')
-      } else if (userAuth.password !== password) {
-        setError('Неверный пароль!')
-      } else {
-        localStorage.setItem('userAuth', JSON.stringify(userAuth))
-        dispatch(createUserAuth(userAuth))
-        navigate(Navigate.MARKET)
+
+      const data = {
+        email,
+        password,
       }
+      axios.post('http://localhost:5200/auth/login', data)
+        .then(function (response) {
+          setError('')
+          localStorage.setItem('userAuth', JSON.stringify(response.data))
+          dispatch(createUserAuth(response.data))
+          navigate(Navigate.MARKET)
+        })
+        .catch(function (error) {
+          setError('Неправильный email или пароль!')
+        });
     },
   });
 

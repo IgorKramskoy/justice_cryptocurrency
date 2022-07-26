@@ -86,7 +86,7 @@ export const Refill = () => {
   }, [])
 
   const handleSubmit = () => {
-    const id = currentUser.id
+    const id = currentUser._id
     const key = formik.values.currenciesValue.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
     if (key === 'rub') {
@@ -110,7 +110,7 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
-          userId: currentUser.id,
+          userId: currentUser._id,
           currencies: {
             rub: +formik.values.count,
             usd: 0,
@@ -144,7 +144,7 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
-          userId: currentUser.id,
+          userId: currentUser._id,
           currencies: {
             rub: 0,
             usd: +formik.values.count,
