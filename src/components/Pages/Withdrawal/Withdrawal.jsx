@@ -25,7 +25,6 @@ import { BoxStep, StepItem } from './Withdrawal.styles';
 import * as Navigate from '../../../routesNavigate';
 import { steps } from './Steper/step'
 import rub from '../../../assets/images/rub.svg';
-import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
 import { cryptoMessage } from '../../../ModalMessage/cryptoMessage'
 import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
@@ -51,11 +50,7 @@ export const Withdrawal = () => {
     {
       img: rub,
       currency: 'RUB',
-    },
-    // {
-    //   img: usd,
-    //   currency: 'USD',
-    // },
+    }
   ]
 
   const formik = useFormik({
@@ -108,10 +103,11 @@ export const Withdrawal = () => {
   }, [])
 
   const handleWithdrawal = () => {
-    const id = currentUser.id
+    const id = currentUser._id
     const key = formik.values.currenciesValue.toLowerCase();
     const keyUp = formik.values.currenciesValueUp.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
+    console.log(id,key, keyUp, findWallet)
     const newWallet = {
       ...findWallet,
       currencies: {
@@ -234,6 +230,5 @@ export const Withdrawal = () => {
       </ContentСontainer>
       );
     </>
-
   );
 }
