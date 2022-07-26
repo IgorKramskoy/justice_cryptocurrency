@@ -18,15 +18,17 @@ import {
   ContentСontainer,
   RefillForm
 } from './Refill.styles';
+
 import * as Navigate from '../../../routesNavigate';
 import { CardForm } from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/';
+
+import { steps } from './Steper/step';
+import { walletMessage } from '../../../ModalMessage/walletMessage'
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
-import { steps } from './Steper/step';
-import { walletMessage } from '../../../ModalMessage/walletMessage'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -44,8 +46,7 @@ export const Refill = () => {
       currenciesValue: '',
       count: 0,
     },
-    onSubmit: (values) => {
-      console.log('1')
+    onSubmit: () => {
     },
   });
 
@@ -158,18 +159,15 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(allWalletRedux))
       }
     }
-    const value = {}
   }
 
   return (
     <ContentСontainer>
       <Content>
         <ContentHeader>
-          {/*title*/}
           <Box>
             <Typography sx={{color: '#FFFFFF'}} variant="h5">Пополнение</Typography>
           </Box>
-          {/*//*/}
           <Box>
             <Button
               type="submit"
