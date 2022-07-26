@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   Box,
@@ -17,12 +17,10 @@ import axios from 'axios';
 
 
 export const RegisterFormContainer = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [error, setError] = useState('');
 
-  const usersRedux = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const formik = useFormik({
@@ -44,11 +42,11 @@ export const RegisterFormContainer = () => {
         avatar: '',
       }
       axios.post('http://localhost:5200/auth/register', data)
-        .then(function (response) {
+        .then(function () {
           setError('')
           navigate(Navigate.LOGIN)
         })
-        .catch(function (error) {
+        .catch(function () {
           setError('Пользователь с таким email существует')
         });
     },
