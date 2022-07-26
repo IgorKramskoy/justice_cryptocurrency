@@ -4,7 +4,11 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography
+} from '@mui/material';
 import { StylesBoxReg } from './LoginFormContainer.styled';
 
 import { LoginFormValidation } from './LoginFormValidation';
@@ -19,7 +23,6 @@ export const LoginFormContainer = () => {
   const [error, setError] = useState('');
 
   const currentUser = useSelector((state) => state.users.currentUser)
-  const usersRedux = useSelector((state) => state.users.allUsers)
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +31,6 @@ export const LoginFormContainer = () => {
     },
     validationSchema: LoginFormValidation,
     onSubmit: ({email, password}) => {
-
       const data = {
         email,
         password,
@@ -40,7 +42,7 @@ export const LoginFormContainer = () => {
           dispatch(createUserAuth(response.data))
           navigate(Navigate.MARKET)
         })
-        .catch(function (error) {
+        .catch(function () {
           setError('Неправильный email или пароль!')
         });
     },
@@ -50,7 +52,7 @@ export const LoginFormContainer = () => {
     if (currentUser) {
       navigate(Navigate.MARKET)
     }
-  }, [])
+  },[])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
