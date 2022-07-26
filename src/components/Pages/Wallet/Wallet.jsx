@@ -22,11 +22,10 @@ import {
 import { TableCellHeadStyled} from '../Market/Table.styled';
 import { TableCellStyled } from './Wallet.styles';
 
-import rub from '../../../assets/images/rub.svg';
-import usd from '../../../assets/images/usd.svg';
 import * as Navigate from '../../../routesNavigate';
 import { getCryptoId } from '../../../redux/action';
-
+import rub from '../../../assets/images/rub.svg';
+import usd from '../../../assets/images/usd.svg';
 
 export const Wallet = () => {
   const navigate = useNavigate();
