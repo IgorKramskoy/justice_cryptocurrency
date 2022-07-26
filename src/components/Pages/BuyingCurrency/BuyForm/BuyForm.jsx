@@ -43,7 +43,7 @@ export const BuyForm = () => {
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
   const cryptoCurrency = useSelector((state) => state.money.cryptoId);
-  const cryptoCurrencyDefault = 'USDT'
+  const cryptoCurrencyDefault = 'USDT';
 
   const buttons = [
     {
