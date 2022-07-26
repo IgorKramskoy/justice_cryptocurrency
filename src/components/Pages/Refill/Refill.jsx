@@ -46,8 +46,6 @@ export const Refill = () => {
       currenciesValue: '',
       count: 0,
     },
-    onSubmit: () => {
-    },
   });
 
   const money = [

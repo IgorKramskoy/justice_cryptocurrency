@@ -9,7 +9,8 @@ import {
   CssBaseline,
   Toolbar,
   Avatar,
-  Divider, Button,
+  Divider,
+  Button,
 } from '@mui/material';
 import {
   AppBarStyles,
