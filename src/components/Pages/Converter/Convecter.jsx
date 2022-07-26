@@ -48,7 +48,7 @@ export const Convecter = () => {
       countUp: 0,
     },
     onSubmit: (values) => {
-      const id = currentUser.id
+      const id = currentUser._id
       const key = values.currenciesValue.toLowerCase();
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
@@ -77,7 +77,7 @@ export const Convecter = () => {
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets));
         if (!findTransactions) {
           const newTransactions = {
-            userId: currentUser.id,
+            userId: currentUser._id,
             transactions: [
               {
                 data: Date.now(),
@@ -115,7 +115,7 @@ export const Convecter = () => {
       } else {
         if (!findTransactions) {
           const newTransactions = {
-            userId: currentUser.id,
+            userId: currentUser._id,
             transactions: [
               {
                 data: Date.now(),

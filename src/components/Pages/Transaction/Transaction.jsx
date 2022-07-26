@@ -27,8 +27,8 @@ export const Transaction = () => {
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
   const currentUser = useSelector((state) => state.users.currentUser);
 
-  const transactionUser = transactionAll.find((transaction) => transaction.userId === currentUser.id)
-  const transactionArr = transactionUser.transactions
+  const transactionUser = transactionAll.find((transaction) => transaction.userId === currentUser._id)
+  const transactionArr = transactionUser?.transactions
 
   const findItem = (findValue, arr) => {
     const findObj = arr.find(item => item.currency === findValue)

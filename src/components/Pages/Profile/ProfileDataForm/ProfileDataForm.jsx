@@ -3,7 +3,11 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button} from '@mui/material';
-import { Container, HederTitle, BoxStyled } from './ProfileDataFormContainer.styled';
+import {
+  Container,
+  HederTitle,
+  BoxStyled
+} from './ProfileDataFormContainer.styled';
 import { CustomTextField } from '../../../Common/CustomTextField';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
@@ -31,7 +35,6 @@ export const ProfileDataForm = () => {
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
-      userFind.avatar = userFind.avatar
       localStorage.setItem('userAuth', JSON.stringify(userFind))
       localStorage.setItem('users', JSON.stringify(usersRedux))
       dispatch(updateUser(userFind))

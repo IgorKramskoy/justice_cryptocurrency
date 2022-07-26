@@ -18,15 +18,17 @@ import {
   ContentСontainer,
   RefillForm
 } from './Refill.styles';
+
 import * as Navigate from '../../../routesNavigate';
 import { CardForm } from './CardForm';
 import { SimpleDialogDemo } from './ModalWindow';
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/';
+
+import { steps } from './Steper/step';
+import { walletMessage } from '../../../ModalMessage/walletMessage'
 import rub from '../../../assets/images/rub.svg';
 import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
-import { steps } from './Steper/step';
-import { walletMessage } from '../../../ModalMessage/walletMessage'
 
 export const Refill = () => {
   const dispatch = useDispatch();
@@ -43,9 +45,6 @@ export const Refill = () => {
     initialValues: {
       currenciesValue: '',
       count: 0,
-    },
-    onSubmit: (values) => {
-      console.log('1')
     },
   });
 
@@ -86,7 +85,7 @@ export const Refill = () => {
   }, [])
 
   const handleSubmit = () => {
-    const id = currentUser.id
+    const id = currentUser._id
     const key = formik.values.currenciesValue.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
     if (key === 'rub') {
@@ -110,7 +109,7 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
-          userId: currentUser.id,
+          userId: currentUser._id,
           currencies: {
             rub: +formik.values.count,
             usd: 0,
@@ -144,7 +143,7 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(newAllWallets))
       } else {
         const walletUser = {
-          userId: currentUser.id,
+          userId: currentUser._id,
           currencies: {
             rub: 0,
             usd: +formik.values.count,
@@ -158,18 +157,15 @@ export const Refill = () => {
         localStorage.setItem('allWallets', JSON.stringify(allWalletRedux))
       }
     }
-    const value = {}
   }
 
   return (
     <ContentСontainer>
       <Content>
         <ContentHeader>
-          {/*title*/}
           <Box>
             <Typography sx={{color: '#FFFFFF'}} variant="h5">Пополнение</Typography>
           </Box>
-          {/*//*/}
           <Box>
             <Button
               type="submit"

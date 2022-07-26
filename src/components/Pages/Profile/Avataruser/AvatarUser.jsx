@@ -42,7 +42,7 @@ export const AvatarUser = () => {
     }
     reader.readAsDataURL(file)
     const base64 = await convertBase64(file);
-    const userFind = usersRedux.find((user) => user.email === currentUser.email)
+    const userFind = currentUser
     userFind.avatar = base64
     localStorage.setItem('userAuth', JSON.stringify(userFind))
     localStorage.setItem('users', JSON.stringify(usersRedux))

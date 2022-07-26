@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   Box,
@@ -13,16 +13,14 @@ import { StylesBoxReg } from './RefisterFormContainer.styled';
 
 import { RegisterFormValidation } from './RegisterFormValidation';
 import * as Navigate from '../../../../routesNavigate';
-import { createUser } from '../../../../redux/action';
+import axios from 'axios';
 
 
 export const RegisterFormContainer = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [error, setError] = useState('');
 
-  const usersRedux = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const formik = useFormik({
@@ -33,40 +31,38 @@ export const RegisterFormContainer = () => {
       repeatPassword: '',
     },
     validationSchema: RegisterFormValidation,
-    onSubmit: ({ name, email, password }) => {
+    onSubmit: ({name, email, password}) => {
       const data = {
         name,
         email,
         password,
-        id: Date.now(),
         birthday: '',
         city: '',
         phone: '',
         avatar: '',
       }
-      const isUserExistRedux = usersRedux.some((user) => user.email === email)
-      if(isUserExistRedux) {
-        setError('Пользователь с таким email существует')
-      } else {
-        dispatch(createUser(data))
-        localStorage.setItem('users', JSON.stringify([...usersRedux, data]))
-        setError('')
-        navigate(Navigate.LOGIN)
-      }
+      axios.post('http://localhost:5200/auth/register', data)
+        .then(function () {
+          setError('')
+          navigate(Navigate.LOGIN)
+        })
+        .catch(function () {
+          setError('Пользователь с таким email существует')
+        });
     },
   });
 
   useEffect(() => {
-    if(currentUser) {
+    if (currentUser) {
       navigate(Navigate.MARKET)
     }
   }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{width: '100%'}}>
         <CustomTextField
-          label='Имя'
+          label="Имя"
           value={formik.values.name}
           name="name"
           error={formik.errors.name && formik.touched.name}
@@ -76,9 +72,9 @@ export const RegisterFormContainer = () => {
           touched={formik.touched.name}
         />
       </Box>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{width: '100%'}}>
         <CustomTextField
-          label='Email'
+          label="Email"
           value={formik.values.email}
           name="email"
           error={formik.errors.email && formik.touched.email}
@@ -88,10 +84,10 @@ export const RegisterFormContainer = () => {
           touched={formik.touched.email}
         />
       </Box>
-      <StylesBoxReg mode='item'>
-        <Box sx={{ width: '100%' }}>
+      <StylesBoxReg mode="item">
+        <Box sx={{width: '100%'}}>
           <CustomTextField
-            label='Пароль'
+            label="Пароль"
             value={formik.values.password}
             name="password"
             error={formik.errors.password && formik.touched.password}
@@ -101,9 +97,9 @@ export const RegisterFormContainer = () => {
             touched={formik.touched.password}
           />
         </Box>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{width: '100%'}}>
           <CustomTextField
-            label='Подтвердите пароль'
+            label="Подтвердите пароль"
             value={formik.values.repeatPassword}
             name="repeatPassword"
             error={formik.errors.repeatPassword && formik.touched.repeatPassword}

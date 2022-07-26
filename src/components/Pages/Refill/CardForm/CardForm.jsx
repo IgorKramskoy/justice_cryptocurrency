@@ -36,7 +36,6 @@ export const CardForm = (
 
   return (
     <FormCardStyled onSubmit={formik.handleSubmit}>
-      {/*map*/}
       <Box sx={{width: '100%'}}>
         <CustomTextField
           label="Номер карты"

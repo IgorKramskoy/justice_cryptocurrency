@@ -1,4 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React,
+{
+  useCallback,
+  useState,
+  useEffect
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -18,24 +23,23 @@ import {
 } from '../Refill/Refill.styles';
 import { CardForm } from '../Refill/CardForm';
 import { SimpleDialogDemo } from '../Refill/ModalWindow';
-import { Steper } from './Steper/Steper';
+import { Steper } from './Steper/';
 import { ConfirmationForm } from './СonfirmationForm';
 import { BoxStep, StepItem } from './Withdrawal.styles';
 
 import * as Navigate from '../../../routesNavigate';
 import { steps } from './Steper/step'
 import rub from '../../../assets/images/rub.svg';
-import usd from '../../../assets/images/usd.svg';
 import { allWalletRefill, walletRefill } from '../../../redux/action';
 import { cryptoMessage } from '../../../ModalMessage/cryptoMessage'
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/';
 
 export const Withdrawal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [item, setItem] = useState({});
-  const [reversPrice, setReversPrice] = useState(0);
+  const [setItem] = useState({});
+  const [setReversPrice] = useState(0);
 
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
@@ -51,11 +55,7 @@ export const Withdrawal = () => {
     {
       img: rub,
       currency: 'RUB',
-    },
-    // {
-    //   img: usd,
-    //   currency: 'USD',
-    // },
+    }
   ]
 
   const formik = useFormik({
@@ -108,10 +108,11 @@ export const Withdrawal = () => {
   }, [])
 
   const handleWithdrawal = () => {
-    const id = currentUser.id
+    const id = currentUser._id
     const key = formik.values.currenciesValue.toLowerCase();
     const keyUp = formik.values.currenciesValueUp.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
+    console.log(id,key, keyUp, findWallet)
     const newWallet = {
       ...findWallet,
       currencies: {
@@ -234,6 +235,5 @@ export const Withdrawal = () => {
       </ContentСontainer>
       );
     </>
-
   );
 }

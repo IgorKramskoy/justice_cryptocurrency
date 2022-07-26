@@ -17,6 +17,7 @@ import {
   GroupTop,
   Heder
 } from './StartPage.styles';
+
 import * as Navigate from '../../../routesNavigate';
 import logo from '../../../assets/images/logo.png';
 import main from '../../../assets/images/main-table.png';

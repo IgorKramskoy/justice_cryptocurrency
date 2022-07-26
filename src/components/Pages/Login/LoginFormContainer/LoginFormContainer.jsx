@@ -4,12 +4,17 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomTextField } from '../../../Common/CustomTextField';
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography
+} from '@mui/material';
 import { StylesBoxReg } from './LoginFormContainer.styled';
 
 import { LoginFormValidation } from './LoginFormValidation';
 import { createUserAuth } from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
+import axios from 'axios';
 
 export const LoginFormContainer = () => {
   const dispatch = useDispatch();
@@ -18,7 +23,6 @@ export const LoginFormContainer = () => {
   const [error, setError] = useState('');
 
   const currentUser = useSelector((state) => state.users.currentUser)
-  const usersRedux = useSelector((state) => state.users.allUsers)
 
   const formik = useFormik({
     initialValues: {
@@ -27,16 +31,20 @@ export const LoginFormContainer = () => {
     },
     validationSchema: LoginFormValidation,
     onSubmit: ({email, password}) => {
-      const userAuth = usersRedux.find((user) => user.email === email)
-      if (!userAuth) {
-        setError('Пользователь с таким email не существует или неправильный email!')
-      } else if (userAuth.password !== password) {
-        setError('Неверный пароль!')
-      } else {
-        localStorage.setItem('userAuth', JSON.stringify(userAuth))
-        dispatch(createUserAuth(userAuth))
-        navigate(Navigate.MARKET)
+      const data = {
+        email,
+        password,
       }
+      axios.post('http://localhost:5200/auth/login', data)
+        .then(function (response) {
+          setError('')
+          localStorage.setItem('userAuth', JSON.stringify(response.data))
+          dispatch(createUserAuth(response.data))
+          navigate(Navigate.MARKET)
+        })
+        .catch(function () {
+          setError('Неправильный email или пароль!')
+        });
     },
   });
 
@@ -44,7 +52,7 @@ export const LoginFormContainer = () => {
     if (currentUser) {
       navigate(Navigate.MARKET)
     }
-  }, [])
+  },[])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>

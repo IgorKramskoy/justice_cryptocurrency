@@ -9,4 +9,7 @@ export const TRANSACTIONS_ALL = 'TRANSACTIONS_ALL';
 export const CRYPTO_ID = 'CRYPTO_ID';
 export const CRYPTO_BUY = 'CRYPTO_BUY';
 export const FETCH_DATA = 'FETCH_DATA';
+export const FETCH_USERS = 'FETCH_USERS';
+
+
 

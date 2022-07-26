@@ -58,11 +58,6 @@ export const Market = () => {
     setPage(newPage - 1);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const buyingCurrency = (link) => {
     dispatch(getCryptoId(link))
     navigate(Navigate.BUYINDING)
@@ -81,7 +76,6 @@ export const Market = () => {
           Курсы валют
         </Typography>
         <AutocompleteStyled
-
           disablePortal
           options={currencies}
           onChange={onChange}
@@ -111,7 +105,6 @@ export const Market = () => {
           />}
         />
       </BoxStyled>
-      {/*markettable*/}
       <TableContainer component={Paper} sx={{
         marginTop: '20px',
         borderRadius: '0px',
@@ -168,7 +161,6 @@ export const Market = () => {
           onChange={handleChangePage}
         />
       </TableContainer>
-      {/*//*/}
     </>
   );
 }
