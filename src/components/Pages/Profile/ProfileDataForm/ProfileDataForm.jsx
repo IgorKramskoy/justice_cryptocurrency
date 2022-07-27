@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button} from '@mui/material';
+import { Button } from '@mui/material';
 import {
   Container,
   HederTitle,
@@ -11,12 +11,11 @@ import {
 import { CustomTextField } from '../../../Common/CustomTextField';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
 
-  const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
 
   const formik = useFormik({
@@ -28,17 +27,15 @@ export const ProfileDataForm = () => {
       phone: currentUser?.phone ?? '',
     },
     validationSchema: ProfileDataFormValidation,
-    onSubmit: ({ name, email, city, birthday, phone}) => {
-      const userFind = usersRedux.find( (user) => user.email === email)
+    onSubmit: ({name, email, city, birthday, phone}) => {
+      const userFind = currentUser
       userFind.name = name
       userFind.email = email
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
       localStorage.setItem('userAuth', JSON.stringify(userFind))
-      localStorage.setItem('users', JSON.stringify(usersRedux))
       dispatch(updateUser(userFind))
-      dispatch(updateUsers(usersRedux))
     },
   });
 
@@ -71,11 +68,11 @@ export const ProfileDataForm = () => {
   ]
   return (
     <>
-      <HederTitle variant="h4" >
-         Мой профиль
+      <HederTitle variant="h4">
+        Мой профиль
       </HederTitle>
       <Container onSubmit={formik.handleSubmit}>
-        {inputs.map(({ label, name, type }) => (
+        {inputs.map(({label, name, type}) => (
           <CustomTextField
             key={name}
             label={label}
@@ -87,21 +84,21 @@ export const ProfileDataForm = () => {
             errorMessage={formik.errors[name]}
             touched={formik.touched[name]}
             sx={{
-              display:'flex',
-              flexDirection:'column',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           />
         ))}
-          <BoxStyled>
-            <Button
-              type="submit"
-              size="large"
-              variant="contained"
-              color="primary"
-            >
-              Сохранить изменения
-            </Button>
-          </BoxStyled>
+        <BoxStyled>
+          <Button
+            type="submit"
+            size="large"
+            variant="contained"
+            color="primary"
+          >
+            Сохранить изменения
+          </Button>
+        </BoxStyled>
       </Container>
     </>
   );

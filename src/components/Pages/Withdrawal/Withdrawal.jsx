@@ -38,8 +38,8 @@ export const Withdrawal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [setItem] = useState({});
-  const [setReversPrice] = useState(0);
+  const [item , setItem] = useState({});
+  const [reversPrice, setReversPrice] = useState(0);
 
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);

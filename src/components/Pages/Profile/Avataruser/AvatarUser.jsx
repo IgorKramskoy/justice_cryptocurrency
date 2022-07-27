@@ -11,12 +11,11 @@ import {
   ConteinerStyled
 } from './Avatar.styled';
 
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
 
 export const AvatarUser = () => {
   const dispatch = useDispatch();
 
-  const usersRedux = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const [photo, setPhoto] = useState(currentUser.avatar);
@@ -43,11 +42,9 @@ export const AvatarUser = () => {
     reader.readAsDataURL(file)
     const base64 = await convertBase64(file);
     const userFind = currentUser
-    userFind.avatar = base64
+    userFind.avatar = base64;
     localStorage.setItem('userAuth', JSON.stringify(userFind))
-    localStorage.setItem('users', JSON.stringify(usersRedux))
     dispatch(updateUser(userFind))
-    dispatch(updateUsers(usersRedux))
   }
 
   return (
