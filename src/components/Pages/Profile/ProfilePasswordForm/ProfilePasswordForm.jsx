@@ -31,12 +31,10 @@ export const ProfilePasswordForm = () => {
     validationSchema: ProfilePasswordFormValidation,
     onSubmit: ({repeatNewPassword, newPassword, oldPassword,}) => {
       if (currentUser.password === oldPassword && newPassword === repeatNewPassword) {
-        const userFind = usersRedux.find((user) => user.password === oldPassword)
+        const userFind = currentUser
         userFind.password = newPassword
         localStorage.setItem('userAuth', JSON.stringify(userFind))
-        localStorage.setItem('users', JSON.stringify(usersRedux))
         dispatch(updateUser(userFind))
-        dispatch(updateUsers(usersRedux))
         setError('')
       } else {
         setError('Пароли не совпадают!')

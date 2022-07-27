@@ -16,7 +16,6 @@ import { updateUser, updateUsers } from '../../../../redux/action';
 export const AvatarUser = () => {
   const dispatch = useDispatch();
 
-  const usersRedux = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.users.currentUser);
 
   const [photo, setPhoto] = useState(currentUser.avatar);
@@ -45,9 +44,7 @@ export const AvatarUser = () => {
     const userFind = currentUser
     userFind.avatar = base64
     localStorage.setItem('userAuth', JSON.stringify(userFind))
-    localStorage.setItem('users', JSON.stringify(usersRedux))
     dispatch(updateUser(userFind))
-    dispatch(updateUsers(usersRedux))
   }
 
   return (

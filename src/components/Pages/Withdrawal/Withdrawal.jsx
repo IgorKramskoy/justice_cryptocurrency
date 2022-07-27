@@ -38,8 +38,8 @@ export const Withdrawal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [setItem] = useState({});
-  const [setReversPrice] = useState(0);
+  const [item, setItem] = useState({});
+  const [reversPrice, setReversPrice] = useState(0);
 
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
@@ -140,6 +140,7 @@ export const Withdrawal = () => {
   useEffect(() => {
     if (formik.values.currenciesValueUp && formik.values.count) {
       const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
+      console.log(itemNew);
       setItem(itemNew);
       const newReversPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) * Number(formik.values.count)
       setReversPrice(newReversPrice);

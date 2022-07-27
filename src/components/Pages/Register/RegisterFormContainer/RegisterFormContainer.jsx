@@ -41,7 +41,7 @@ export const RegisterFormContainer = () => {
         phone: '',
         avatar: '',
       }
-      axios.post('http://localhost:5200/auth/register', data)
+      axios.post('http://localhost:4200/auth/register', data)
         .then(function () {
           setError('')
           navigate(Navigate.LOGIN)

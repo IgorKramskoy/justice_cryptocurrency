@@ -29,16 +29,13 @@ export const ProfileDataForm = () => {
     },
     validationSchema: ProfileDataFormValidation,
     onSubmit: ({ name, email, city, birthday, phone}) => {
-      const userFind = usersRedux.find( (user) => user.email === email)
+      const userFind = currentUser
       userFind.name = name
       userFind.email = email
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
-      localStorage.setItem('userAuth', JSON.stringify(userFind))
-      localStorage.setItem('users', JSON.stringify(usersRedux))
       dispatch(updateUser(userFind))
-      dispatch(updateUsers(usersRedux))
     },
   });
 

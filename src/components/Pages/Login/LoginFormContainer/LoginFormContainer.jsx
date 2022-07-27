@@ -35,7 +35,7 @@ export const LoginFormContainer = () => {
         email,
         password,
       }
-      axios.post('http://localhost:5200/auth/login', data)
+      axios.post('http://localhost:4200/auth/login', data)
         .then(function (response) {
           setError('')
           localStorage.setItem('userAuth', JSON.stringify(response.data))
