@@ -35,21 +35,24 @@ export const Wallet = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(8);
 
-  const walletUserRedux = useSelector((state) => state.money.walletUser);
+  const allWallets = useSelector((state) => state.money.allWallets);
   const currencies  = useSelector((state) => state.money.money );
+  const authUser = useSelector((state) => state.users.currentUser);
+
+  const walletUserRedux = allWallets.find((item) => item.userId === authUser._id);
 
   let rows = [
     {
       img: rub,
       name: 'RUB',
       title: 'Russian Ruble',
-      cunt: walletUserRedux?.currencies.rub,
+      cunt: walletUserRedux?.currencies?.rub
     },
     {
       img: usd,
       name: 'USD',
       title: 'American dollar',
-      cunt: walletUserRedux?.currencies.usd,
+      cunt: walletUserRedux?.currencies?.usd
     },
   ]
 
@@ -114,7 +117,7 @@ export const Wallet = () => {
           </TableHead>
           <TableBody sx={{ background: '#111823',}}>
             { rows
-              .map((row) => (
+              ?.map((row) => (
                 <TableRow key={row?.name} >
                   <TableCellStyled align="left" >
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
@@ -158,9 +161,9 @@ export const Wallet = () => {
           </TableHead>
           <TableBody sx={{ background: '#111823',}}>
             { filteredRows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow key={`${row.name}-${row.currency}`}>
+                <TableRow key={`${row?.name}-${row?.currency}`}>
                   <TableCellStyled align="left">
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                       <Box><img src={row?.img} alt='icon'/></Box>
@@ -169,7 +172,7 @@ export const Wallet = () => {
                     </Box>
                   </TableCellStyled>
                   <TableCellStyled align="left">
-                    {walletUserRedux?.crypto[row.currency.toLowerCase()] ? walletUserRedux.crypto[row.currency.toLowerCase()] : 0.00}
+                    {walletUserRedux?.crypto[row?.currency.toLowerCase()] ? walletUserRedux?.crypto[row?.currency.toLowerCase()] : 0.00}
                   </TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
                   <TableCellStyled align="left">0.00</TableCellStyled>
@@ -180,7 +183,7 @@ export const Wallet = () => {
                       variant="contained"
                       disabled={false}
                       color="info"
-                      onClick={() => currencyWithdrawalCrypto(row.currency)}
+                      onClick={() => currencyWithdrawalCrypto(row?.currency)}
                     >
                       Вывод
                     </Button>
@@ -190,7 +193,7 @@ export const Wallet = () => {
           </TableBody>
         </Table>
         <Pagination
-          count={Math.ceil(filteredRows.length / rowsPerPage)}
+          count={Math.ceil(filteredRows?.length / rowsPerPage)}
           shape="rounded"
           rowsperpage={rowsPerPage}
           page={page + 1}

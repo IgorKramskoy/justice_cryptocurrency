@@ -150,7 +150,7 @@ export const BuyForm = () => {
             }
             return findTransactions
           })
-          dispatch(allWalletRefill(newTransactionAll));
+          dispatch(transactionsALL(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
         navigate(Navigate.WALLET)
@@ -188,7 +188,7 @@ export const BuyForm = () => {
             }
             return findTransactions
           })
-          dispatch(allWalletRefill(newTransactionAll));
+          dispatch(transactionsALL(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
         setError(true)
@@ -303,7 +303,7 @@ export const BuyForm = () => {
         color="success"
         type="submit"
       >
-        Купить ADA
+        Купить
       </Button>
       {error ? (
         <Box>

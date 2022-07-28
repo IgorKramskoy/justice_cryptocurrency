@@ -51,23 +51,23 @@ export const Convecter = () => {
       const id = currentUser._id
       const key = values.currenciesValue.toLowerCase();
       const keyUp = values.currenciesValueUp.toLowerCase()
-      const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
-      const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
-
-      if (walletUserRedux.crypto[key] > values.count) {
+      const findWallet = allWalletRedux?.find((wallet) => wallet.userId === id);
+      const findTransactions = transactionAll?.find((transactions) => transactions.userId === id);
+      console.log(findTransactions, 'submit');
+      if (walletUserRedux?.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
           crypto: {
             ...findWallet.crypto,
-            [key]: Number(findWallet.crypto[key]) - Number(formik.values.count),
-            [keyUp]: findWallet.crypto[keyUp]
-              ? Number(findWallet.crypto[keyUp]) + Number(formik.values.countUp)
+            [key]: Number(findWallet?.crypto[key]) - Number(formik.values.count),
+            [keyUp]: findWallet?.crypto[keyUp]
+              ? Number(findWallet?.crypto[keyUp]) + Number(formik.values.countUp)
               : Number(formik.values.countUp)
           }
         }
         dispatch(walletRefill(newWallet));
         localStorage.setItem('userWallet', JSON.stringify(newWallet));
-        const newAllWallets = allWalletRedux.map((wallet) => {
+        const newAllWallets = allWalletRedux?.map((wallet) => {
           if (wallet.userId === newWallet.userId) {
             return newWallet
           }
@@ -90,6 +90,7 @@ export const Convecter = () => {
             ]
           }
           transactionAll.push(newTransactions);
+          console.log(newTransactions, 'new trans.');
           dispatch(transactionsALL(transactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
         } else {
@@ -101,17 +102,19 @@ export const Convecter = () => {
             countUp: values.countUp,
             status: true,
           }
-          findTransactions.transactions.push(newTransaction)
-          const newTransactionAll = transactionAll.map((transaction) => {
+          findTransactions?.transactions.push(newTransaction)
+          const newTransactionAll = transactionAll?.map((transaction) => {
             if (transaction.userId === findTransactions.userId) {
               return findTransactions
             }
             return findTransactions
           })
-          dispatch(allWalletRefill(newTransactionAll));
+          console.log(newTransactionAll);
+          dispatch(transactionsALL(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
-        navigate(Navigate.WALLET)
+
+        navigate(Navigate.TRANSACTION)
       } else {
         if (!findTransactions) {
           const newTransactions = {
@@ -127,7 +130,8 @@ export const Convecter = () => {
               }
             ]
           }
-          transactionAll.push(newTransactions);
+          transactionAll?.push(newTransactions);
+          console.log(newTransactions, 'new');
           dispatch(transactionsALL(transactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
         } else {
@@ -140,12 +144,13 @@ export const Convecter = () => {
             status: false,
           }
           findTransactions.transactions.push(newTransaction)
-          const newTransactionAll = transactionAll.map((transaction) => {
-            if (transaction.userId === findTransactions.userId) {
+          const newTransactionAll = transactionAll?.map((transaction) => {
+            if (transaction.userId === findTransactions?.userId) {
               return findTransactions
             }
             return findTransactions
           })
+          console.log(newTransactionAll);
           dispatch(allWalletRefill(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
@@ -197,6 +202,7 @@ export const Convecter = () => {
               arr={currencies}
               handleChangeCurrency={handleChangeCurrency}
               handleChangeCount={handleChangeCount}
+              inputValue=''
             />
           </Box>
           <Box sx={{paddingTop: '20px'}}>
@@ -206,6 +212,7 @@ export const Convecter = () => {
             <Label variant="h4">Получаю</Label>
             <AutocompleteCurrencyInfo
               textFieldDisabled
+              inputValue=''
               textFieldValue={formik.values.countUp}
               arr={currencies}
               handleChangeCurrency={handleChangeCurrencyUp}

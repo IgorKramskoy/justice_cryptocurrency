@@ -29,6 +29,7 @@ export const Transaction = () => {
 
   const transactionUser = transactionAll.find((transaction) => transaction.userId === currentUser._id)
   const transactionArr = transactionUser?.transactions
+  console.log(transactionUser);
 
   const findItem = (findValue, arr) => {
     const findObj = arr.find(item => item.currency === findValue)
@@ -37,12 +38,12 @@ export const Transaction = () => {
   }
 
   const createTransactionArr = (crypto, transactions) => {
-    const arrTransactionsInfo = transactions.map((item) => {
+    const arrTransactionsInfo = transactions?.map((item) => {
       const newItem = findItem(item.currenciesValue, crypto)
       const newItemUp = findItem(item.currenciesValueUp, crypto)
       return {newItem, newItemUp}
     })
-    const transactionArr = transactions.map((item, index) => {
+    const transactionArr = transactions?.map((item, index) => {
       return {...item, ...arrTransactionsInfo[index]}
     })
     return transactionArr
@@ -54,7 +55,7 @@ export const Transaction = () => {
   };
 
   useEffect(() => {
-    if (transactionRows.length === 0) {
+    if (transactionRows?.length === 0) {
       setTransactionUser(createTransactionArr(CryptoCurrency, transactionArr))
     }
   }, [transactionArr]);
@@ -81,7 +82,7 @@ export const Transaction = () => {
           </TableHead>
           <TableBody sx={{background: '#111823',}}>
             {transactionRows
-              .sort((a, b) => b.data - a.data)
+              ?.sort((a, b) => b?.data - a?.data)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow key={`${row.data}`}>
@@ -109,8 +110,8 @@ export const Transaction = () => {
               ))}
           </TableBody>
         </Table>
-        {transactionRows.length > 8 &&  <Pagination
-          count={Math.ceil(transactionRows.transactions / rowsPerPage)}
+        {transactionRows?.length > 8 &&  <Pagination
+          count={Math.ceil(transactionRows?.transactions / rowsPerPage)}
           shape="rounded"
           rowsperpage={rowsPerPage}
           page={page + 1}
