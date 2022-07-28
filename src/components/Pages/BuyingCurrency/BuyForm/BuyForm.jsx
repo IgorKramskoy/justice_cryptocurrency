@@ -21,7 +21,12 @@ import {
 } from './BuyForm.style';
 
 import swap from '../../../../assets/images/swap.svg';
-import { allWalletRefill, cryptoBuy, transactionsALL, walletRefill } from '../../../../redux/action';
+import {
+  allWalletRefill,
+  cryptoBuy,
+  transactionsALL,
+  walletRefill
+} from '../../../../redux/action';
 import * as Navigate from '../../../../routesNavigate';
 import { useNavigate } from 'react-router-dom';
 
@@ -96,7 +101,9 @@ export const BuyForm = () => {
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
-
+      // if(values.count == 0) {
+      //   setError(true)
+      // }
       if (walletUserRedux.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
@@ -229,6 +236,7 @@ export const BuyForm = () => {
         const arr = [];
         arr.push( itemNew, itemUpNew)
         dispatch(cryptoBuy(arr));
+
 
         const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''));
         setPrice(newPrice);

@@ -40,7 +40,7 @@ export const Wallet = () => {
   const authUser = useSelector((state) => state.users.currentUser);
 
   const walletUserRedux = allWallets.find((item) => item.userId === authUser._id);
-  console.log(walletUserRedux);
+
   let rows = [
     {
       img: rub,
