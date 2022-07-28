@@ -112,7 +112,6 @@ export const Withdrawal = () => {
     const key = formik.values.currenciesValue.toLowerCase();
     const keyUp = formik.values.currenciesValueUp.toLowerCase();
     const findWallet = allWalletRedux.find((wallet) => wallet.userId === id)
-    console.log(id,key, keyUp, findWallet)
     const newWallet = {
       ...findWallet,
       currencies: {
@@ -124,7 +123,6 @@ export const Withdrawal = () => {
         [key]: Number(findWallet.crypto[key]) - Number(formik.values.count)
       }
     }
-    console.log(newWallet);
     dispatch(walletRefill(newWallet))
     localStorage.setItem('userWallet', JSON.stringify(newWallet))
     const newAllWallets = allWalletRedux.map((wallet) => {
@@ -140,7 +138,6 @@ export const Withdrawal = () => {
   useEffect(() => {
     if (formik.values.currenciesValueUp && formik.values.count) {
       const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
-      console.log(itemNew);
       setItem(itemNew);
       const newReversPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) * Number(formik.values.count)
       setReversPrice(newReversPrice);
