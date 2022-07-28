@@ -53,7 +53,7 @@ export const Convecter = () => {
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux?.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll?.find((transactions) => transactions.userId === id);
-      console.log(findTransactions, 'submit');
+
       if (walletUserRedux?.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
@@ -90,7 +90,7 @@ export const Convecter = () => {
             ]
           }
           transactionAll.push(newTransactions);
-          console.log(newTransactions, 'new trans.');
+
           dispatch(transactionsALL(transactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
         } else {
@@ -109,7 +109,7 @@ export const Convecter = () => {
             }
             return findTransactions
           })
-          console.log(newTransactionAll);
+
           dispatch(transactionsALL(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
@@ -131,7 +131,7 @@ export const Convecter = () => {
             ]
           }
           transactionAll?.push(newTransactions);
-          console.log(newTransactions, 'new');
+
           dispatch(transactionsALL(transactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(transactionAll));
         } else {
@@ -150,8 +150,8 @@ export const Convecter = () => {
             }
             return findTransactions
           })
-          console.log(newTransactionAll);
-          dispatch(allWalletRefill(newTransactionAll));
+
+          dispatch(transactionsALL(newTransactionAll));
           localStorage.setItem('transactionAll', JSON.stringify(newTransactionAll));
         }
         setError(true)
@@ -202,7 +202,7 @@ export const Convecter = () => {
               arr={currencies}
               handleChangeCurrency={handleChangeCurrency}
               handleChangeCount={handleChangeCount}
-              inputValue=''
+              inputValue=""
             />
           </Box>
           <Box sx={{paddingTop: '20px'}}>
@@ -212,7 +212,7 @@ export const Convecter = () => {
             <Label variant="h4">Получаю</Label>
             <AutocompleteCurrencyInfo
               textFieldDisabled
-              inputValue=''
+              inputValue=""
               textFieldValue={formik.values.countUp}
               arr={currencies}
               handleChangeCurrency={handleChangeCurrencyUp}
@@ -244,7 +244,7 @@ export const Convecter = () => {
           </Box>
           {error ? (
             <Alert color="error" variant="filledLarge" icon={false}>Недостаточно средств. Пополните баланс.</Alert>
-          ) : null }
+          ) : null}
 
         </ContentBottom>
       </Content>
