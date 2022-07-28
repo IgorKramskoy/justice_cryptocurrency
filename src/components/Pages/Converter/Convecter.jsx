@@ -16,7 +16,7 @@ import {
   Label,
   Title
 } from './ComponentConvecter.styles';
-import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/AutocompleteCurrencyInfo';
+import { AutocompleteCurrencyInfo } from '../../Common/AutocompleteCurrencyInfo/';
 
 import swap from '../../../assets/images/swap.svg';
 import { allWalletRefill, transactionsALL, walletRefill } from '../../../redux/action';
@@ -53,7 +53,7 @@ export const Convecter = () => {
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux?.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll?.find((transactions) => transactions.userId === id);
-
+      console.log(findTransactions);
       if (walletUserRedux?.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
