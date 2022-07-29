@@ -33,6 +33,7 @@ export const Convecter = () => {
   const [reversPrice, setReversPrice] = useState(0);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState(false);
+  const [errorForm, setErrorForm] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const currencies = useSelector((state) => state.money.money);
@@ -54,7 +55,7 @@ export const Convecter = () => {
       const findWallet = allWalletRedux?.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll?.find((transactions) => transactions.userId === id);
 
-      if (walletUserRedux?.crypto[key] > values.count && values.currenciesValue &&  values.currenciesValueUp) {
+      if (walletUserRedux?.crypto[key] > values.count && values.currenciesValue && values.currenciesValueUp) {
         const newWallet = {
           ...findWallet,
           crypto: {
@@ -176,7 +177,17 @@ export const Convecter = () => {
   }, [])
 
   useEffect(() => {
+    if (!formik.values.currenciesValueUp) {
+      setErrorForm(true)
+    }
+    if (!formik.values.currenciesValue) {
+      setErrorForm(true)
+    }
+    if (!formik.values.count) {
+      setErrorForm(true)
+    }
     if (formik.values.currenciesValueUp && formik.values.currenciesValue && formik.values.count) {
+      setErrorForm(false)
       const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue)
       setItem(itemNew);
       const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp)
@@ -225,6 +236,13 @@ export const Convecter = () => {
             size="large"
             variant="contained"
             color="primary"
+            disabled={errorForm}
+            sx={{
+              '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
+                color: '#8C8C8C',
+                backgroundColor: '#282B30',
+              }
+            }}
           >
             Конвертировать
           </Button>
