@@ -11,12 +11,11 @@ import {
 import { CustomTextField } from '../../../Common/CustomTextField';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
 
-  const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
 
   const formik = useFormik({
@@ -35,7 +34,8 @@ export const ProfileDataForm = () => {
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
-      dispatch(updateUser(userFind))
+      dispatch(updateUser(userFind));
+      localStorage.setItem('userAuth', JSON.stringify(userFind));
     },
   });
 
