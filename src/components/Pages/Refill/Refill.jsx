@@ -160,7 +160,6 @@ export const Refill = () => {
     }
   }
   useEffect(() => {
-    console.log(formik.values.count)
     if (!formik.values.currenciesValue) {
       setError(true)
     }
@@ -214,15 +213,21 @@ export const Refill = () => {
                     handleChangeCount={handleChangeCount}
                   />
                 </Box>
-                {error ? null :
                   <Button
                     size="small"
                     variant="contained"
                     color="primary"
+                    disabled={error}
                     onClick={handleNext}
+                    sx={{
+                      '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
+                        color: '#8C8C8C',
+                        backgroundColor: '#282B30',
+                      }
+                    }}
                   >
                     Продолжить
-                  </Button>}
+                  </Button>
               </BoxStep>)}
             {activeStep === 1 && (
               <Box sx={{textAlign: 'start'}}>
