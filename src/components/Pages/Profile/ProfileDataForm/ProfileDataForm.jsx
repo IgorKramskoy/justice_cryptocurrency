@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { Button} from '@mui/material';
 import {
@@ -34,8 +35,12 @@ export const ProfileDataForm = () => {
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
-      dispatch(updateUser(userFind));
-      localStorage.setItem('userAuth', JSON.stringify(userFind));
+
+      axios.put('http://localhost:4200/auth/profile', userFind)
+        .then(function (response) {
+          dispatch(updateUser(response.data));
+          localStorage.setItem('userAuth', JSON.stringify(response.data));
+        })
     },
   });
 

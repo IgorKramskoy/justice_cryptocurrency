@@ -11,7 +11,8 @@ import {
   ConteinerStyled
 } from './Avatar.styled';
 
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
+import axios from 'axios';
 
 export const AvatarUser = () => {
   const dispatch = useDispatch();
@@ -43,8 +44,13 @@ export const AvatarUser = () => {
     const base64 = await convertBase64(file);
     const userFind = currentUser
     userFind.avatar = base64
-    localStorage.setItem('userAuth', JSON.stringify(userFind))
-    dispatch(updateUser(userFind))
+
+    axios.put('http://localhost:4200/auth/profile', userFind)
+      .then(function (response) {
+        dispatch(updateUser(response.data));
+        localStorage.setItem('userAuth', JSON.stringify(response.data));
+      })
+
   }
 
   return (
