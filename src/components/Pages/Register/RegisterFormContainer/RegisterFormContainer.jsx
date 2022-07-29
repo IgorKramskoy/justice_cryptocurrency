@@ -31,7 +31,7 @@ export const RegisterFormContainer = () => {
       repeatPassword: '',
     },
     validationSchema: RegisterFormValidation,
-    onSubmit: ({name, email, password}) => {
+    onSubmit: ({name, email, password, repeatPassword}) => {
       const data = {
         name,
         email,
@@ -41,14 +41,19 @@ export const RegisterFormContainer = () => {
         phone: '',
         avatar: '',
       }
-      axios.post('http://localhost:4200/auth/register', data)
-        .then(function () {
-          setError('')
-          navigate(Navigate.LOGIN)
-        })
-        .catch(function () {
-          setError('Пользователь с таким email существует')
-        });
+      if(password === repeatPassword) {
+        axios.post('http://localhost:4200/auth/register', data)
+          .then(function () {
+            setError('')
+            navigate(Navigate.LOGIN)
+          })
+          .catch(function () {
+            setError('Пользователь с таким email существует!')
+          });
+      } else {
+        setError('Пароли не совпадают!')
+      }
+
     },
   });
 
