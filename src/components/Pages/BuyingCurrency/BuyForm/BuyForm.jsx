@@ -224,8 +224,13 @@ export const BuyForm = () => {
 
   useEffect(() => {
     if(!walletUserRedux) {
+      const itemNew = currencies.find((item) => item.currency === formik.values.currenciesValue);
+      setItem(itemNew);
+      const itemUpNew = currencies.find((item) => item.currency === formik.values.currenciesValueUp);
+      setItemUp(itemUpNew);
+
       const arr = [];
-      arr.push( cryptoCurrencyDefault, formik.values.currenciesValue);
+      arr.push( itemNew, itemUpNew)
       dispatch(cryptoBuy(arr));
     }
     if (walletUserRedux && formik.values.currenciesValue) {

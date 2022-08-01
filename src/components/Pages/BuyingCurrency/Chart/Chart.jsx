@@ -201,7 +201,7 @@ export const Chart = () => {
       setPercentChange(newPercentChange)
 
     }
-  }, [arrCryptoBuy])
+  }, [arrData])
 
   return (
     <>
