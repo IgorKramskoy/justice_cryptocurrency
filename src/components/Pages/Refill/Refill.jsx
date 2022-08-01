@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +36,7 @@ export const Refill = () => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState(false);
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
@@ -158,6 +159,23 @@ export const Refill = () => {
       }
     }
   }
+  useEffect(() => {
+    if (!formik.values.currenciesValue) {
+      setError(true)
+    }
+    if (Number(formik.values.count) < 0) {
+      setError(true)
+    }
+    if (!formik.values.count) {
+      setError(true)
+    }
+    if(formik.values.currenciesValue && Number(formik.values.count) > 0) {
+      setError(false)
+    }
+
+
+
+  }, [formik])
 
   return (
     <ContentСontainer>
@@ -195,14 +213,21 @@ export const Refill = () => {
                     handleChangeCount={handleChangeCount}
                   />
                 </Box>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                >
-                  Продолжить
-                </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    disabled={error}
+                    onClick={handleNext}
+                    sx={{
+                      '&.MuiButtonBase-root.MuiButton-root.Mui-disabled': {
+                        color: '#8C8C8C',
+                        backgroundColor: '#282B30',
+                      }
+                    }}
+                  >
+                    Продолжить
+                  </Button>
               </BoxStep>)}
             {activeStep === 1 && (
               <Box sx={{textAlign: 'start'}}>

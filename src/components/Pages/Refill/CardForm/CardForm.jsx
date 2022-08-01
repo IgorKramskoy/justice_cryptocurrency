@@ -41,10 +41,10 @@ export const CardForm = (
           label="Номер карты"
           value={formik.values.number}
           name="number"
-          error={formik.errors.number && formik.touched.number}
           onChange={formik.handleChange}
           type="text"
           errorMessage={formik.errors.number}
+          error={formik.errors.number && formik.touched.number}
           touched={formik.touched.number}
         />
       </Box>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 import { Button} from '@mui/material';
 import {
@@ -11,12 +12,11 @@ import {
 import { CustomTextField } from '../../../Common/CustomTextField';
 
 import { ProfileDataFormValidation } from './ProfileDataFormValidation';
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
 
 export const ProfileDataForm = () => {
   const dispatch = useDispatch()
 
-  const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
 
   const formik = useFormik({
@@ -35,7 +35,12 @@ export const ProfileDataForm = () => {
       userFind.birthday = birthday
       userFind.city = city
       userFind.phone = phone
-      dispatch(updateUser(userFind))
+
+      axios.put('http://localhost:4200/auth/profile', userFind)
+        .then(function (response) {
+          dispatch(updateUser(response.data));
+          localStorage.setItem('userAuth', JSON.stringify(response.data));
+        })
     },
   });
 

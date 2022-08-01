@@ -11,7 +11,8 @@ import { CustomTextField } from '../../../Common/CustomTextField';
 import { Button, Typography } from '@mui/material';
 
 import { ProfilePasswordFormValidation } from './ProfilePasswordFormValidation';
-import { updateUser, updateUsers } from '../../../../redux/action';
+import { updateUser } from '../../../../redux/action';
+import axios from 'axios';
 
 
 export const ProfilePasswordForm = () => {
@@ -19,7 +20,6 @@ export const ProfilePasswordForm = () => {
 
   const [error, setError] = useState('');
 
-  const usersRedux = useSelector((state) => state.users.allUsers)
   const currentUser = useSelector((state) => state.users.currentUser)
 
   const formik = useFormik({
@@ -30,15 +30,25 @@ export const ProfilePasswordForm = () => {
     },
     validationSchema: ProfilePasswordFormValidation,
     onSubmit: ({repeatNewPassword, newPassword, oldPassword,}) => {
-      if (currentUser.password === oldPassword && newPassword === repeatNewPassword) {
-        const userFind = currentUser
-        userFind.password = newPassword
-        localStorage.setItem('userAuth', JSON.stringify(userFind))
-        dispatch(updateUser(userFind))
+      if(repeatNewPassword === newPassword) {
         setError('')
+        const userFind = currentUser
+        userFind.password = oldPassword
+        userFind.passwordNew = newPassword
+        axios.put('http://localhost:4200/auth/password', userFind)
+          .then(function (response) {
+            dispatch(updateUser(response.data));
+            localStorage.setItem('userAuth', JSON.stringify(response.data));
+            setError('')
+          })
+          .catch(function () {
+            setError('Не совпадает с текущим паролем!')
+          });
       } else {
-        setError('Пароли не совпадают!')
+        setError('Новые пароли не совпадают!')
       }
+
+
     },
   });
   const inputs = [
