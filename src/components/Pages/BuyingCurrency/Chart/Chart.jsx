@@ -184,7 +184,7 @@ export const Chart = () => {
           if (index === 0) {
             return el
           }
-          if (index != 0) {
+          if (index !== 0) {
             return Number(el).toString()
           }
         })
@@ -199,8 +199,9 @@ export const Chart = () => {
     if (crypto) {
       const newPercentChange = Number(crypto[1]) / Number(crypto[3])
       setPercentChange(newPercentChange)
+
     }
-  }, [arrCryptoBuy])
+  }, [arrData])
 
   return (
     <>

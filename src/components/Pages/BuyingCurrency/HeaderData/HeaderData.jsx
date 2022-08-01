@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import
+  React,
+{
+  useEffect,
+  useState
+} from 'react';
 import { useSelector } from 'react-redux';
 
 import { Box } from '@mui/material';
@@ -16,13 +21,13 @@ export const HeaderData = () => {
   const arrCryptoBuy = useSelector((state) => state.money.cryptoBuy);
 
   useEffect(() => {
-    const newItem = arrCryptoBuy[0]
+    const newItem = arrCryptoBuy[0];
     setItem(newItem);
-    const newItemUp = arrCryptoBuy[1]
+    const newItemUp = arrCryptoBuy[1];
     setItemUp(newItemUp);
     if (newItem && newItemUp) {
-      const mathItems = Number(newItem.PRICE.slice(2).split(',').join('')) / Number(newItemUp.PRICE.slice(2).split(',').join(''));
-      setMath(mathItems)
+      const mathItems = Number(newItem?.PRICE.slice(2).split(',').join('')) / Number(newItemUp?.PRICE.slice(2).split(',').join(''));
+      setMath(mathItems);
     }
 
   }, [arrCryptoBuy])
