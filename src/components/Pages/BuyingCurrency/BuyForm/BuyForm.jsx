@@ -44,12 +44,12 @@ export const BuyForm = () => {
 
   const currentUser = useSelector((state) => state.users.currentUser);
   const currencies = useSelector((state) => state.money.money);
-  const walletUserRedux = useSelector((state) => state.money.walletUser);
   const allWalletRedux = useSelector((state) => state.money.allWallets);
   const transactionAll = useSelector((state) => state.transaction.transactionAll);
   const cryptoCurrency = useSelector((state) => state.money.cryptoId);
+  const walletUserRedux = useSelector((state) => state.money.walletUser);
 
-  let cryptoCurrencyDefault = 'USDT';
+  const cryptoCurrencyDefault = 'USDT';
 
   const buttons = [
     {
@@ -101,9 +101,9 @@ export const BuyForm = () => {
       const keyUp = values.currenciesValueUp.toLowerCase()
       const findWallet = allWalletRedux.find((wallet) => wallet.userId === id);
       const findTransactions = transactionAll.find((transactions) => transactions.userId === id);
-      // if(values.count == 0) {
-      //   setError(true)
-      // }
+      if(values.count == 0) {
+        setError(true)
+      }
       if (walletUserRedux.crypto[key] > values.count) {
         const newWallet = {
           ...findWallet,
@@ -223,6 +223,11 @@ export const BuyForm = () => {
   }, [])
 
   useEffect(() => {
+    if(!walletUserRedux) {
+      const arr = [];
+      arr.push( cryptoCurrencyDefault, formik.values.currenciesValue);
+      dispatch(cryptoBuy(arr));
+    }
     if (walletUserRedux && formik.values.currenciesValue) {
       const newMoneyUser = walletUserRedux.crypto[formik.values.currenciesValue.toLowerCase()];
       setUserMoney(newMoneyUser)
@@ -236,7 +241,6 @@ export const BuyForm = () => {
         const arr = [];
         arr.push( itemNew, itemUpNew)
         dispatch(cryptoBuy(arr));
-
 
         const newPrice = Number(itemNew.PRICE.slice(2).split(',').join('')) / Number(itemUpNew.PRICE.slice(2).split(',').join(''));
         setPrice(newPrice);

@@ -22,7 +22,7 @@ export const LoginFormContainer = () => {
 
   const [error, setError] = useState('');
 
-  const currentUser = useSelector((state) => state.users.currentUser)
+  const currentUser = useSelector((state) => state.users.currentUser);
 
   const formik = useFormik({
     initialValues: {
@@ -38,8 +38,8 @@ export const LoginFormContainer = () => {
       axios.post('http://localhost:4200/auth/login', data)
         .then(function (response) {
           setError('')
-          localStorage.setItem('userAuth', JSON.stringify(response.data))
-          dispatch(createUserAuth(response.data))
+          localStorage.setItem('userAuth', JSON.stringify(response.data));
+          dispatch(createUserAuth(response.data));
           navigate(Navigate.MARKET)
         })
         .catch(function () {
@@ -52,7 +52,7 @@ export const LoginFormContainer = () => {
     if (currentUser) {
       navigate(Navigate.MARKET)
     }
-  },[])
+  }, [])
 
   return (
     <StylesBoxReg onSubmit={formik.handleSubmit}>
